@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import InvestButton from "./InvestButton";
 
 type ObjectKey =
   | "Status"
@@ -301,11 +300,7 @@ function getDesktopPose(config: DesktopObjectConfig, progress: number) {
   );
 }
 
-interface ObjectsHeroProps {
-  onInvest: () => void;
-}
-
-export default function ObjectsHero({ onInvest }: ObjectsHeroProps) {
+export default function ObjectsHero() {
   const [progress, setProgress] = useState(0);
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
   const [isMobile, setIsMobile] = useState(false);
@@ -334,23 +329,21 @@ export default function ObjectsHero({ onInvest }: ObjectsHeroProps) {
   }, []);
 
   useEffect(() => {
-    const htmlOverflow = document.documentElement.style.overflow;
-    const bodyOverflow = document.body.style.overflow;
-    const bodyOverscroll = document.body.style.overscrollBehavior;
-
-    document.documentElement.style.overflow = "hidden";
-    document.body.style.overflow = "hidden";
-    document.body.style.overscrollBehavior = "none";
-
     const updateProgress = (delta: number) => {
       const next = clamp(progressRef.current + delta, 0, 1);
       progressRef.current = next;
       setProgress(next);
     };
 
+    const atTop = () => window.scrollY <= 0;
+    const shouldReverseHero = (deltaY: number) =>
+      progressRef.current > 0 && atTop() && deltaY < 0;
+
     const handleWheel = (event: WheelEvent) => {
-      event.preventDefault();
-      updateProgress(event.deltaY / 2200);
+      if (progressRef.current < 1 || shouldReverseHero(event.deltaY)) {
+        event.preventDefault();
+        updateProgress(event.deltaY / 2200);
+      }
     };
 
     const handleTouchStart = (event: TouchEvent) => {
@@ -360,8 +353,17 @@ export default function ObjectsHero({ onInvest }: ObjectsHeroProps) {
     const handleTouchMove = (event: TouchEvent) => {
       const currentY = event.touches[0]?.clientY;
       if (currentY == null || touchYRef.current == null) return;
-      event.preventDefault();
+
       const delta = touchYRef.current - currentY;
+      const shouldControlHero =
+        progressRef.current < 1 || (progressRef.current > 0 && atTop() && delta < 0);
+
+      if (!shouldControlHero) {
+        touchYRef.current = currentY;
+        return;
+      }
+
+      event.preventDefault();
       touchYRef.current = currentY;
       updateProgress(delta / 900);
     };
@@ -376,9 +378,6 @@ export default function ObjectsHero({ onInvest }: ObjectsHeroProps) {
     window.addEventListener("touchend", handleTouchEnd);
 
     return () => {
-      document.documentElement.style.overflow = htmlOverflow;
-      document.body.style.overflow = bodyOverflow;
-      document.body.style.overscrollBehavior = bodyOverscroll;
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
@@ -386,12 +385,25 @@ export default function ObjectsHero({ onInvest }: ObjectsHeroProps) {
     };
   }, []);
 
+  useEffect(() => {
+    const shouldLock = progress < 1;
+    document.documentElement.style.overflow = shouldLock ? "hidden" : "";
+    document.body.style.overflow = shouldLock ? "hidden" : "";
+    document.body.style.overscrollBehavior = shouldLock ? "none" : "";
+
+    return () => {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      document.body.style.overscrollBehavior = "";
+    };
+  }, [progress]);
+
   const mobileObjects = useMemo(() => MOBILE_OBJECTS, []);
   const sceneProgress = clamp(progress / 0.72, 0, 1);
   const objectOpacity = 1 - clamp((progress - 0.52) / 0.22, 0, 1);
   const whiteOpacity = 1 - clamp((progress - 0.56) / 0.2, 0, 1);
   const darkOverlayOpacity = clamp((progress - 0.5) / 0.24, 0, 1);
-  const investProgress = clamp((progress - 0.72) / 0.14, 0, 1);
+  const heroOpacity = 1 - clamp((progress - 0.92) / 0.08, 0, 1);
   const desktopScale =
     viewport.width && viewport.height
       ? Math.min(
@@ -401,7 +413,13 @@ export default function ObjectsHero({ onInvest }: ObjectsHeroProps) {
       : 1;
 
   return (
-    <section className="fixed inset-0 overflow-hidden bg-[#232323]">
+    <section
+      className="fixed inset-0 z-20 overflow-hidden"
+      style={{
+        opacity: heroOpacity,
+        pointerEvents: progress > 0 ? "auto" : "none",
+      }}
+    >
       <div className="absolute inset-0 overflow-hidden bg-[#232323]">
         <div
           className="absolute inset-0"
@@ -481,16 +499,6 @@ export default function ObjectsHero({ onInvest }: ObjectsHeroProps) {
           )}
         </div>
 
-        <div
-          className="absolute inset-0 flex items-center justify-center px-6"
-          style={{
-            opacity: investProgress,
-            transform: `translateY(${lerp(24, 0, investProgress)}px)`,
-            pointerEvents: investProgress > 0.92 ? "auto" : "none",
-          }}
-        >
-          <InvestButton onInvest={onInvest} fullscreen={false} />
-        </div>
       </div>
     </section>
   );
