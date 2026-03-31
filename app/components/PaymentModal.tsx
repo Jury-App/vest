@@ -59,6 +59,30 @@ function CheckoutForm({
   const elements = useElements();
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [formComplete, setFormComplete] = useState(false);
+  const checkoutTurbRef = useRef<SVGFETurbulenceElement>(null);
+  const checkoutAnimRef = useRef<number>(0);
+  const checkoutSeedRef = useRef(0);
+
+  useEffect(() => {
+    if (!formComplete) return;
+    let lastTime = 0;
+    const animate = (time: number) => {
+      if (checkoutTurbRef.current) {
+        const delta = time - lastTime;
+        if (delta > 200) {
+          checkoutSeedRef.current += 1;
+          checkoutTurbRef.current.setAttribute("seed", String(checkoutSeedRef.current));
+          const freq = 0.015 + Math.sin(time * 0.00025) * 0.005;
+          checkoutTurbRef.current.setAttribute("baseFrequency", `${freq} ${freq * 0.8}`);
+          lastTime = time;
+        }
+      }
+      checkoutAnimRef.current = requestAnimationFrame(animate);
+    };
+    checkoutAnimRef.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(checkoutAnimRef.current);
+  }, [formComplete]);
 
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
@@ -96,21 +120,58 @@ function CheckoutForm({
   );
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <PaymentElement />
+    <>
+    <svg style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }}>
+        <defs>
+          <filter id="checkout-cta-lava" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence
+              ref={checkoutTurbRef}
+              type="fractalNoise"
+              baseFrequency="0.015 0.012"
+              numOctaves="3"
+              seed="0"
+              result="turbulence"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="turbulence"
+              scale="8"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+        </defs>
+      </svg>
+      <form onSubmit={handleSubmit}>
+      <PaymentElement onChange={(e) => setFormComplete(e.complete)} />
       {error && (
         <p className="text-red-400 text-sm text-center">{error}</p>
       )}
       <button
         type="submit"
-        disabled={!stripe || processing}
-        className="w-full py-4 rounded-2xl bg-white text-black font-semibold text-lg
-          disabled:opacity-50 disabled:cursor-not-allowed
+        disabled={!stripe || processing || !formComplete}
+        className="disabled:opacity-30 disabled:cursor-not-allowed
           transition-all duration-200 hover:bg-gray-100 active:scale-[0.98] cursor-pointer"
+        style={{
+          width: "100%",
+          height: formComplete ? "96px" : "48px",
+          padding: 0,
+          margin: 0,
+          marginTop: "24px",
+          border: "none",
+          borderRadius: "48px",
+          backgroundColor: "white",
+          color: "black",
+          fontSize: "18px",
+          fontWeight: 600,
+          transition: "height 0.3s ease",
+          filter: formComplete ? "url(#checkout-cta-lava)" : "none",
+        }}
       >
         {processing ? "Processing..." : `Invest $${amount.toLocaleString()}`}
       </button>
     </form>
+    </>
   );
 }
 
@@ -140,7 +201,7 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
 
   const rawAmount = parseRawNumber(displayAmount);
   const numAmount = parseFloat(rawAmount);
-  const isActive = !!(numAmount && numAmount >= 1);
+  const isActive = !!(numAmount && numAmount >= 2500);
 
   // Lava lamp animation for Continue button — only runs when active
   useEffect(() => {
@@ -168,14 +229,14 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
     // Prevent multiple decimals
     const parts = raw.split(".");
     const sanitized = parts.length > 2 ? `${parts[0]}.${parts.slice(1).join("")}` : raw;
-    // Cap integer part at 8 digits (99,999,999)
+    // Cap at 999,999
     const intPart = sanitized.split(".")[0].replace(/,/g, "");
-    if (intPart.length > 8) return;
+    if (intPart.length > 6) return;
     setDisplayAmount(formatWithCommas(sanitized));
   }, []);
 
   const handleAmountSubmit = useCallback(async () => {
-    if (!numAmount || numAmount < 1) return;
+    if (!numAmount || numAmount < 2500 || numAmount > 999999) return;
 
     setLoading(true);
     try {
@@ -244,34 +305,37 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
                 How much would you like to invest?
               </h2>
 
-              <div className="flex items-baseline justify-center" style={{ paddingTop: "32px", paddingBottom: "32px" }}>
-                <span className={`text-5xl font-bold leading-none ${displayAmount ? "text-white" : "text-white/20"}`}>$</span>
-                <input
-                  ref={inputRef}
-                  type="text"
-                  inputMode="decimal"
-                  placeholder=""
-                  value={displayAmount}
-                  onChange={handleChange}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") handleAmountSubmit();
-                  }}
-                  className="bg-transparent border-0 outline-none text-5xl font-bold text-white
-                    placeholder-white/20 leading-none p-0 m-0"
-                  style={{ width: `${Math.max(1, displayAmount.length) * 0.6 + 0.5}em` }}
-                />
+              <div className="flex justify-center" style={{ paddingTop: "32px", paddingBottom: "32px" }}>
+                <div className="flex items-baseline">
+                  <span className={`text-5xl font-bold leading-none ${displayAmount ? "text-white" : "text-white/20"}`}>$</span>
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    inputMode="decimal"
+                    placeholder=""
+                    value={displayAmount}
+                    onChange={handleChange}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") handleAmountSubmit();
+                    }}
+                    className="bg-transparent border-0 outline-none text-5xl font-bold text-white
+                      placeholder-white/20 leading-none p-0 m-0 text-center"
+                    style={{ width: `${Math.max(1, displayAmount.length) * 0.6 + 0.5}em` }}
+                  />
+                </div>
               </div>
 
               <button
                 onClick={handleAmountSubmit}
-                disabled={!numAmount || numAmount < 1 || loading}
+                disabled={!numAmount || numAmount < 2500 || numAmount > 999999 || loading}
                 className="w-full bg-white text-black font-semibold text-lg
                   disabled:opacity-30 disabled:cursor-not-allowed
                   transition-all duration-200 hover:bg-gray-100 active:scale-[0.98] cursor-pointer"
                 style={{
-                  height: "48px",
+                  height: isActive ? "96px" : "48px",
                   borderRadius: "48px",
                   filter: isActive ? "url(#cta-lava)" : "none",
+                  transition: "height 0.3s ease",
                 }}
               >
                 {loading ? "Loading..." : "Continue"}

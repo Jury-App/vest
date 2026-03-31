@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import VideoPlayer from "./components/VideoPlayer";
 import InvestButton from "./components/InvestButton";
 import PaymentModal from "./components/PaymentModal";
 import DonorHome from "./components/DonorHome";
@@ -49,7 +48,6 @@ export default function Home() {
   // New user state
   return (
     <div className="fixed inset-0" style={{ height: "100dvh" }}>
-      <VideoPlayer />
       <InvestButton onInvest={handleInvest} />
       {showPayment && (
         <PaymentModal

@@ -12,6 +12,7 @@ export default function InvestButton({ onInvest }: InvestButtonProps) {
   const animFrameRef = useRef<number>(0);
   const seedRef = useRef(0);
   const [isPressed, setIsPressed] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const speedRef = useRef(1);
 
   useEffect(() => {
@@ -61,11 +62,13 @@ export default function InvestButton({ onInvest }: InvestButtonProps) {
   }, [onInvest]);
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-20 p-4">
+    <div className="fixed inset-0 z-20 flex items-center justify-center pointer-events-none">
       <button
         onClick={handleClick}
-        className="relative w-full cursor-pointer border-0 bg-transparent p-0"
-        style={{ height: "80px" }}
+        className="relative cursor-pointer border-0 bg-transparent p-0 pointer-events-auto"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        style={{ height: isHovered || isPressed ? "112px" : "80px", paddingLeft: isHovered || isPressed ? "67px" : "48px", paddingRight: isHovered || isPressed ? "67px" : "48px", transition: "all 0.3s ease" }}
       >
         {/* SVG filter for lava lamp distortion */}
         <svg
@@ -96,9 +99,9 @@ export default function InvestButton({ onInvest }: InvestButtonProps) {
           {/* The undulating blob shape */}
           <g filter="url(#lava-filter)">
             <rect
-              x="4%"
+              x="0"
               y="5%"
-              width="92%"
+              width="100%"
               height="90%"
               rx="40"
               ry="40"
@@ -109,7 +112,7 @@ export default function InvestButton({ onInvest }: InvestButtonProps) {
 
         {/* Button text */}
         <span
-          className="absolute inset-0 flex items-center justify-center text-white text-2xl font-semibold tracking-wide"
+          className="relative flex items-center justify-center text-white text-2xl font-semibold tracking-wide"
           style={{
             textShadow: "0 0 20px rgba(255, 255, 255, 0.5)",
           }}
