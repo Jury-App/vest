@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import InvestButton from "./components/InvestButton";
 import PaymentModal from "./components/PaymentModal";
 import DonorHome from "./components/DonorHome";
+import ObjectsHero from "./components/ObjectsHero";
 
 const STORAGE_KEY = "vest_donation_amount";
 
@@ -47,8 +47,8 @@ export default function Home() {
 
   // New user state
   return (
-    <div className="fixed inset-0" style={{ height: "100dvh" }}>
-      <InvestButton onInvest={handleInvest} />
+    <div className="bg-black">
+      <ObjectsHero onInvest={handleInvest} />
       {showPayment && (
         <PaymentModal
           onSuccess={handlePaymentSuccess}

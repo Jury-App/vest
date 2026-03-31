@@ -4,9 +4,13 @@ import { useEffect, useRef, useState, useCallback } from "react";
 
 interface InvestButtonProps {
   onInvest: () => void;
+  fullscreen?: boolean;
 }
 
-export default function InvestButton({ onInvest }: InvestButtonProps) {
+export default function InvestButton({
+  onInvest,
+  fullscreen = true,
+}: InvestButtonProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const turbulenceRef = useRef<SVGFETurbulenceElement>(null);
   const animFrameRef = useRef<number>(0);
@@ -62,7 +66,13 @@ export default function InvestButton({ onInvest }: InvestButtonProps) {
   }, [onInvest]);
 
   return (
-    <div className="fixed inset-0 z-20 flex items-center justify-center pointer-events-none">
+    <div
+      className={
+        fullscreen
+          ? "fixed inset-0 z-20 flex items-center justify-center pointer-events-none"
+          : "relative z-20 flex items-center justify-center"
+      }
+    >
       <button
         onClick={handleClick}
         className="relative cursor-pointer border-0 bg-transparent p-0 pointer-events-auto"

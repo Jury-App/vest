@@ -1,0 +1,497 @@
+"use client";
+
+import { useEffect, useMemo, useRef, useState } from "react";
+import InvestButton from "./InvestButton";
+
+type ObjectKey =
+  | "Status"
+  | "Games"
+  | "Lighter"
+  | "BigPill"
+  | "Edible"
+  | "SmallPills"
+  | "Narcissism"
+  | "Toys"
+  | "Love";
+
+type MobilePose = {
+  x: number;
+  y: number;
+  rotate: number;
+  scale: number;
+};
+
+type MobileObjectConfig = {
+  key: ObjectKey;
+  src: string;
+  alt: string;
+  width: string;
+  zIndex: number;
+  start: MobilePose;
+  mid: MobilePose;
+  end: MobilePose;
+};
+
+type DesktopPose = {
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+  rotate: number;
+};
+
+type DesktopObjectConfig = {
+  key: ObjectKey;
+  src: string;
+  alt: string;
+  zIndex: number;
+  backgroundSize: "contain" | "cover";
+  start: DesktopPose;
+  mid: DesktopPose;
+  end: DesktopPose;
+  flipY?: boolean;
+};
+
+const DESKTOP_SCENE_WIDTH = 1728;
+const DESKTOP_SCENE_HEIGHT = 982;
+
+const DESKTOP_OBJECTS: DesktopObjectConfig[] = [
+  {
+    key: "Status",
+    src: "/assets/sinners/Status.png",
+    alt: "Black card",
+    zIndex: 3,
+    backgroundSize: "cover",
+    start: { left: -188, top: 230, width: 702, height: 788.4, rotate: 327 },
+    mid: { left: -795, top: -117, width: 976, height: 882, rotate: 273.862 },
+    end: { left: -1500, top: -500, width: 976, height: 882, rotate: 273.862 },
+  },
+  {
+    key: "Love",
+    src: "/assets/sinners/Love.png",
+    alt: "Burgundy curved vibrator",
+    zIndex: 5,
+    backgroundSize: "contain",
+    start: { left: 980, top: 250, width: 1283.1, height: 1064.7, rotate: 14 },
+    mid: { left: 1496, top: 1251, width: 1259.13, height: 1042.85, rotate: 21.121 },
+    end: { left: 2500, top: 1800, width: 1259.13, height: 1042.85, rotate: 21.121 },
+  },
+  {
+    key: "Narcissism",
+    src: "/assets/sinners/Narcissism.png",
+    alt: "Kodak disposable camera",
+    zIndex: 2,
+    backgroundSize: "contain",
+    start: { left: -110, top: 228, width: 1008, height: 1112.4, rotate: 337 },
+    mid: { left: -1338, top: -41, width: 1651.51, height: 1822.68, rotate: 226.701 },
+    end: { left: -2000, top: 200, width: 1651.51, height: 1822.68, rotate: 226.701 },
+  },
+  {
+    key: "Toys",
+    src: "/assets/sinners/Toys.png",
+    alt: "Orange device",
+    zIndex: 4,
+    backgroundSize: "contain",
+    start: { left: 760, top: 160, width: 780, height: 774, rotate: 193 },
+    mid: { left: 33, top: 1271, width: 582.188, height: 577.939, rotate: 15.76 },
+    end: { left: -500, top: 1800, width: 582.188, height: 577.939, rotate: 15.76 },
+  },
+  {
+    key: "Games",
+    src: "/assets/sinners/Games.png",
+    alt: "Blue yo-yo",
+    zIndex: 4,
+    backgroundSize: "cover",
+    flipY: true,
+    start: { left: 248, top: 8, width: 453, height: 453, rotate: 180 },
+    mid: { left: -618, top: -649, width: 857, height: 472, rotate: 6.067 },
+    end: { left: -1200, top: -1200, width: 857, height: 472, rotate: 6.067 },
+  },
+  {
+    key: "Lighter",
+    src: "/assets/sinners/Lighter.png",
+    alt: "Red lighter",
+    zIndex: 5,
+    backgroundSize: "contain",
+    start: { left: 1112, top: 90, width: 236, height: 242, rotate: 348 },
+    mid: { left: 1066, top: -535, width: 357.276, height: 367.756, rotate: 285.531 },
+    end: { left: 1800, top: -1200, width: 357.276, height: 367.756, rotate: 285.531 },
+  },
+  {
+    key: "Edible",
+    src: "/assets/sinners/Edible.png",
+    alt: "Glittery black sponge",
+    zIndex: 4,
+    backgroundSize: "contain",
+    start: { left: 1458, top: 268, width: 184, height: 136, rotate: 328 },
+    mid: { left: 2053, top: 307, width: 276.589, height: 205.943, rotate: 267.318 },
+    end: { left: 3000, top: 800, width: 276.589, height: 205.943, rotate: 267.318 },
+  },
+  {
+    key: "BigPill",
+    src: "/assets/sinners/BigPill.png",
+    alt: "Round white tablet",
+    zIndex: 3,
+    backgroundSize: "contain",
+    start: { left: 1350, top: 92, width: 110, height: 110, rotate: 0 },
+    mid: { left: 1853, top: -407, width: 137.338, height: 137.696, rotate: 331.052 },
+    end: { left: 2500, top: -1000, width: 137.338, height: 137.696, rotate: 331.052 },
+  },
+  {
+    key: "SmallPills",
+    src: "/assets/sinners/SmallPills.png",
+    alt: "Two blue pills",
+    zIndex: 6,
+    backgroundSize: "contain",
+    start: { left: 1592, top: 96, width: 190, height: 284, rotate: 0 },
+    mid: { left: 3099, top: -1042, width: 94.651, height: 94.651, rotate: 351.586 },
+    end: { left: 4000, top: -1500, width: 94.651, height: 94.651, rotate: 351.586 },
+  },
+];
+
+const MOBILE_OBJECTS: MobileObjectConfig[] = [
+  {
+    key: "Status",
+    src: "/assets/sinners/Status.png",
+    alt: "Black card",
+    width: "clamp(180px, 44vw, 260px)",
+    zIndex: 3,
+    start: { x: 8, y: 31, rotate: -26, scale: 1 },
+    mid: { x: 1, y: 24, rotate: -31, scale: 1 },
+    end: { x: -10, y: 16, rotate: -36, scale: 0.97 },
+  },
+  {
+    key: "Games",
+    src: "/assets/sinners/Games.png",
+    alt: "Blue yo-yo",
+    width: "clamp(140px, 34vw, 190px)",
+    zIndex: 4,
+    start: { x: 45, y: 14, rotate: -7, scale: 1 },
+    mid: { x: 43, y: 8, rotate: -1, scale: 1 },
+    end: { x: 38, y: -2, rotate: 6, scale: 0.95 },
+  },
+  {
+    key: "Lighter",
+    src: "/assets/sinners/Lighter.png",
+    alt: "Red lighter",
+    width: "clamp(96px, 20vw, 132px)",
+    zIndex: 5,
+    start: { x: 80, y: 14, rotate: -8, scale: 1 },
+    mid: { x: 82, y: 6, rotate: -4, scale: 1 },
+    end: { x: 84, y: -8, rotate: 4, scale: 0.95 },
+  },
+  {
+    key: "BigPill",
+    src: "/assets/sinners/BigPill.png",
+    alt: "Round white tablet",
+    width: "clamp(78px, 16vw, 112px)",
+    zIndex: 3,
+    start: { x: 87, y: 21, rotate: -14, scale: 1 },
+    mid: { x: 90, y: 15, rotate: -8, scale: 0.99 },
+    end: { x: 93, y: 4, rotate: 2, scale: 0.95 },
+  },
+  {
+    key: "Edible",
+    src: "/assets/sinners/Edible.png",
+    alt: "Glittery black sponge",
+    width: "clamp(100px, 21vw, 136px)",
+    zIndex: 4,
+    start: { x: 86, y: 31, rotate: -17, scale: 1 },
+    mid: { x: 90, y: 23, rotate: -12, scale: 1 },
+    end: { x: 95, y: 14, rotate: -8, scale: 0.96 },
+  },
+  {
+    key: "SmallPills",
+    src: "/assets/sinners/SmallPills.png",
+    alt: "Two blue pills",
+    width: "clamp(38px, 8vw, 54px)",
+    zIndex: 6,
+    start: { x: 95, y: 6, rotate: 20, scale: 1 },
+    mid: { x: 97, y: 4, rotate: 15, scale: 0.98 },
+    end: { x: 99, y: -2, rotate: 10, scale: 0.95 },
+  },
+  {
+    key: "Narcissism",
+    src: "/assets/sinners/Narcissism.png",
+    alt: "Kodak disposable camera",
+    width: "clamp(280px, 64vw, 390px)",
+    zIndex: 2,
+    start: { x: 6, y: 72, rotate: -20, scale: 1 },
+    mid: { x: 2, y: 74, rotate: -13, scale: 1 },
+    end: { x: -16, y: 82, rotate: -7, scale: 0.96 },
+  },
+  {
+    key: "Toys",
+    src: "/assets/sinners/Toys.png",
+    alt: "Orange device",
+    width: "clamp(210px, 50vw, 300px)",
+    zIndex: 4,
+    start: { x: 48, y: 88, rotate: 12, scale: 1 },
+    mid: { x: 41, y: 76, rotate: 17, scale: 0.98 },
+    end: { x: 28, y: 52, rotate: 22, scale: 0.92 },
+  },
+  {
+    key: "Love",
+    src: "/assets/sinners/Love.png",
+    alt: "Burgundy curved vibrator",
+    width: "clamp(250px, 60vw, 360px)",
+    zIndex: 5,
+    start: { x: 89, y: 72, rotate: 18, scale: 1 },
+    mid: { x: 95, y: 74, rotate: 26, scale: 1 },
+    end: { x: 109, y: 79, rotate: 34, scale: 0.96 },
+  },
+];
+
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function lerp(a: number, b: number, t: number) {
+  return a + (b - a) * t;
+}
+
+function easeInOutCubic(t: number) {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+function mixMobilePose(from: MobilePose, to: MobilePose, t: number): MobilePose {
+  return {
+    x: lerp(from.x, to.x, t),
+    y: lerp(from.y, to.y, t),
+    rotate: lerp(from.rotate, to.rotate, t),
+    scale: lerp(from.scale, to.scale, t),
+  };
+}
+
+function mixDesktopPose(from: DesktopPose, to: DesktopPose, t: number): DesktopPose {
+  return {
+    left: lerp(from.left, to.left, t),
+    top: lerp(from.top, to.top, t),
+    width: lerp(from.width, to.width, t),
+    height: lerp(from.height, to.height, t),
+    rotate: lerp(from.rotate, to.rotate, t),
+  };
+}
+
+function getMobilePose(config: MobileObjectConfig, progress: number) {
+  if (progress <= 0.55) {
+    return mixMobilePose(
+      config.start,
+      config.mid,
+      easeInOutCubic(progress / 0.55)
+    );
+  }
+
+  return mixMobilePose(
+    config.mid,
+    config.end,
+    easeInOutCubic((progress - 0.55) / 0.45)
+  );
+}
+
+function getDesktopPose(config: DesktopObjectConfig, progress: number) {
+  if (progress <= 0.5) {
+    return mixDesktopPose(config.start, config.mid, easeInOutCubic(progress / 0.5));
+  }
+
+  return mixDesktopPose(
+    config.mid,
+    config.end,
+    easeInOutCubic((progress - 0.5) / 0.5)
+  );
+}
+
+interface ObjectsHeroProps {
+  onInvest: () => void;
+}
+
+export default function ObjectsHero({ onInvest }: ObjectsHeroProps) {
+  const [progress, setProgress] = useState(0);
+  const [viewport, setViewport] = useState({ width: 0, height: 0 });
+  const [isMobile, setIsMobile] = useState(false);
+  const progressRef = useRef(0);
+  const touchYRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 767px)");
+
+    const handleViewportChange = () => {
+      setViewport({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+      setIsMobile(media.matches);
+    };
+
+    handleViewportChange();
+    media.addEventListener("change", handleViewportChange);
+    window.addEventListener("resize", handleViewportChange);
+
+    return () => {
+      media.removeEventListener("change", handleViewportChange);
+      window.removeEventListener("resize", handleViewportChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    const htmlOverflow = document.documentElement.style.overflow;
+    const bodyOverflow = document.body.style.overflow;
+    const bodyOverscroll = document.body.style.overscrollBehavior;
+
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+    document.body.style.overscrollBehavior = "none";
+
+    const updateProgress = (delta: number) => {
+      const next = clamp(progressRef.current + delta, 0, 1);
+      progressRef.current = next;
+      setProgress(next);
+    };
+
+    const handleWheel = (event: WheelEvent) => {
+      event.preventDefault();
+      updateProgress(event.deltaY / 2200);
+    };
+
+    const handleTouchStart = (event: TouchEvent) => {
+      touchYRef.current = event.touches[0]?.clientY ?? null;
+    };
+
+    const handleTouchMove = (event: TouchEvent) => {
+      const currentY = event.touches[0]?.clientY;
+      if (currentY == null || touchYRef.current == null) return;
+      event.preventDefault();
+      const delta = touchYRef.current - currentY;
+      touchYRef.current = currentY;
+      updateProgress(delta / 900);
+    };
+
+    const handleTouchEnd = () => {
+      touchYRef.current = null;
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: false });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("touchend", handleTouchEnd);
+
+    return () => {
+      document.documentElement.style.overflow = htmlOverflow;
+      document.body.style.overflow = bodyOverflow;
+      document.body.style.overscrollBehavior = bodyOverscroll;
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
+    };
+  }, []);
+
+  const mobileObjects = useMemo(() => MOBILE_OBJECTS, []);
+  const sceneProgress = clamp(progress / 0.72, 0, 1);
+  const objectOpacity = 1 - clamp((progress - 0.52) / 0.22, 0, 1);
+  const whiteOpacity = 1 - clamp((progress - 0.56) / 0.2, 0, 1);
+  const darkOverlayOpacity = clamp((progress - 0.5) / 0.24, 0, 1);
+  const investProgress = clamp((progress - 0.72) / 0.14, 0, 1);
+  const desktopScale =
+    viewport.width && viewport.height
+      ? Math.min(
+          viewport.width / DESKTOP_SCENE_WIDTH,
+          viewport.height / DESKTOP_SCENE_HEIGHT
+        )
+      : 1;
+
+  return (
+    <section className="fixed inset-0 overflow-hidden bg-[#232323]">
+      <div className="absolute inset-0 overflow-hidden bg-[#232323]">
+        <div
+          className="absolute inset-0"
+          style={{ background: "#f2e6c9", opacity: whiteOpacity }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{ background: "#232323", opacity: darkOverlayOpacity }}
+        />
+
+        <div
+          className="absolute inset-0 overflow-hidden"
+          style={{ opacity: objectOpacity }}
+        >
+          {isMobile ? (
+            mobileObjects.map((object) => {
+              const pose = getMobilePose(object, sceneProgress);
+
+              return (
+                <img
+                  key={object.key}
+                  src={object.src}
+                  alt={object.alt}
+                  className="absolute h-auto max-w-none select-none pointer-events-none"
+                  draggable={false}
+                  style={{
+                    left: `${pose.x}%`,
+                    top: `${pose.y}%`,
+                    width: object.width,
+                    zIndex: object.zIndex,
+                    transform: `translate(-50%, -50%) rotate(${pose.rotate}deg) scale(${pose.scale})`,
+                    filter: "drop-shadow(0 12px 28px rgba(0, 0, 0, 0.15))",
+                  }}
+                />
+              );
+            })
+          ) : (
+            <div
+              className="absolute left-1/2 top-1/2"
+              style={{
+                width: DESKTOP_SCENE_WIDTH,
+                height: DESKTOP_SCENE_HEIGHT,
+                transform: `translate(-50%, -50%) scale(${desktopScale})`,
+                transformOrigin: "center center",
+              }}
+            >
+              {DESKTOP_OBJECTS.map((object) => {
+                const pose = getDesktopPose(object, sceneProgress);
+                const transforms = [`rotate(${pose.rotate}deg)`];
+
+                if (object.flipY) {
+                  transforms.push("scaleY(-1)");
+                }
+
+                return (
+                  <div
+                    key={object.key}
+                    className="absolute pointer-events-none select-none"
+                    style={{
+                      left: pose.left,
+                      top: pose.top,
+                      width: pose.width,
+                      height: pose.height,
+                      zIndex: object.zIndex,
+                      transform: transforms.join(" "),
+                      transformOrigin: "center center",
+                      backgroundImage: `url('${object.src}')`,
+                      backgroundPosition: "center",
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: object.backgroundSize,
+                      filter: "drop-shadow(0 18px 40px rgba(0, 0, 0, 0.16))",
+                    }}
+                  />
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        <div
+          className="absolute inset-0 flex items-center justify-center px-6"
+          style={{
+            opacity: investProgress,
+            transform: `translateY(${lerp(24, 0, investProgress)}px)`,
+            pointerEvents: investProgress > 0.92 ? "auto" : "none",
+          }}
+        >
+          <InvestButton onInvest={onInvest} fullscreen={false} />
+        </div>
+      </div>
+    </section>
+  );
+}
