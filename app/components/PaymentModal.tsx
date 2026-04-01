@@ -163,13 +163,6 @@ function CheckoutForm({
 
   return (
     <form onSubmit={handleSubmit}>
-      <div
-        className="mb-4 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/70"
-      >
-        <p className="text-white">{name}</p>
-        <p>{email}</p>
-      </div>
-
       <PaymentElement onChange={(e) => setFormComplete(e.complete)} />
       {error && <p className="text-red-400 text-sm text-center mt-3">{error}</p>}
       <button
@@ -191,10 +184,10 @@ function CheckoutForm({
           fontWeight: 600,
         }}
       >
-        {processing ? "Processing..." : `Invest $${amount.toLocaleString()}`}
+        {processing ? "Processing..." : `Invest $${amount.toLocaleString()} in Jury`}
       </button>
-      <p className="mt-3 text-center text-xs text-white/45">
-        Card and wallet payments usually confirm immediately. Bank payments can remain pending while funds settle.
+      <p className="text-center text-xs text-white/45" style={{ marginTop: "16px" }}>
+        Check your email for a magic link once processed!
       </p>
     </form>
   );
@@ -318,12 +311,9 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
                   </div>
                 </div>
               ) : (
-                <div className="space-y-3" style={{ paddingTop: "28px" }}>
-                  <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/60">
-                    Investment amount: <span className="text-white">${numAmount.toLocaleString()}</span>
-                  </div>
+                <div style={{ paddingTop: "28px" }}>
                   <label className="block">
-                    <span className="mb-2 block text-sm text-white/60">Legal name</span>
+                    <span className="mb-2 block text-sm text-white/60">Full Legal Name</span>
                     <input
                       type="text"
                       value={name}
@@ -331,13 +321,14 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
                       onKeyDown={(e) => {
                         if (e.key === "Enter" && identityValid) handleIdentitySubmit();
                       }}
-                      className="w-full rounded-2xl border border-white/10 bg-white/6 px-4 py-3 text-white outline-none transition focus:border-white/25"
+                      className="w-full rounded-2xl border border-white/10 bg-white/6 py-3 text-white outline-none transition focus:border-white/25"
+                      style={{ height: "45px", paddingLeft: "8px", paddingRight: "8px" }}
                       placeholder="Jane Investor"
                     />
                   </label>
 
-                  <label className="block">
-                    <span className="mb-2 block text-sm text-white/60">Email for paperwork</span>
+                  <label className="block" style={{ marginTop: "24px" }}>
+                    <span className="mb-2 block text-sm text-white/60">Email</span>
                     <input
                       type="email"
                       value={email}
@@ -345,7 +336,8 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
                       onKeyDown={(e) => {
                         if (e.key === "Enter" && identityValid) handleIdentitySubmit();
                       }}
-                      className="w-full rounded-2xl border border-white/10 bg-white/6 px-4 py-3 text-white outline-none transition focus:border-white/25"
+                      className="w-full rounded-2xl border border-white/10 bg-white/6 py-3 text-white outline-none transition focus:border-white/25"
+                      style={{ height: "45px", paddingLeft: "8px", paddingRight: "8px" }}
                       placeholder="jane@example.com"
                     />
                   </label>
@@ -357,21 +349,25 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
               <button
                 onClick={step === "amount" ? handleAmountSubmit : handleIdentitySubmit}
                 disabled={step === "amount" ? !amountValid : !identityValid || loading}
-                className="mt-6 w-full bg-white text-black font-semibold text-lg
+                className={`${step === "amount" ? "mt-6" : "mt-6"} w-full bg-white text-black font-semibold text-lg
                   disabled:opacity-30 disabled:cursor-not-allowed
-                  transition-all duration-200 hover:bg-gray-100 active:scale-[0.98] cursor-pointer"
+                  transition-all duration-200 hover:bg-gray-100 active:scale-[0.98] cursor-pointer`}
                 style={{
                   height: "48px",
                   borderRadius: "48px",
+                  marginTop: step === "identity" ? "24px" : undefined,
                 }}
               >
                 {loading ? "Loading..." : "Continue"}
               </button>
 
-              <p className="mt-3 text-center text-xs text-white/45">
+              <p
+                className="text-center text-xs text-white/45"
+                style={{ marginTop: step === "identity" ? "16px" : "16px" }}
+              >
                 {step === "amount"
                   ? "Minimum investment is $2,500 and the maximum is $999,999."
-                  : "We use your name and email to identify your investment and send SAFE paperwork."}
+                  : "We use your name and email to identify your investment and send SAFE paperwork. If paperwork and verification is incomplete, your money will be refunded within 30 days of written failed approval notice."}
               </p>
             </div>
           ) : (

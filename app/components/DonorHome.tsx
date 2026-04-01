@@ -66,7 +66,7 @@ export default function DonorHome({
         className="text-white/50 text-lg tracking-widest mb-2"
         style={{ fontVariant: "small-caps" }}
       >
-        your stake:
+        your pending stake:
       </p>
       <p
         className="text-white font-bold leading-none"
@@ -74,20 +74,17 @@ export default function DonorHome({
       >
         ${formatted}
       </p>
-      {investment.status === "succeeded" ? (
-        <p className="mt-6 max-w-md text-sm text-white/60">
-          Payment confirmed for {investment.name}. Paperwork coming to you at {investment.email}.
+      <div className="mt-6 max-w-md space-y-3 text-sm text-white/60">
+        <p>
+          Check {investment.email} for paperwork.
         </p>
-      ) : (
-        <div className="mt-6 max-w-md space-y-3 text-sm text-white/60">
-          <p>
-            Payment submitted for {investment.name}. We&apos;re waiting for Stripe to confirm the transfer.
-          </p>
-          <p>
-            Paperwork coming to you at {investment.email} as soon as the funds settle.
-          </p>
-        </div>
-      )}
+        <p>
+          Your investment is only confirmed after ops and paperwork are completed and approved.
+        </p>
+        <p>
+          If that process is not completed successfully, your money will be refunded.
+        </p>
+      </div>
     </div>
   );
 }
