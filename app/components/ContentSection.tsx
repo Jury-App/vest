@@ -6,6 +6,7 @@ import Reveal from "./Reveal";
 export default function ContentSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [copyOffset, setCopyOffset] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     let frame = 0;
@@ -20,10 +21,11 @@ export default function ContentSection() {
       const revealWindow = viewportHeight * 0.9;
       const traveled = viewportHeight - rect.top;
       const progress = Math.min(1, Math.max(0, traveled / revealWindow));
-      const isMobile = window.innerWidth < 768;
-      const startOffset = isMobile ? 120 : 168;
+      const mobileViewport = window.innerWidth < 768;
+      const startOffset = mobileViewport ? 120 : 168;
       const easedProgress = 1 - Math.pow(1 - progress, 3);
 
+      setIsMobile(mobileViewport);
       setCopyOffset((1 - easedProgress) * startOffset);
     };
 
@@ -80,8 +82,8 @@ export default function ContentSection() {
               transition: "transform 120ms linear",
               willChange: "transform",
               marginTop: "42px",
-              paddingLeft: "16px",
-              paddingRight: "16px",
+              paddingLeft: isMobile ? "16px" : "0px",
+              paddingRight: isMobile ? "16px" : "0px",
             }}
           >
             <p>

@@ -779,6 +779,8 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               fontSize: isMobile ? "15px" : "17px",
               lineHeight: isMobile ? 1.82 : 1.9,
               letterSpacing: "-0.015em",
+              paddingLeft: isMobile ? "16px" : "0px",
+              paddingRight: isMobile ? "16px" : "0px",
             }}
           >
             <div ref={firstBodyCopyRef}>
@@ -854,6 +856,39 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
             >
               <FAQAccordion onInvest={onInvest} />
             </div>
+
+            <footer
+              className="mx-auto w-full max-w-[672px] px-4 text-center text-[10px] leading-4 tracking-[0.01em] text-white/30 sm:text-[11px]"
+              style={{
+                marginTop: "40px",
+                opacity: faqEntryProgress,
+                transform: `translateY(${faqTranslateY}px)`,
+              }}
+            >
+              <p>
+                This page is for informational purposes only and does not constitute an
+                offer to sell or a solicitation of an offer to buy any securities. Any
+                offer to sell securities will be made only pursuant to definitive
+                offering documents provided directly to prospective investors who have
+                a pre-existing relationship with the Company. Securities offered by
+                Jury App Inc. have not been registered under the Securities Act of
+                1933, as amended, or any state securities laws, and are being offered
+                in reliance on exemptions from registration. Such securities may not
+                be offered or sold except pursuant to an exemption from, or in a
+                transaction not subject to, the registration requirements of the
+                Securities Act and applicable state securities laws. Investing in
+                early-stage companies involves a high degree of risk, including the
+                risk of total loss of investment. Past performance is not indicative
+                of future results. Nothing on this page should be construed as legal,
+                tax, or investment advice. This opportunity is available only to
+                individuals with a pre-existing relationship with Jury App Inc. and
+                its founder. If you received this link directly, you&apos;re in the
+                right place.
+                <br />
+                <br />
+                © 2026 Jury App Inc. All rights reserved.
+              </p>
+            </footer>
           </div>
         </div>
 
