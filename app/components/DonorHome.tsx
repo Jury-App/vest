@@ -63,8 +63,8 @@ export default function DonorHome({
       style={{ height: "100dvh" }}
     >
       <p
-        className="text-white/50 text-lg tracking-widest mb-2"
-        style={{ fontVariant: "small-caps" }}
+        className="text-white/50 text-lg tracking-widest"
+        style={{ fontVariant: "small-caps", marginBottom: "32px" }}
       >
         your pending stake:
       </p>
