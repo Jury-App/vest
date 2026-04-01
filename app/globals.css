@@ -75,14 +75,13 @@ html, body {
 
 .flashlight-reveal {
   position: relative;
-  display: grid;
-  place-items: center;
+  display: inline-block;
   isolation: isolate;
 }
 
 .flashlight-reveal__base,
 .flashlight-reveal__secret {
-  grid-area: 1 / 1;
+  display: block;
 }
 
 .flashlight-reveal__base {
@@ -93,18 +92,34 @@ html, body {
 }
 
 .flashlight-reveal__secret {
+  position: absolute;
+  inset: 0;
   color: #ff0000;
   text-shadow: 0 0 18px rgba(255, 0, 0, 0.22);
   pointer-events: none;
   opacity: 0;
   transition: opacity 180ms ease;
+  -webkit-mask-image: radial-gradient(
+    circle var(--flashlight-size, 132px) at var(--flashlight-x, 50%)
+      var(--flashlight-y, 50%),
+    rgba(0, 0, 0, 1) 0,
+    rgba(0, 0, 0, 1) 45%,
+    transparent 72%
+  );
+  mask-image: radial-gradient(
+    circle var(--flashlight-size, 132px) at var(--flashlight-x, 50%)
+      var(--flashlight-y, 50%),
+    rgba(0, 0, 0, 1) 0,
+    rgba(0, 0, 0, 1) 45%,
+    transparent 72%
+  );
 }
 
-.flashlight-reveal:hover .flashlight-reveal__secret {
+.flashlight-reveal[data-active="true"] .flashlight-reveal__secret {
   opacity: 1;
 }
 
-.flashlight-reveal:hover .flashlight-reveal__base {
+.flashlight-reveal[data-active="true"] .flashlight-reveal__base {
   -webkit-mask-image: radial-gradient(
     circle var(--flashlight-size, 132px) at var(--flashlight-x, 50%)
       var(--flashlight-y, 50%),

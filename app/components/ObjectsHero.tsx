@@ -856,6 +856,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 <h2
                   ref={secondHeadingRef}
                   className="flashlight-reveal mx-auto max-w-[12ch] text-white"
+                  data-active={flashlightPosition.active ? "true" : "false"}
                   style={
                     {
                       fontSize: isMobile
@@ -879,7 +880,8 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                     aria-hidden="true"
                     className="flashlight-reveal__secret"
                   >
-                    Fuck you, Pay me
+                    <span className="block">Fuck you,</span>
+                    <span className="block">Pay me</span>
                   </span>
                 </h2>
               </div>
