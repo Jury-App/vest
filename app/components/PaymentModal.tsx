@@ -187,7 +187,7 @@ function CheckoutForm({
         {processing ? "Processing..." : `Invest $${amount.toLocaleString()} in Jury`}
       </button>
       <p className="text-center text-xs text-white/45" style={{ marginTop: "16px" }}>
-        Check your email for a magic link once processed!
+        Check your email for next steps once processed!
       </p>
     </form>
   );

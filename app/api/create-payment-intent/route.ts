@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { createInvestment, upsertDonor } from "@/lib/investor-ops";
 import { findOrCreateCustomer, stripe } from "@/lib/stripe";
 
 export async function POST(req: Request) {
@@ -50,11 +51,25 @@ export async function POST(req: Request) {
       },
     });
 
+    const donor = await upsertDonor({
+      email: normalizedEmail,
+      fullLegalName: normalizedName,
+      stripeCustomerId: customer.id,
+    });
+
+    const investment = await createInvestment({
+      donorId: donor.id,
+      stripePaymentIntentId: paymentIntent.id,
+      investorReference,
+      amount,
+    });
+
     return NextResponse.json({
       clientSecret: paymentIntent.client_secret,
       customerId: customer.id,
       paymentIntentId: paymentIntent.id,
       investorReference,
+      investmentId: investment.id,
     });
   } catch (err) {
     const message = err instanceof Error ? err.message : "Internal server error";

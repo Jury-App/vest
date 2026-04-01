@@ -1,4 +1,5 @@
 import Stripe from "stripe";
+import { syncPaymentIntent } from "@/lib/investor-ops";
 import { stripe } from "@/lib/stripe";
 
 export async function POST(req: Request) {
@@ -22,6 +23,7 @@ export async function POST(req: Request) {
       case "payment_intent.succeeded":
       case "payment_intent.payment_failed": {
         const paymentIntent = event.data.object as Stripe.PaymentIntent;
+        await syncPaymentIntent(paymentIntent);
         console.log("[stripe-webhook]", {
           eventType: event.type,
           paymentIntentId: paymentIntent.id,
