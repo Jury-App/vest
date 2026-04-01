@@ -390,6 +390,10 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
   const [progress, setProgress] = useState(0);
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const [canHoverDesktopObjects, setCanHoverDesktopObjects] = useState(false);
+  const [hoveredDesktopObject, setHoveredDesktopObject] = useState<ObjectKey | null>(
+    null
+  );
   const [logoDuration, setLogoDuration] = useState(FALLBACK_LOGO_DURATION);
   const [firstSignatureProgress, setFirstSignatureProgress] = useState(0);
   const [secondHeadingHeight, setSecondHeadingHeight] = useState(0);
@@ -408,6 +412,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
 
   useEffect(() => {
     const media = window.matchMedia("(max-width: 767px)");
+    const hoverMedia = window.matchMedia("(hover: hover) and (pointer: fine)");
 
     const handleViewportChange = () => {
       setViewport({
@@ -415,17 +420,26 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
         height: window.innerHeight,
       });
       setIsMobile(media.matches);
+      setCanHoverDesktopObjects(hoverMedia.matches);
     };
 
     handleViewportChange();
     media.addEventListener("change", handleViewportChange);
+    hoverMedia.addEventListener("change", handleViewportChange);
     window.addEventListener("resize", handleViewportChange);
 
     return () => {
       media.removeEventListener("change", handleViewportChange);
+      hoverMedia.removeEventListener("change", handleViewportChange);
       window.removeEventListener("resize", handleViewportChange);
     };
   }, []);
+
+  useEffect(() => {
+    if (isMobile || !canHoverDesktopObjects) {
+      setHoveredDesktopObject(null);
+    }
+  }, [canHoverDesktopObjects, isMobile]);
 
   useEffect(() => {
     const updateProgress = (delta: number) => {
@@ -736,16 +750,35 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
             >
               {DESKTOP_OBJECTS.map((object) => {
                 const pose = getDesktopPose(object, sceneProgress);
-                const transforms = [`rotate(${pose.rotate}deg)`];
+                const isHovered =
+                  canHoverDesktopObjects && hoveredDesktopObject === object.key;
+                const transforms = [
+                  isHovered ? "translateY(-10px)" : "translateY(0px)",
+                  `rotate(${pose.rotate}deg)`,
+                ];
 
                 if (object.flipY) {
                   transforms.push("scaleY(-1)");
                 }
 
+                transforms.push(isHovered ? "scale(1.018)" : "scale(1)");
+
                 return (
                   <div
                     key={object.key}
-                    className="absolute pointer-events-none select-none"
+                    className="absolute select-none"
+                    onPointerEnter={() => {
+                      if (canHoverDesktopObjects) {
+                        setHoveredDesktopObject(object.key);
+                      }
+                    }}
+                    onPointerLeave={() => {
+                      if (canHoverDesktopObjects) {
+                        setHoveredDesktopObject((current) =>
+                          current === object.key ? null : current
+                        );
+                      }
+                    }}
                     style={{
                       left: pose.left,
                       top: pose.top,
@@ -758,7 +791,12 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                       backgroundPosition: "center",
                       backgroundRepeat: "no-repeat",
                       backgroundSize: object.backgroundSize,
-                      filter: "drop-shadow(0 18px 40px rgba(0, 0, 0, 0.16))",
+                      filter: isHovered
+                        ? "brightness(1.03) saturate(1.04) drop-shadow(0 24px 54px rgba(0, 0, 0, 0.22))"
+                        : "drop-shadow(0 18px 40px rgba(0, 0, 0, 0.16))",
+                      pointerEvents: canHoverDesktopObjects ? "auto" : "none",
+                      transition:
+                        "transform 220ms ease, filter 220ms ease, opacity 220ms ease",
                     }}
                   />
                 );
