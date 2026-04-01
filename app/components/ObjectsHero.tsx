@@ -32,6 +32,8 @@ const FIRST_TEXT_ENTRY_START = 0.88;
 const FIRST_TEXT_ENTRY_END = 0.98;
 const FIRST_TEXT_SCROLL_START = 0.98;
 const FIRST_TEXT_SCROLL_END = 1.16;
+const MOBILE_SIGNATURE_START = 0.96;
+const MOBILE_SIGNATURE_END = 1.1;
 const SECOND_HEADING_FADE_IN_START = 1.28;
 const SECOND_HEADING_FADE_IN_END = 1.36;
 
@@ -587,6 +589,17 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
     (isMobile ? FAQ_INITIAL_OFFSET_MOBILE : FAQ_INITIAL_OFFSET_DESKTOP);
 
   useEffect(() => {
+    if (isMobile) {
+      const nextProgress = clamp(
+        (progress - MOBILE_SIGNATURE_START) /
+          (MOBILE_SIGNATURE_END - MOBILE_SIGNATURE_START),
+        0,
+        1
+      );
+      setFirstSignatureProgress(nextProgress);
+      return;
+    }
+
     const bodyCopy = firstBodyCopyRef.current;
     if (!bodyCopy || viewport.height === 0) return;
 
@@ -597,7 +610,13 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
       : DESKTOP_SIGNATURE_DRAW_RANGE;
     const nextProgress = clamp((triggerY - rect.bottom) / drawRange, 0, 1);
     setFirstSignatureProgress(nextProgress);
-  }, [firstSequence.textEntryProgress, firstSequence.textTranslateY, isMobile, viewport.height]);
+  }, [
+    firstSequence.textEntryProgress,
+    firstSequence.textTranslateY,
+    isMobile,
+    progress,
+    viewport.height,
+  ]);
 
   useEffect(() => {
     const heading = secondHeadingRef.current;
@@ -849,13 +868,14 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
 
         <div
           ref={finalStageScrollRef}
-          className="absolute inset-0 z-40 overflow-y-auto"
+          className="absolute inset-0 z-40 flex justify-center overflow-y-auto"
           style={{
             pointerEvents: faqEntryProgress > 0.98 ? "auto" : "none",
+            scrollbarGutter: "stable both-edges",
           }}
         >
           <div
-            className="relative left-1/2 w-full max-w-[704px] -translate-x-1/2 px-4"
+            className="relative w-full max-w-[704px] px-0 md:px-4"
             style={{
               minHeight: "100dvh",
               paddingTop: `${Math.max(viewport.height / 2 - secondHeadingHeight / 2, 0)}px`,
@@ -930,8 +950,11 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
             </div>
 
             <footer
-              className="mx-auto w-full max-w-[672px] px-4 text-center text-[10px] leading-4 tracking-[0.01em] text-white/30 sm:text-[11px]"
+              className="mx-auto max-w-[672px] px-[16px] text-center text-[10px] leading-4 tracking-[0.01em] text-white/30 sm:text-[11px]"
               style={{
+                width: isMobile ? "calc(100% - 32px)" : "100%",
+                marginLeft: "auto",
+                marginRight: "auto",
                 marginTop: "40px",
                 opacity: faqEntryProgress,
                 transform: `translateY(${faqTranslateY}px)`,

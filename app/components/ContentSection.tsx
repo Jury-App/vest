@@ -3,6 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import Reveal from "./Reveal";
 
+const SAFE_GUIDE_URL =
+  "https://bookface-static.ycombinator.com/assets/ycdc/Website%20User%20Guide%20Feb%202023%20-%20final-28acf9a3b938e643cc270b7da514194d5c271359be25b631b025605673fa9f95.pdf";
+
 export default function ContentSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const [copyOffset, setCopyOffset] = useState(0);
@@ -182,8 +185,17 @@ export default function ContentSection() {
               unexpected ongoing legal/security costs, sudden changes with aging
               dependents, and recently a small car accident. So - it&apos;s now or
               never for me and Jury. This is it. I&apos;m raising a $1.44M seed on
-              post-money SAFE at a $12M valuation which is an intentional probably
-              50% discount. I have no idea how the investment world works and
+              post-money{" "}
+              <a
+                className="underline underline-offset-2"
+                href={SAFE_GUIDE_URL}
+                rel="noreferrer"
+                target="_blank"
+              >
+                SAFE
+              </a>{" "}
+              at a $12M valuation which is an intentional probably 50%
+              discount. I have no idea how the investment world works and
               truthfully it&apos;s not my priority, so I&apos;m open to feedback.
               I&apos;ve intentionally limited investor outreach to select and elite
               partners. This is not spray &amp; pray. This is not accelerator
@@ -207,15 +219,6 @@ export default function ContentSection() {
           </div>
         </Reveal>
 
-        <Reveal className="mt-16 flex w-full justify-center md:mt-20 lg:mt-24" delayMs={120}>
-          <div className="h-[92px] w-[210px] overflow-hidden md:h-[161px] md:w-[367px]">
-            <img
-              alt="Signature"
-              className="mx-auto h-full w-full object-contain"
-              src="/assets/whitesig.png"
-            />
-          </div>
-        </Reveal>
       </div>
     </section>
   );

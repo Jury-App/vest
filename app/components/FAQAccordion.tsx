@@ -7,6 +7,9 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { ReactNode, useEffect, useState } from "react";
 
+const SAFE_GUIDE_URL =
+  "https://bookface-static.ycombinator.com/assets/ycdc/Website%20User%20Guide%20Feb%202023%20-%20final-28acf9a3b938e643cc270b7da514194d5c271359be25b631b025605673fa9f95.pdf";
+
 type FAQAccordionProps = {
   onInvest: () => void;
 };
@@ -162,7 +165,7 @@ export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
       question: "What are the terms?",
       answer: (
         <div className="space-y-4">
-          <p>You're investing in Jury App Inc., a Delaware C Corp. Your investment will consolidate into one SPV managed by a singular lead and structured as a SAFE. The minimum investment is $2,500 and the maximum individual investment is $999,999. Currently, we are offering a $12M valuation cap post-money. Future fundraising may dilute your ownership. Expect a fraction of a percentage, which is standard. You will have no voting rights or control over company decisions.</p>
+          <p>You're investing in Jury App Inc., a Delaware C Corp. Your investment will consolidate into one SPV managed by a singular lead and structured as a <a className="underline underline-offset-2" href={SAFE_GUIDE_URL} rel="noreferrer" target="_blank">SAFE</a>. The minimum investment is $2,500 and the maximum individual investment is $999,999. Currently, we are offering a $12M valuation cap post-money. Future fundraising may dilute your ownership. Expect a fraction of a percentage, which is standard. You will have no voting rights or control over company decisions.</p>
         </div>
       ),
     },

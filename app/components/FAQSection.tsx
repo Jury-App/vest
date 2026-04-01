@@ -3,6 +3,9 @@
 import { ReactNode, useState } from "react";
 import Reveal from "./Reveal";
 
+const SAFE_GUIDE_URL =
+  "https://bookface-static.ycombinator.com/assets/ycdc/Website%20User%20Guide%20Feb%202023%20-%20final-28acf9a3b938e643cc270b7da514194d5c271359be25b631b025605673fa9f95.pdf";
+
 interface FAQItemProps {
   question: string;
   answer: ReactNode;
@@ -90,10 +93,19 @@ export function FAQSection({ onInvest }: FAQSectionProps) {
             You&apos;re investing in Jury App Inc., a Delaware C Corp. Your
             investment will consolidate into one SPV (Special Purpose Vehicle)
             so it appears as one line item in our cap table managed by a
-            singular lead and structured as a SAFE (Simple Agreement for Future
-            Equity), which is the standard vehicle and instrument used by most
-            early-stage startups. A SAFE converts into equity at a priced round
-            when institutional investors join.
+            singular lead and structured as a{" "}
+            <a
+              className="underline underline-offset-2"
+              href={SAFE_GUIDE_URL}
+              rel="noreferrer"
+              target="_blank"
+            >
+              SAFE
+            </a>{" "}
+            (Simple Agreement for Future Equity), which is the standard
+            vehicle and instrument used by most early-stage startups. A SAFE
+            converts into equity at a priced round when institutional
+            investors join.
           </p>
           <p>
             The minimum investment is $2,500 and the maximum individual
