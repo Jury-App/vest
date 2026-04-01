@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties, PointerEvent } from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import FAQAccordion from "./FAQAccordion";
 import SignatureDraw from "./SignatureDraw";
@@ -390,6 +391,11 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
   const [logoDuration, setLogoDuration] = useState(FALLBACK_LOGO_DURATION);
   const [firstSignatureProgress, setFirstSignatureProgress] = useState(0);
   const [secondHeadingHeight, setSecondHeadingHeight] = useState(0);
+  const [flashlightPosition, setFlashlightPosition] = useState({
+    x: 50,
+    y: 50,
+    active: false,
+  });
   const progressRef = useRef(0);
   const touchYRef = useRef<number | null>(null);
   const logoVideoRef = useRef<HTMLVideoElement>(null);
@@ -616,6 +622,17 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
     }
   }, [progress]);
 
+  const handleSecretRevealMove = (event: PointerEvent<HTMLDivElement>) => {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    if (bounds.width === 0 || bounds.height === 0) return;
+
+    setFlashlightPosition({
+      x: ((event.clientX - bounds.left) / bounds.width) * 100,
+      y: ((event.clientY - bounds.top) / bounds.height) * 100,
+      active: true,
+    });
+  };
+
   return (
     <section
       className="fixed inset-0 z-20 overflow-hidden"
@@ -828,22 +845,44 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 transform: `translateY(${secondHeadingTranslateY}px)`,
               }}
             >
-              <h2
-                ref={secondHeadingRef}
-                className="mx-auto max-w-[12ch] text-white"
-                style={{
-                  fontSize: isMobile
-                    ? "clamp(2.1rem, 10vw, 3.25rem)"
-                    : "clamp(3.2rem, 6vw, 5.75rem)",
-                  lineHeight: 0.96,
-                  letterSpacing: "-0.045em",
-                  fontWeight: 500,
-                  textAlign: "center",
-                  textWrap: "balance",
-                }}
+              <div
+                className="pointer-events-auto"
+                onPointerEnter={handleSecretRevealMove}
+                onPointerMove={handleSecretRevealMove}
+                onPointerLeave={() =>
+                  setFlashlightPosition((current) => ({ ...current, active: false }))
+                }
               >
-                Thank you for your service
-              </h2>
+                <h2
+                  ref={secondHeadingRef}
+                  className="flashlight-reveal mx-auto max-w-[12ch] text-white"
+                  style={
+                    {
+                      fontSize: isMobile
+                        ? "clamp(2.1rem, 10vw, 3.25rem)"
+                        : "clamp(3.2rem, 6vw, 5.75rem)",
+                      lineHeight: 0.96,
+                      letterSpacing: "-0.045em",
+                      fontWeight: 500,
+                      textAlign: "center",
+                      textWrap: "balance",
+                      ["--flashlight-x" as string]: `${flashlightPosition.x}%`,
+                      ["--flashlight-y" as string]: `${flashlightPosition.y}%`,
+                      ["--flashlight-size" as string]: isMobile ? "72px" : "132px",
+                    } as CSSProperties
+                  }
+                >
+                  <span className="flashlight-reveal__base">
+                    Thank you for your service
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="flashlight-reveal__secret"
+                  >
+                    Fuck you, Pay me
+                  </span>
+                </h2>
+              </div>
             </div>
 
             <div

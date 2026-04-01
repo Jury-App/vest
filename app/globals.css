@@ -72,3 +72,51 @@ html, body {
   border-radius: 12px;
   padding: 16px;
 }
+
+.flashlight-reveal {
+  position: relative;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+
+.flashlight-reveal__base,
+.flashlight-reveal__secret {
+  grid-area: 1 / 1;
+}
+
+.flashlight-reveal__base {
+  color: rgba(255, 255, 255, 0.96);
+  transition: opacity 180ms ease;
+  position: relative;
+  z-index: 1;
+}
+
+.flashlight-reveal__secret {
+  color: #ff0000;
+  text-shadow: 0 0 18px rgba(255, 0, 0, 0.22);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.flashlight-reveal:hover .flashlight-reveal__secret {
+  opacity: 1;
+}
+
+.flashlight-reveal:hover .flashlight-reveal__base {
+  -webkit-mask-image: radial-gradient(
+    circle var(--flashlight-size, 132px) at var(--flashlight-x, 50%)
+      var(--flashlight-y, 50%),
+    transparent 0,
+    transparent 45%,
+    rgba(0, 0, 0, 1) 72%
+  );
+  mask-image: radial-gradient(
+    circle var(--flashlight-size, 132px) at var(--flashlight-x, 50%)
+      var(--flashlight-y, 50%),
+    transparent 0,
+    transparent 45%,
+    rgba(0, 0, 0, 1) 72%
+  );
+}
