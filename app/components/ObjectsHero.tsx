@@ -879,7 +879,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
             style={{
               minHeight: "100dvh",
               paddingTop: `${Math.max(viewport.height / 2 - secondHeadingHeight / 2, 0)}px`,
-              paddingBottom: "56px",
+              paddingBottom: "80px",
             }}
           >
             <div
@@ -984,6 +984,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 © 2026 Jury App Inc. All rights reserved.
               </p>
             </footer>
+            <div aria-hidden="true" style={{ height: "24px" }} />
           </div>
         </div>
 
