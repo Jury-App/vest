@@ -398,6 +398,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
   });
   const progressRef = useRef(0);
   const touchYRef = useRef<number | null>(null);
+  const mobilePeekTimeoutRef = useRef<number | null>(null);
   const logoVideoRef = useRef<HTMLVideoElement>(null);
   const firstBodyCopyRef = useRef<HTMLDivElement>(null);
   const secondHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -622,6 +623,14 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
     }
   }, [progress]);
 
+  useEffect(() => {
+    return () => {
+      if (mobilePeekTimeoutRef.current != null) {
+        window.clearTimeout(mobilePeekTimeoutRef.current);
+      }
+    };
+  }, []);
+
   const handleSecretRevealMove = (event: PointerEvent<HTMLDivElement>) => {
     const bounds = event.currentTarget.getBoundingClientRect();
     if (bounds.width === 0 || bounds.height === 0) return;
@@ -631,6 +640,21 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
       y: ((event.clientY - bounds.top) / bounds.height) * 100,
       active: true,
     });
+  };
+
+  const handleSecretRevealPointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (!isMobile) return;
+
+    handleSecretRevealMove(event);
+
+    if (mobilePeekTimeoutRef.current != null) {
+      window.clearTimeout(mobilePeekTimeoutRef.current);
+    }
+
+    mobilePeekTimeoutRef.current = window.setTimeout(() => {
+      setFlashlightPosition((current) => ({ ...current, active: false }));
+      mobilePeekTimeoutRef.current = null;
+    }, 300);
   };
 
   return (
@@ -847,10 +871,17 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
             >
               <div
                 className="pointer-events-auto"
-                onPointerEnter={handleSecretRevealMove}
-                onPointerMove={handleSecretRevealMove}
-                onPointerLeave={() =>
-                  setFlashlightPosition((current) => ({ ...current, active: false }))
+                onPointerDown={handleSecretRevealPointerDown}
+                onPointerEnter={isMobile ? undefined : handleSecretRevealMove}
+                onPointerMove={isMobile ? undefined : handleSecretRevealMove}
+                onPointerLeave={
+                  isMobile
+                    ? undefined
+                    : () =>
+                        setFlashlightPosition((current) => ({
+                          ...current,
+                          active: false,
+                        }))
                 }
               >
                 <h2
