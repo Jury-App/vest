@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef, FormEvent } from "react";
+import { useState, useCallback, FormEvent } from "react";
 import {
   Elements,
   PaymentElement,
@@ -48,41 +48,16 @@ function CheckoutForm({
   amount,
   clientSecret,
   onSuccess,
-  onClose,
 }: {
   amount: number;
   clientSecret: string;
   onSuccess: (amount: number) => void;
-  onClose: () => void;
 }) {
   const stripe = useStripe();
   const elements = useElements();
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [formComplete, setFormComplete] = useState(false);
-  const checkoutTurbRef = useRef<SVGFETurbulenceElement>(null);
-  const checkoutAnimRef = useRef<number>(0);
-  const checkoutSeedRef = useRef(0);
-
-  useEffect(() => {
-    if (!formComplete) return;
-    let lastTime = 0;
-    const animate = (time: number) => {
-      if (checkoutTurbRef.current) {
-        const delta = time - lastTime;
-        if (delta > 200) {
-          checkoutSeedRef.current += 1;
-          checkoutTurbRef.current.setAttribute("seed", String(checkoutSeedRef.current));
-          const freq = 0.015 + Math.sin(time * 0.00025) * 0.005;
-          checkoutTurbRef.current.setAttribute("baseFrequency", `${freq} ${freq * 0.8}`);
-          lastTime = time;
-        }
-      }
-      checkoutAnimRef.current = requestAnimationFrame(animate);
-    };
-    checkoutAnimRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(checkoutAnimRef.current);
-  }, [formComplete]);
 
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
@@ -120,29 +95,7 @@ function CheckoutForm({
   );
 
   return (
-    <>
-    <svg style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }}>
-        <defs>
-          <filter id="checkout-cta-lava" x="-20%" y="-20%" width="140%" height="140%">
-            <feTurbulence
-              ref={checkoutTurbRef}
-              type="fractalNoise"
-              baseFrequency="0.015 0.012"
-              numOctaves="3"
-              seed="0"
-              result="turbulence"
-            />
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="turbulence"
-              scale="8"
-              xChannelSelector="R"
-              yChannelSelector="G"
-            />
-          </filter>
-        </defs>
-      </svg>
-      <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <PaymentElement onChange={(e) => setFormComplete(e.complete)} />
       {error && (
         <p className="text-red-400 text-sm text-center">{error}</p>
@@ -154,7 +107,7 @@ function CheckoutForm({
           transition-all duration-200 hover:bg-gray-100 active:scale-[0.98] cursor-pointer"
         style={{
           width: "100%",
-          height: formComplete ? "96px" : "48px",
+          height: "48px",
           padding: 0,
           margin: 0,
           marginTop: "24px",
@@ -164,14 +117,11 @@ function CheckoutForm({
           color: "black",
           fontSize: "18px",
           fontWeight: 600,
-          transition: "height 0.3s ease",
-          filter: formComplete ? "url(#checkout-cta-lava)" : "none",
         }}
       >
         {processing ? "Processing..." : `Invest $${amount.toLocaleString()}`}
       </button>
     </form>
-    </>
   );
 }
 
@@ -192,37 +142,12 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
   const [displayAmount, setDisplayAmount] = useState<string>("");
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const turbulenceRef = useRef<SVGFETurbulenceElement>(null);
-  const animFrameRef = useRef<number>(0);
-  const seedRef = useRef(0);
   const inputRef = useCallback((node: HTMLInputElement | null) => {
     if (node) node.focus();
   }, []);
 
   const rawAmount = parseRawNumber(displayAmount);
   const numAmount = parseFloat(rawAmount);
-  const isActive = !!(numAmount && numAmount >= 2500);
-
-  // Lava lamp animation for Continue button — only runs when active
-  useEffect(() => {
-    if (!isActive) return;
-    let lastTime = 0;
-    const animate = (time: number) => {
-      if (turbulenceRef.current) {
-        const delta = time - lastTime;
-        if (delta > 200) {
-          seedRef.current += 1;
-          turbulenceRef.current.setAttribute("seed", String(seedRef.current));
-          const freq = 0.015 + Math.sin(time * 0.00025) * 0.005;
-          turbulenceRef.current.setAttribute("baseFrequency", `${freq} ${freq * 0.8}`);
-          lastTime = time;
-        }
-      }
-      animFrameRef.current = requestAnimationFrame(animate);
-    };
-    animFrameRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animFrameRef.current);
-  }, [isActive]);
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value.replace(/[^0-9.]/g, "");
@@ -264,29 +189,6 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
     >
       {/* Backdrop — tap to dismiss */}
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm cursor-pointer" onClick={onClose} />
-
-      {/* SVG filter for Continue button lava lamp effect */}
-      <svg className="absolute" style={{ width: 0, height: 0 }}>
-        <defs>
-          <filter id="cta-lava" x="-20%" y="-20%" width="140%" height="140%">
-            <feTurbulence
-              ref={turbulenceRef}
-              type="fractalNoise"
-              baseFrequency="0.015 0.012"
-              numOctaves="3"
-              seed="0"
-              result="turbulence"
-            />
-            <feDisplacementMap
-              in="SourceGraphic"
-              in2="turbulence"
-              scale="8"
-              xChannelSelector="R"
-              yChannelSelector="G"
-            />
-          </filter>
-        </defs>
-      </svg>
 
       {/* Modal sheet */}
       <div
@@ -332,10 +234,8 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
                   disabled:opacity-30 disabled:cursor-not-allowed
                   transition-all duration-200 hover:bg-gray-100 active:scale-[0.98] cursor-pointer"
                 style={{
-                  height: isActive ? "96px" : "48px",
+                  height: "48px",
                   borderRadius: "48px",
-                  filter: isActive ? "url(#cta-lava)" : "none",
-                  transition: "height 0.3s ease",
                 }}
               >
                 {loading ? "Loading..." : "Continue"}
@@ -355,7 +255,6 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
                 amount={numAmount}
                 clientSecret={clientSecret}
                 onSuccess={onSuccess}
-                onClose={onClose}
               />
             </Elements>
           )}
