@@ -201,6 +201,7 @@ function CheckoutForm({
 }
 
 export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) {
+  const [step, setStep] = useState<"amount" | "identity" | "payment">("amount");
   const [displayAmount, setDisplayAmount] = useState<string>("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -217,7 +218,7 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
   const trimmedName = name.trim();
   const trimmedEmail = email.trim().toLowerCase();
   const amountValid = !!numAmount && numAmount >= 2500 && numAmount <= 999999;
-  const formValid = amountValid && !!trimmedName && isValidEmail(trimmedEmail);
+  const identityValid = !!trimmedName && isValidEmail(trimmedEmail);
 
   const handleAmountChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value.replace(/[^0-9.]/g, "");
@@ -228,8 +229,14 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
     setDisplayAmount(formatWithCommas(sanitized));
   }, []);
 
+  const handleAmountSubmit = useCallback(() => {
+    if (!amountValid) return;
+    setError(null);
+    setStep("identity");
+  }, [amountValid]);
+
   const handleIdentitySubmit = useCallback(async () => {
-    if (!formValid) return;
+    if (!amountValid || !identityValid) return;
 
     setLoading(true);
     setError(null);
@@ -254,6 +261,7 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
       if (data.clientSecret && data.paymentIntentId) {
         setClientSecret(data.clientSecret);
         setPaymentIntentId(data.paymentIntentId);
+        setStep("payment");
       } else {
         setError("Stripe did not return a payment session.");
       }
@@ -262,7 +270,7 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
     } finally {
       setLoading(false);
     }
-  }, [formValid, numAmount, trimmedEmail, trimmedName]);
+  }, [amountValid, identityValid, numAmount, trimmedEmail, trimmedName]);
 
   return (
     <div
@@ -282,60 +290,73 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
         }}
       >
         <div style={{ padding: "24px" }}>
-          {!clientSecret || !paymentIntentId ? (
+          {step !== "payment" || !clientSecret || !paymentIntentId ? (
             <div>
               <h2 className="text-center text-white/60 text-lg">
-                Confirm your investment details
+                {step === "amount"
+                  ? "How much would you like to invest?"
+                  : "Where should we send the paperwork?"}
               </h2>
 
-              <div className="flex justify-center" style={{ paddingTop: "28px", paddingBottom: "24px" }}>
-                <div className="flex items-baseline">
-                  <span className={`text-5xl font-bold leading-none ${displayAmount ? "text-white" : "text-white/20"}`}>$</span>
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    inputMode="decimal"
-                    value={displayAmount}
-                    onChange={handleAmountChange}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") handleIdentitySubmit();
-                    }}
-                    className="bg-transparent border-0 outline-none text-5xl font-bold text-white
-                      placeholder-white/20 leading-none p-0 m-0 text-center"
-                    style={{ width: `${Math.max(1, displayAmount.length) * 0.6 + 0.5}em` }}
-                  />
+              {step === "amount" ? (
+                <div className="flex justify-center" style={{ paddingTop: "28px", paddingBottom: "24px" }}>
+                  <div className="flex items-baseline">
+                    <span className={`text-5xl font-bold leading-none ${displayAmount ? "text-white" : "text-white/20"}`}>$</span>
+                    <input
+                      ref={inputRef}
+                      type="text"
+                      inputMode="decimal"
+                      value={displayAmount}
+                      onChange={handleAmountChange}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") handleAmountSubmit();
+                      }}
+                      className="bg-transparent border-0 outline-none text-5xl font-bold text-white
+                        placeholder-white/20 leading-none p-0 m-0 text-center"
+                      style={{ width: `${Math.max(1, displayAmount.length) * 0.6 + 0.5}em` }}
+                    />
+                  </div>
                 </div>
-              </div>
+              ) : (
+                <div className="space-y-3" style={{ paddingTop: "28px" }}>
+                  <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/60">
+                    Investment amount: <span className="text-white">${numAmount.toLocaleString()}</span>
+                  </div>
+                  <label className="block">
+                    <span className="mb-2 block text-sm text-white/60">Legal name</span>
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && identityValid) handleIdentitySubmit();
+                      }}
+                      className="w-full rounded-2xl border border-white/10 bg-white/6 px-4 py-3 text-white outline-none transition focus:border-white/25"
+                      placeholder="Jane Investor"
+                    />
+                  </label>
 
-              <div className="space-y-3">
-                <label className="block">
-                  <span className="mb-2 block text-sm text-white/60">Legal name</span>
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full rounded-2xl border border-white/10 bg-white/6 px-4 py-3 text-white outline-none transition focus:border-white/25"
-                    placeholder="Jane Investor"
-                  />
-                </label>
-
-                <label className="block">
-                  <span className="mb-2 block text-sm text-white/60">Email for paperwork</span>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full rounded-2xl border border-white/10 bg-white/6 px-4 py-3 text-white outline-none transition focus:border-white/25"
-                    placeholder="jane@example.com"
-                  />
-                </label>
-              </div>
+                  <label className="block">
+                    <span className="mb-2 block text-sm text-white/60">Email for paperwork</span>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && identityValid) handleIdentitySubmit();
+                      }}
+                      className="w-full rounded-2xl border border-white/10 bg-white/6 px-4 py-3 text-white outline-none transition focus:border-white/25"
+                      placeholder="jane@example.com"
+                    />
+                  </label>
+                </div>
+              )}
 
               {error && <p className="mt-4 text-center text-sm text-red-400">{error}</p>}
 
               <button
-                onClick={handleIdentitySubmit}
-                disabled={!formValid || loading}
+                onClick={step === "amount" ? handleAmountSubmit : handleIdentitySubmit}
+                disabled={step === "amount" ? !amountValid : !identityValid || loading}
                 className="mt-6 w-full bg-white text-black font-semibold text-lg
                   disabled:opacity-30 disabled:cursor-not-allowed
                   transition-all duration-200 hover:bg-gray-100 active:scale-[0.98] cursor-pointer"
@@ -344,11 +365,13 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
                   borderRadius: "48px",
                 }}
               >
-                {loading ? "Loading..." : "Continue to payment"}
+                {loading ? "Loading..." : "Continue"}
               </button>
 
               <p className="mt-3 text-center text-xs text-white/45">
-                We use your name and email to identify your investment and send SAFE paperwork.
+                {step === "amount"
+                  ? "Minimum investment is $2,500 and the maximum is $999,999."
+                  : "We use your name and email to identify your investment and send SAFE paperwork."}
               </p>
             </div>
           ) : (
