@@ -74,17 +74,9 @@ export default function DonorHome({
       >
         ${formatted}
       </p>
-      <div className="mt-6 max-w-md space-y-3 text-sm text-white/60">
-        <p>
-          Check {investment.email} for paperwork.
-        </p>
-        <p>
-          Your investment is only confirmed after ops and paperwork are completed and approved.
-        </p>
-        <p>
-          If that process is not completed successfully, your money will be refunded.
-        </p>
-      </div>
+      <p className="max-w-md text-sm text-white/60" style={{ marginTop: "42px" }}>
+        Your investment is only confirmed after ops and paperwork are completed and approved. Check {investment.email} for next steps! If this process is not completed successfully, your money will be refunded. We have a right to refuse service.
+      </p>
     </div>
   );
 }
