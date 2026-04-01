@@ -1,6 +1,48 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import FAQAccordion from "./FAQAccordion";
+import SignatureDraw from "./SignatureDraw";
+
+const OBJECTS_EXIT_PROGRESS = 0.145;
+const CLIP_START_PROGRESS = 0.08;
+const LOGO_FADE_DURATION = 1 - OBJECTS_EXIT_PROGRESS;
+const FALLBACK_LOGO_DURATION = 4;
+const OBJECTS_FADE_START = 0.055;
+const MAX_HERO_PROGRESS = 1.46;
+const TEXT_BLOCK_GAP = 24;
+const MOBILE_TEXT_LIFT = 760;
+const DESKTOP_TEXT_LIFT = 980;
+const MOBILE_SIGNATURE_DRAW_RANGE = 140;
+const DESKTOP_SIGNATURE_DRAW_RANGE = 180;
+const CONTENT_BLACKOUT_START = 1.16;
+const CONTENT_BLACKOUT_END = 1.28;
+const FAQ_ENTRY_START = 1.3;
+const FAQ_ENTRY_END = 1.46;
+const FAQ_GAP = 56;
+const FAQ_INITIAL_OFFSET_MOBILE = 360;
+const FAQ_INITIAL_OFFSET_DESKTOP = 420;
+const TEXT_INITIAL_OFFSET_MOBILE = 280;
+const TEXT_INITIAL_OFFSET_DESKTOP = 340;
+
+const FIRST_HEADING_START = 0.78;
+const FIRST_HEADING_END = 0.9;
+const FIRST_TEXT_ENTRY_START = 0.88;
+const FIRST_TEXT_ENTRY_END = 0.98;
+const FIRST_TEXT_SCROLL_START = 0.98;
+const FIRST_TEXT_SCROLL_END = 1.16;
+const SECOND_HEADING_FADE_IN_START = 1.28;
+const SECOND_HEADING_FADE_IN_END = 1.36;
+
+
+const COMMUNITY_FUND_COPY = [
+  "Social media became a content business and culture outgrew dating apps. Public and legal opinion of today's connection tools are at historic lows. The Jury has like, literally, spoken.",
+  "Now imagine everyone on Match, Bumble, Grindr and Her invited 3 of their closest friends to join. Imagine everyone frustrated with social media and big tech had a healthy and fun alternative they could trust. Imagine your wallflower friends had something to do on their phone other than lurk. Imagine a social network without ads.",
+  "That's Jury. Your friends build your profile and swipe for you. The outcome of this Social Intelligence gets people outside with our signed event partners. If you're dating, meet your match in person. No in-app chat. If it's awkward IRL, that's fine. You're still outside having a good time with friends.",
+  "We validated a 2.5x organic viral coefficient out the gate with $0 paid acquisition. After a year of designing with local partners and another bigger investment in quality UX, brand, and motion design, we've proven immediate velocity on iOS.",
+  "My goal was to reach 3 years bootstrapped, but I've encountered unexpected ongoing legal and security costs, sudden changes with aging dependents, and recently a small car accident. So it's now or never for me and Jury. This is it.",
+  "I've intentionally limited investor outreach to select and elite partners. This is not spray and pray. This is not accelerator material. This is outside system, kinda-punk, for-the-culture entrepreneurship. The floor is iconic and the ceiling doesn't exist.",
+];
 
 type ObjectKey =
   | "Status"
@@ -300,12 +342,60 @@ function getDesktopPose(config: DesktopObjectConfig, progress: number) {
   );
 }
 
-export default function ObjectsHero() {
+function getSequenceState(
+  progress: number,
+  isMobile: boolean,
+  headingStart: number,
+  headingEnd: number,
+  textEntryStart: number,
+  textEntryEnd: number,
+  textScrollStart: number,
+  textScrollEnd: number
+) {
+  const headingOpacity = clamp(
+    (progress - headingStart) / (headingEnd - headingStart),
+    0,
+    1
+  );
+  const textEntryProgress = clamp(
+    (progress - textEntryStart) / (textEntryEnd - textEntryStart),
+    0,
+    1
+  );
+  const textScrollProgress = clamp(
+    (progress - textScrollStart) / (textScrollEnd - textScrollStart),
+    0,
+    1
+  );
+  const textLift =
+    (isMobile ? MOBILE_TEXT_LIFT : DESKTOP_TEXT_LIFT) * textScrollProgress;
+  const headingTranslateY = -textLift;
+  const textTranslateY =
+    (1 - textEntryProgress) *
+      (isMobile ? TEXT_INITIAL_OFFSET_MOBILE : TEXT_INITIAL_OFFSET_DESKTOP) -
+    textLift;
+
+  return {
+    headingOpacity,
+    headingTranslateY,
+    textEntryProgress,
+    textTranslateY,
+  };
+}
+
+export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
   const [progress, setProgress] = useState(0);
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const [logoDuration, setLogoDuration] = useState(FALLBACK_LOGO_DURATION);
+  const [firstSignatureProgress, setFirstSignatureProgress] = useState(0);
+  const [secondHeadingHeight, setSecondHeadingHeight] = useState(0);
   const progressRef = useRef(0);
   const touchYRef = useRef<number | null>(null);
+  const logoVideoRef = useRef<HTMLVideoElement>(null);
+  const firstBodyCopyRef = useRef<HTMLDivElement>(null);
+  const secondHeadingRef = useRef<HTMLHeadingElement>(null);
+  const finalStageScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const media = window.matchMedia("(max-width: 767px)");
@@ -330,17 +420,19 @@ export default function ObjectsHero() {
 
   useEffect(() => {
     const updateProgress = (delta: number) => {
-      const next = clamp(progressRef.current + delta, 0, 1);
+      const next = clamp(progressRef.current + delta, 0, MAX_HERO_PROGRESS);
       progressRef.current = next;
       setProgress(next);
     };
 
     const atTop = () => window.scrollY <= 0;
+    const finalStageAtTop = () =>
+      (finalStageScrollRef.current?.scrollTop ?? 0) <= 0;
     const shouldReverseHero = (deltaY: number) =>
-      progressRef.current > 0 && atTop() && deltaY < 0;
+      progressRef.current > 0 && atTop() && finalStageAtTop() && deltaY < 0;
 
     const handleWheel = (event: WheelEvent) => {
-      if (progressRef.current < 1 || shouldReverseHero(event.deltaY)) {
+      if (progressRef.current < MAX_HERO_PROGRESS || shouldReverseHero(event.deltaY)) {
         event.preventDefault();
         updateProgress(event.deltaY / 2200);
       }
@@ -356,7 +448,8 @@ export default function ObjectsHero() {
 
       const delta = touchYRef.current - currentY;
       const shouldControlHero =
-        progressRef.current < 1 || (progressRef.current > 0 && atTop() && delta < 0);
+        progressRef.current < MAX_HERO_PROGRESS ||
+        (progressRef.current > 0 && atTop() && finalStageAtTop() && delta < 0);
 
       if (!shouldControlHero) {
         touchYRef.current = currentY;
@@ -386,7 +479,7 @@ export default function ObjectsHero() {
   }, []);
 
   useEffect(() => {
-    const shouldLock = progress < 1;
+    const shouldLock = progress < MAX_HERO_PROGRESS;
     document.documentElement.style.overflow = shouldLock ? "hidden" : "";
     document.body.style.overflow = shouldLock ? "hidden" : "";
     document.body.style.overscrollBehavior = shouldLock ? "none" : "";
@@ -398,12 +491,54 @@ export default function ObjectsHero() {
     };
   }, [progress]);
 
+  useEffect(() => {
+    const video = logoVideoRef.current;
+    if (!video) return;
+    if (video.readyState === 0) return;
+    const targetFadeProgress = clamp(
+      (progress - CLIP_START_PROGRESS) / (1 - CLIP_START_PROGRESS),
+      0,
+      1
+    );
+    const targetTime = targetFadeProgress * logoDuration;
+
+    if (Math.abs(video.currentTime - targetTime) > 0.033) {
+      video.currentTime = targetTime;
+    }
+  }, [logoDuration, progress]);
+
   const mobileObjects = useMemo(() => MOBILE_OBJECTS, []);
-  const sceneProgress = clamp(progress / 0.72, 0, 1);
-  const objectOpacity = 1 - clamp((progress - 0.52) / 0.22, 0, 1);
-  const whiteOpacity = 1 - clamp((progress - 0.56) / 0.2, 0, 1);
-  const darkOverlayOpacity = clamp((progress - 0.5) / 0.24, 0, 1);
-  const heroOpacity = 1 - clamp((progress - 0.92) / 0.08, 0, 1);
+  const sceneProgress = clamp(progress / OBJECTS_EXIT_PROGRESS, 0, 1);
+  const fadeProgress = clamp(
+    (progress - CLIP_START_PROGRESS) / (1 - CLIP_START_PROGRESS),
+    0,
+    1
+  );
+  const objectOpacity =
+    1 -
+    clamp(
+      (progress - OBJECTS_FADE_START) /
+        (OBJECTS_EXIT_PROGRESS - OBJECTS_FADE_START),
+      0,
+      1
+    );
+  const whiteOpacity = 1 - clamp(fadeProgress / 0.4, 0, 1);
+  const darkOverlayOpacity = clamp(fadeProgress / 0.4, 0, 1);
+  const heroOpacity = 1;
+  const logoOpacity =
+    clamp(fadeProgress / 0.08, 0, 1) *
+    (1 - clamp((fadeProgress - 0.72) / 0.14, 0, 1));
+  const logoGlowStrength = clamp(fadeProgress * 1.6, 0, 1);
+  const firstSequence = getSequenceState(
+    progress,
+    isMobile,
+    FIRST_HEADING_START,
+    FIRST_HEADING_END,
+    FIRST_TEXT_ENTRY_START,
+    FIRST_TEXT_ENTRY_END,
+    FIRST_TEXT_SCROLL_START,
+    FIRST_TEXT_SCROLL_END
+  );
   const desktopScale =
     viewport.width && viewport.height
       ? Math.min(
@@ -411,6 +546,75 @@ export default function ObjectsHero() {
           viewport.height / DESKTOP_SCENE_HEIGHT
         )
       : 1;
+  const faqEntryProgress = clamp(
+    (progress - FAQ_ENTRY_START) / (FAQ_ENTRY_END - FAQ_ENTRY_START),
+    0,
+    1
+  );
+  const contentBlackoutProgress = clamp(
+    (progress - CONTENT_BLACKOUT_START) /
+      (CONTENT_BLACKOUT_END - CONTENT_BLACKOUT_START),
+    0,
+    1
+  );
+  const contentOpacity = 1 - contentBlackoutProgress;
+  const secondHeadingOpacity =
+    clamp(
+      (progress - SECOND_HEADING_FADE_IN_START) /
+        (SECOND_HEADING_FADE_IN_END - SECOND_HEADING_FADE_IN_START),
+      0,
+      1
+    );
+  const secondHeadingTranslateY =
+    (1 -
+      clamp(
+        (progress - SECOND_HEADING_FADE_IN_START) /
+          (SECOND_HEADING_FADE_IN_END - SECOND_HEADING_FADE_IN_START),
+        0,
+        1
+      )) *
+    28;
+  const bodyStackTranslateY = firstSequence.textTranslateY;
+  const faqTranslateY =
+    (1 - faqEntryProgress) *
+    (isMobile ? FAQ_INITIAL_OFFSET_MOBILE : FAQ_INITIAL_OFFSET_DESKTOP);
+
+  useEffect(() => {
+    const bodyCopy = firstBodyCopyRef.current;
+    if (!bodyCopy || viewport.height === 0) return;
+
+    const rect = bodyCopy.getBoundingClientRect();
+    const triggerY = viewport.height * 0.5;
+    const drawRange = isMobile
+      ? MOBILE_SIGNATURE_DRAW_RANGE
+      : DESKTOP_SIGNATURE_DRAW_RANGE;
+    const nextProgress = clamp((triggerY - rect.bottom) / drawRange, 0, 1);
+    setFirstSignatureProgress(nextProgress);
+  }, [firstSequence.textEntryProgress, firstSequence.textTranslateY, isMobile, viewport.height]);
+
+  useEffect(() => {
+    const heading = secondHeadingRef.current;
+    if (!heading) return;
+
+    const updateHeight = () => {
+      setSecondHeadingHeight(heading.getBoundingClientRect().height);
+    };
+
+    updateHeight();
+
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(heading);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [isMobile, viewport.width]);
+
+  useEffect(() => {
+    if (progress < FAQ_ENTRY_END && finalStageScrollRef.current) {
+      finalStageScrollRef.current.scrollTop = 0;
+    }
+  }, [progress]);
 
   return (
     <section
@@ -422,16 +626,20 @@ export default function ObjectsHero() {
     >
       <div className="absolute inset-0 overflow-hidden bg-[#232323]">
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 z-0"
           style={{ background: "#f2e6c9", opacity: whiteOpacity }}
         />
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 z-0"
           style={{ background: "#232323", opacity: darkOverlayOpacity }}
+        />
+        <div
+          className="absolute inset-0 z-10"
+          style={{ background: "#000", opacity: contentBlackoutProgress }}
         />
 
         <div
-          className="absolute inset-0 overflow-hidden"
+          className="absolute inset-0 z-10 overflow-hidden"
           style={{ opacity: objectOpacity }}
         >
           {isMobile ? (
@@ -497,6 +705,156 @@ export default function ObjectsHero() {
               })}
             </div>
           )}
+        </div>
+
+        <div
+          className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
+          style={{ opacity: logoOpacity }}
+        >
+          <video
+            ref={logoVideoRef}
+            className="h-auto w-full max-w-[min(82vw,1200px)]"
+            src="/assets/logo-clips/gothic-wordmark-alpha.mov"
+            muted
+            playsInline
+            preload="auto"
+            aria-hidden="true"
+            style={{
+              filter:
+                `brightness(${1 + logoGlowStrength * 0.42}) contrast(${1 +
+                  logoGlowStrength * 0.18}) saturate(${1 +
+                  logoGlowStrength * 0.32}) drop-shadow(0 0 ${26 +
+                  logoGlowStrength * 54}px rgba(255, 250, 235, ${0.38 +
+                  logoGlowStrength * 0.38})) drop-shadow(0 0 ${64 +
+                  logoGlowStrength * 76}px rgba(255, 244, 214, ${0.24 +
+                  logoGlowStrength * 0.3})) drop-shadow(0 0 ${120 +
+                  logoGlowStrength * 110}px rgba(255, 214, 140, ${0.1 +
+                  logoGlowStrength * 0.22}))`,
+            }}
+            onLoadedMetadata={(event) => {
+              const duration = event.currentTarget.duration;
+              if (Number.isFinite(duration) && duration > 0) {
+                setLogoDuration(duration);
+              }
+            }}
+          />
+        </div>
+
+        <div
+          className="absolute inset-0 z-30 flex items-center justify-center px-4 text-center pointer-events-none"
+          style={{
+            opacity: firstSequence.headingOpacity * contentOpacity,
+            transform: `translateY(${firstSequence.headingTranslateY}px)`,
+          }}
+        >
+          <h1
+            className="max-w-[12ch] text-white"
+            style={{
+              fontSize: isMobile ? "clamp(2rem, 9vw, 3rem)" : "clamp(3rem, 5.4vw, 5.5rem)",
+              lineHeight: 0.95,
+              letterSpacing: "-0.04em",
+              fontWeight: 500,
+              textWrap: "balance",
+            }}
+          >
+            <span className="block">
+              You are <em>exclusively</em> invited to our
+            </span>
+            <span className="block">Community Fund</span>
+          </h1>
+        </div>
+
+        <div
+          className="absolute left-1/2 z-30 w-full max-w-[672px] px-4 pointer-events-none"
+          style={{
+            top: isMobile ? "calc(50% + 92px)" : "calc(50% + 126px)",
+            opacity: firstSequence.textEntryProgress * contentOpacity,
+            transform: `translate(-50%, ${bodyStackTranslateY}px)`,
+          }}
+        >
+          <div
+            className="mx-auto text-left text-white/80"
+            style={{
+              marginTop: `${TEXT_BLOCK_GAP}px`,
+              fontSize: isMobile ? "15px" : "17px",
+              lineHeight: isMobile ? 1.82 : 1.9,
+              letterSpacing: "-0.015em",
+            }}
+          >
+            <div ref={firstBodyCopyRef}>
+              {COMMUNITY_FUND_COPY.map((paragraph) => (
+                <p
+                  key={paragraph}
+                  style={{ marginTop: paragraph === COMMUNITY_FUND_COPY[0] ? 0 : 24 }}
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+
+            <div
+              className="flex justify-end"
+              style={{ marginTop: 0 }}
+            >
+              <SignatureDraw
+                className="h-auto w-[105px] md:w-[184px]"
+                progress={firstSignatureProgress}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div
+          ref={finalStageScrollRef}
+          className="absolute inset-0 z-40 overflow-y-auto"
+          style={{
+            pointerEvents: faqEntryProgress > 0.98 ? "auto" : "none",
+          }}
+        >
+          <div
+            className="relative left-1/2 w-full max-w-[704px] -translate-x-1/2 px-4"
+            style={{
+              minHeight: "100dvh",
+              paddingTop: `${Math.max(viewport.height / 2 - secondHeadingHeight / 2, 0)}px`,
+              paddingBottom: "56px",
+            }}
+          >
+            <div
+              className="flex justify-center text-center"
+              style={{
+                opacity: secondHeadingOpacity,
+                transform: `translateY(${secondHeadingTranslateY}px)`,
+              }}
+            >
+              <h2
+                ref={secondHeadingRef}
+                className="mx-auto max-w-[12ch] text-white"
+                style={{
+                  fontSize: isMobile
+                    ? "clamp(2.1rem, 10vw, 3.25rem)"
+                    : "clamp(3.2rem, 6vw, 5.75rem)",
+                  lineHeight: 0.96,
+                  letterSpacing: "-0.045em",
+                  fontWeight: 500,
+                  textAlign: "center",
+                  textWrap: "balance",
+                }}
+              >
+                Thank you for your service
+              </h2>
+            </div>
+
+            <div
+              className="mx-auto w-full max-w-[672px]"
+              style={{
+                marginTop: "42px",
+                opacity: faqEntryProgress,
+                transform: `translateY(${faqTranslateY}px)`,
+              }}
+            >
+              <FAQAccordion onInvest={onInvest} />
+            </div>
+          </div>
         </div>
 
       </div>

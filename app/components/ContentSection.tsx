@@ -5,7 +5,7 @@ import Reveal from "./Reveal";
 
 export default function ContentSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [parallaxOffset, setParallaxOffset] = useState(0);
+  const [copyOffset, setCopyOffset] = useState(0);
 
   useEffect(() => {
     let frame = 0;
@@ -17,11 +17,14 @@ export default function ContentSection() {
 
       const rect = section.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
-      const total = rect.height + viewportHeight;
+      const revealWindow = viewportHeight * 0.9;
       const traveled = viewportHeight - rect.top;
-      const progress = Math.min(1, Math.max(0, traveled / total));
+      const progress = Math.min(1, Math.max(0, traveled / revealWindow));
+      const isMobile = window.innerWidth < 768;
+      const startOffset = isMobile ? 120 : 168;
+      const easedProgress = 1 - Math.pow(1 - progress, 3);
 
-      setParallaxOffset(progress * -32);
+      setCopyOffset((1 - easedProgress) * startOffset);
     };
 
     const requestUpdate = () => {
@@ -47,33 +50,38 @@ export default function ContentSection() {
       ref={sectionRef}
       className="relative w-full bg-[#232323] px-5 py-24 sm:px-8 md:px-10 md:py-32 lg:py-36"
     >
-      <div className="mx-auto max-w-[1120px]">
-        <Reveal className="mb-12 md:mb-16 lg:mb-20">
-          <h1
-            className="text-center text-white"
+      <div className="mx-auto flex w-full max-w-[1120px] flex-col items-center">
+        <Reveal
+          className="mx-auto max-w-[900px] px-4 text-center text-white sm:px-6 md:px-10"
+          delayMs={40}
+        >
+          <h2
             style={{
               fontFamily: 'Georgia, "Times New Roman", serif',
-              fontSize: "clamp(3.2rem, 8vw, 7.6rem)",
+              fontSize:
+                "clamp(2.2rem, 6vw, 5.4rem)",
               lineHeight: 0.92,
               letterSpacing: "-0.045em",
             }}
           >
             Welcome to our
             <br />
-            Community Fund
-          </h1>
+            <span>Community Fund</span>
+          </h2>
         </Reveal>
 
         <Reveal
-          className="mx-auto mt-8 max-w-[820px] px-2 text-left text-[15px] leading-[1.85] text-white/78 sm:px-6 md:mt-8 md:px-10 md:text-[17px] md:leading-[1.92] lg:px-14"
+          className="mx-auto w-full max-w-[640px] text-left text-[15px] leading-[1.85] text-white/78 sm:px-6 md:text-[17px] md:leading-[1.92]"
           delayMs={60}
-          
         >
           <div
             style={{
-              transform: `translateY(${parallaxOffset}px)`,
+              transform: `translateY(${copyOffset}px)`,
               transition: "transform 120ms linear",
               willChange: "transform",
+              marginTop: "42px",
+              paddingLeft: "16px",
+              paddingRight: "16px",
             }}
           >
             <p>

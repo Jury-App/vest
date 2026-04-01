@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import ContentSection from "./components/ContentSection";
-import { FAQSection } from "./components/FAQSection";
 import PaymentModal from "./components/PaymentModal";
 import DonorHome from "./components/DonorHome";
 import ObjectsHero from "./components/ObjectsHero";
@@ -50,11 +48,7 @@ export default function Home() {
   // New user state
   return (
     <div className="bg-black">
-      <ObjectsHero />
-      <main className="relative z-0">
-        <ContentSection />
-        <FAQSection onInvest={handleInvest} />
-      </main>
+      <ObjectsHero onInvest={handleInvest} />
       {showPayment && (
         <PaymentModal
           onSuccess={handlePaymentSuccess}
