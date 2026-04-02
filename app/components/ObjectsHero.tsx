@@ -32,8 +32,8 @@ const FIRST_TEXT_ENTRY_START = 0.88;
 const FIRST_TEXT_ENTRY_END = 0.98;
 const FIRST_TEXT_SCROLL_START = 0.98;
 const FIRST_TEXT_SCROLL_END = 1.16;
-const MOBILE_SIGNATURE_START = 0.96;
-const MOBILE_SIGNATURE_END = 1.1;
+const MOBILE_SIGNATURE_START = 0.99;
+const MOBILE_SIGNATURE_END = 1.13;
 const SECOND_HEADING_FADE_IN_START = 1.28;
 const SECOND_HEADING_FADE_IN_END = 1.36;
 
@@ -951,11 +951,12 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                       fontSize: isMobile
                         ? "clamp(2.1rem, 10vw, 3.25rem)"
                         : "clamp(3.2rem, 6vw, 5.75rem)",
-                      lineHeight: 0.96,
+                      lineHeight: 1,
                       letterSpacing: "-0.045em",
                       fontWeight: 500,
                       textAlign: "center",
                       textWrap: "balance",
+                      paddingBottom: "0.08em",
                       ["--flashlight-x" as string]: `${flashlightPosition.x}%`,
                       ["--flashlight-y" as string]: `${flashlightPosition.y}%`,
                       ["--flashlight-size" as string]: isMobile ? "72px" : "132px",
