@@ -313,7 +313,7 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
               ) : (
                 <div style={{ paddingTop: "28px" }}>
                   <label className="block">
-                    <span className="mb-2 block text-sm text-white/60">Full Legal Name</span>
+                    <span className="block text-sm text-white/60" style={{ marginBottom: "8px" }}>Full Legal Name</span>
                     <input
                       type="text"
                       value={name}
@@ -328,7 +328,7 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
                   </label>
 
                   <label className="block" style={{ marginTop: "24px" }}>
-                    <span className="mb-2 block text-sm text-white/60">Email</span>
+                    <span className="block text-sm text-white/60" style={{ marginBottom: "8px" }}>Email</span>
                     <input
                       type="email"
                       value={email}
