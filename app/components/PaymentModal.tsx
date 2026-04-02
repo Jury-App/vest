@@ -89,6 +89,20 @@ function CheckoutForm({
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [formComplete, setFormComplete] = useState(false);
+  const paymentElementOptions = {
+    defaultValues: {
+      billingDetails: {
+        email,
+        name,
+      },
+    },
+    fields: {
+      billingDetails: {
+        email: "never" as const,
+        name: "never" as const,
+      },
+    },
+  };
 
   const handleSubmit = useCallback(
     async (e: FormEvent) => {
@@ -163,7 +177,10 @@ function CheckoutForm({
 
   return (
     <form onSubmit={handleSubmit}>
-      <PaymentElement onChange={(e) => setFormComplete(e.complete)} />
+      <PaymentElement
+        options={paymentElementOptions}
+        onChange={(e) => setFormComplete(e.complete)}
+      />
       {error && <p className="text-red-400 text-sm text-center mt-3">{error}</p>}
       <button
         type="submit"
