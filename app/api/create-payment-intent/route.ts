@@ -44,6 +44,7 @@ export async function POST(req: Request) {
       automatic_payment_methods: { enabled: true },
       description: `Jury Community Fund investment from ${normalizedName}`,
       metadata: {
+        product_key: "communityfund",
         product_id: "prod_UFGjE6oupxaLBX",
         investor_email: normalizedEmail,
         investor_name: normalizedName,
