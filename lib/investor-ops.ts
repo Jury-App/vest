@@ -10,7 +10,6 @@ import {
   sendInvestmentApprovedEmail,
   sendNewMagicLinkEmail,
   sendPaymentFailedEmail,
-  sendPaymentPendingEmail,
   sendPaymentReceivedEmail,
 } from "@/lib/email";
 import { absoluteUrl } from "@/lib/site";
@@ -179,19 +178,6 @@ export async function syncPaymentIntent(paymentIntent: Stripe.PaymentIntent) {
     .single<InvestmentRow>();
 
   if (upsertError) throw new Error(upsertError.message);
-
-  if (paymentStatus === "processing" && !investment.pending_email_sent_at) {
-    await sendPaymentPendingEmail({
-      email: donor.email,
-      name: donor.full_legal_name,
-      amountCents: investment.amount,
-    });
-
-    await admin
-      .from("investments")
-      .update({ pending_email_sent_at: new Date().toISOString() })
-      .eq("id", investment.id);
-  }
 
   if (paymentStatus === "payment_failed" && !investment.failed_email_sent_at) {
     await sendPaymentFailedEmail({

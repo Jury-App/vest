@@ -53,23 +53,13 @@ async function sendEmail({
   });
 }
 
-export async function sendPaymentPendingEmail({ email, name, amountCents }: EmailParams) {
-  const amount = formatAmount(amountCents);
-  await sendEmail({
-    to: email,
-    subject: "Your Jury investment is pending",
-    text: `Hi ${name}, your ${amount ?? "investment"} is pending while Stripe finishes processing it. We'll email you again with next steps once it clears.`,
-    html: `<p>Hi ${name},</p><p>Your ${amount ?? "investment"} is pending while Stripe finishes processing it.</p><p>We&apos;ll email you again with next steps once it clears.</p>`,
-  });
-}
-
 export async function sendPaymentFailedEmail({ email, name, amountCents }: EmailParams) {
   const amount = formatAmount(amountCents);
   await sendEmail({
     to: email,
     subject: "Your Jury payment did not go through",
     text: `Hi ${name}, your ${amount ?? "investment"} did not complete successfully. You can return to Jury and try again, or reply to this email if you need help.`,
-    html: `<p>Hi ${name},</p><p>Your ${amount ?? "investment"} did not complete successfully.</p><p>You can return to Jury and try again, or reply to this email if you need help.</p>`,
+    html: `<p>Hi ${name}, your ${amount ?? "investment"} did not complete successfully. You can return to Jury and try again, or reply to this email if you need help.</p>`,
   });
 }
 
@@ -78,8 +68,8 @@ export async function sendPaymentReceivedEmail({ email, name, amountCents }: Ema
   await sendEmail({
     to: email,
     subject: "We received your Jury investment",
-    text: `Hi ${name}, we received your ${amount ?? "investment"}. Next up is ops and paperwork review. Watch this inbox for the next steps.`,
-    html: `<p>Hi ${name},</p><p>We received your ${amount ?? "investment"}.</p><p>Next up is ops and paperwork review. Watch this inbox for the next steps.</p>`,
+    text: `Hi ${name}, we received your ${amount ?? "investment"}. Next up is ops and paperwork review. Watch this inbox for the next steps!`,
+    html: `<p>Hi ${name}, we received your ${amount ?? "investment"}. Next up is ops and paperwork review. Watch this inbox for the next steps!</p>`,
   });
 }
 
@@ -94,9 +84,9 @@ export async function sendInvestmentApprovedEmail({
 
   await sendEmail({
     to: email,
-    subject: "Your Jury investment is approved",
-    text: `Hi ${name}, your investment has been approved. Use this magic link to access your donor view: ${magicLink}`,
-    html: `<p>Hi ${name},</p><p>Your investment has been approved.</p><p><a href="${magicLink}">Use this magic link to access your donor view</a>.</p>`,
+    subject: "Your Jury investment is approved!",
+    text: `Hi ${name}, your investment has been approved. Use this magic link to access your donor view: ${magicLink}. Thanks for backing Jury!!!`,
+    html: `<p>Hi ${name}, your investment has been approved.<a href="${magicLink}">Use this magic link to access your donor view</a>. Thanks for backing Jury!!!</p>`,
   });
 }
 
@@ -111,9 +101,9 @@ export async function sendNewMagicLinkEmail({
 
   await sendEmail({
     to: email,
-    subject: "Your new Jury magic link",
-    text: `Hi ${name}, here is your new magic link: ${magicLink}`,
-    html: `<p>Hi ${name},</p><p><a href="${magicLink}">Here is your new magic link</a>.</p>`,
+    subject: "Your personal magic link!",
+    text: `Hi ${name}, to track your investment, here is your new magic link: ${magicLink}`,
+    html: `<p>Hi ${name}, <a href="${magicLink}">to track your investment, here is your new magic link</a>.</p>`,
   });
 }
 
