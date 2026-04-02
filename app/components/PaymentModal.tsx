@@ -219,9 +219,12 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
   const [paymentIntentId, setPaymentIntentId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const inputRef = useCallback((node: HTMLInputElement | null) => {
+  const amountInputRef = useCallback((node: HTMLInputElement | null) => {
     if (node) node.focus();
   }, []);
+  const identityNameInputRef = useCallback((node: HTMLInputElement | null) => {
+    if (node && step === "identity") node.focus();
+  }, [step]);
 
   const rawAmount = parseRawNumber(displayAmount);
   const numAmount = parseFloat(rawAmount);
@@ -313,7 +316,7 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
                   <div className="flex items-baseline">
                     <span className={`text-5xl font-bold leading-none ${displayAmount ? "text-white" : "text-white/20"}`}>$</span>
                     <input
-                      ref={inputRef}
+                      ref={amountInputRef}
                       type="text"
                       inputMode="decimal"
                       value={displayAmount}
@@ -332,6 +335,7 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
                   <label className="block">
                     <span className="block text-sm text-white/60" style={{ marginBottom: "8px" }}>Full Legal Name</span>
                     <input
+                      ref={identityNameInputRef}
                       type="text"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
@@ -339,7 +343,7 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
                         if (e.key === "Enter" && identityValid) handleIdentitySubmit();
                       }}
                       className="w-full rounded-2xl border border-white/10 bg-white/6 py-3 text-white outline-none transition focus:border-white/25"
-                      style={{ height: "45px", paddingLeft: "8px", paddingRight: "8px" }}
+                      style={{ height: "45px", paddingLeft: "16px", paddingRight: "8px" }}
                       placeholder="Jane Investor"
                     />
                   </label>
@@ -354,7 +358,7 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
                         if (e.key === "Enter" && identityValid) handleIdentitySubmit();
                       }}
                       className="w-full rounded-2xl border border-white/10 bg-white/6 py-3 text-white outline-none transition focus:border-white/25"
-                      style={{ height: "45px", paddingLeft: "8px", paddingRight: "8px" }}
+                      style={{ height: "45px", paddingLeft: "16px", paddingRight: "8px" }}
                       placeholder="jane@example.com"
                     />
                   </label>
