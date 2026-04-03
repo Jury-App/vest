@@ -1012,7 +1012,10 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 systemic problem that can be summarized in one chart.
               </p>
               <p style={{ marginTop: 24 }}>
-                <img src="/images/chart.png" alt="Chart" className="h-auto w-full" />
+                <img src="/images/prodwages.png" alt="Productivity has grown 2.7x as much as pay" className="h-auto w-full" />
+              </p>
+              <p className="mt-[16px] px-[16px] text-center text-[10px] leading-4 tracking-[0.01em] text-white/30 sm:text-[11px]">
+                Productivity has grown 2.7x as much as pay
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1116,11 +1119,10 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
 
               <p style={{ marginTop: 24 }}>
                 There&apos;s a legendary era just around the corner. At minimum,
-                good hangs with friends, maybe a cheeky cig, and a crush here
-                and/or there 🙃
+                good hangs with friends, maybe a cheeky cig, and if we're good, a crush or two or... 🙃
               </p>
 
-              <p style={{ marginTop: 24 }}>Meet me outside?</p>
+              <p style={{ marginTop: 24 }}>Meet me there?</p>
             </div>
 
             <div
