@@ -17,8 +17,6 @@ const BASE_MAX_HERO_PROGRESS = 1.46;
 const TEXT_BLOCK_GAP = 24;
 const MOBILE_TEXT_LIFT = 760;
 const DESKTOP_TEXT_LIFT = 980;
-const MOBILE_SIGNATURE_DRAW_RANGE = 140;
-const DESKTOP_SIGNATURE_DRAW_RANGE = 180;
 const BASE_CONTENT_BLACKOUT_START = 1.16;
 const BASE_CONTENT_BLACKOUT_END = 1.28;
 const BASE_FAQ_ENTRY_START = 1.3;
@@ -475,17 +473,27 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
     FIRST_TEXT_SCROLL_START +
     baseTextScrollSpan * (textLiftDistance / baseTextLift);
   const timelineShift = extendedTextScrollEnd - BASE_FIRST_TEXT_SCROLL_END;
-  const contentBlackoutStart = BASE_CONTENT_BLACKOUT_START + timelineShift;
-  const contentBlackoutEnd = BASE_CONTENT_BLACKOUT_END + timelineShift;
-  const faqEntryStart = BASE_FAQ_ENTRY_START + timelineShift;
-  const faqEntryEnd = BASE_FAQ_ENTRY_END + timelineShift;
-  const secondHeadingFadeInStart =
-    BASE_SECOND_HEADING_FADE_IN_START + timelineShift;
-  const secondHeadingFadeInEnd =
-    BASE_SECOND_HEADING_FADE_IN_END + timelineShift;
   const mobileSignatureStart = BASE_MOBILE_SIGNATURE_START + timelineShift;
   const mobileSignatureEnd = BASE_MOBILE_SIGNATURE_END + timelineShift;
-  const maxHeroProgress = BASE_MAX_HERO_PROGRESS + timelineShift;
+  const signatureTimelineOffset = isMobile ? 0 : 0.16;
+  const signatureStart = mobileSignatureStart + signatureTimelineOffset;
+  const signatureEnd = mobileSignatureEnd + signatureTimelineOffset;
+  const contentBlackoutStart = Math.max(
+    BASE_CONTENT_BLACKOUT_START + timelineShift,
+    signatureEnd + 0.02
+  );
+  const contentBlackoutEnd =
+    contentBlackoutStart +
+    (BASE_CONTENT_BLACKOUT_END - BASE_CONTENT_BLACKOUT_START);
+  const downstreamTimelineShift =
+    contentBlackoutEnd - (BASE_CONTENT_BLACKOUT_END + timelineShift);
+  const faqEntryStart = BASE_FAQ_ENTRY_START + timelineShift + downstreamTimelineShift;
+  const faqEntryEnd = BASE_FAQ_ENTRY_END + timelineShift + downstreamTimelineShift;
+  const secondHeadingFadeInStart =
+    BASE_SECOND_HEADING_FADE_IN_START + timelineShift + downstreamTimelineShift;
+  const secondHeadingFadeInEnd =
+    BASE_SECOND_HEADING_FADE_IN_END + timelineShift + downstreamTimelineShift;
+  const maxHeroProgress = BASE_MAX_HERO_PROGRESS + timelineShift + downstreamTimelineShift;
 
   useEffect(() => {
     const updateProgress = (delta: number) => {
@@ -650,33 +658,16 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
     (isMobile ? FAQ_INITIAL_OFFSET_MOBILE : FAQ_INITIAL_OFFSET_DESKTOP);
 
   useEffect(() => {
-    if (isMobile) {
-      const nextProgress = clamp(
-        (progress - mobileSignatureStart) /
-          (mobileSignatureEnd - mobileSignatureStart),
-        0,
-        1
-      );
-      setFirstSignatureProgress(nextProgress);
-      return;
-    }
-
-    const bodyCopy = firstBodyCopyRef.current;
-    if (!bodyCopy || viewport.height === 0) return;
-
-    const rect = bodyCopy.getBoundingClientRect();
-    const triggerY = viewport.height * 0.5;
-    const drawRange = isMobile
-      ? MOBILE_SIGNATURE_DRAW_RANGE
-      : DESKTOP_SIGNATURE_DRAW_RANGE;
-    const nextProgress = clamp((triggerY - rect.bottom) / drawRange, 0, 1);
+    const nextProgress = clamp(
+      (progress - signatureStart) / (signatureEnd - signatureStart),
+      0,
+      1
+    );
     setFirstSignatureProgress(nextProgress);
   }, [
-    firstSequence.textEntryProgress,
-    firstSequence.textTranslateY,
-    isMobile,
     progress,
-    viewport.height,
+    signatureEnd,
+    signatureStart,
   ]);
 
   useEffect(() => {
@@ -1129,10 +1120,12 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               className="flex justify-end"
               style={{ marginTop: 0 }}
             >
-              <SignatureDraw
-                className="h-auto w-[105px] md:w-[184px]"
-                progress={firstSignatureProgress}
-              />
+              <div className="w-[105px] overflow-visible md:w-[184px] md:overflow-hidden">
+                <SignatureDraw
+                  className="h-auto w-[105px] md:w-[252px] md:translate-x-[44px]"
+                  progress={firstSignatureProgress}
+                />
+              </div>
             </div>
           </div>
         </div>
