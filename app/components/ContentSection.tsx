@@ -181,7 +181,7 @@ export default function ContentSection() {
 
             <p>Meet me outside?</p>
 
-            <p>There's a beautiful era just around the corner. At minimum, at least a cheeky cig, good hangs with friends, and a crush here or there :) </p>
+            <p>There's a legendary era just around the corner. At minimum, good hangs with friends, maybe a cheeky cig, and a crush here and/or there 🙃 </p>
           </div>
         </Reveal>
 
