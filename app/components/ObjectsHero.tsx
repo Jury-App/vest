@@ -13,16 +13,16 @@ const CLIP_START_PROGRESS = 0.08;
 const LOGO_FADE_DURATION = 1 - OBJECTS_EXIT_PROGRESS;
 const FALLBACK_LOGO_DURATION = 4;
 const OBJECTS_FADE_START = 0.055;
-const MAX_HERO_PROGRESS = 1.46;
+const BASE_MAX_HERO_PROGRESS = 1.46;
 const TEXT_BLOCK_GAP = 24;
 const MOBILE_TEXT_LIFT = 760;
 const DESKTOP_TEXT_LIFT = 980;
 const MOBILE_SIGNATURE_DRAW_RANGE = 140;
 const DESKTOP_SIGNATURE_DRAW_RANGE = 180;
-const CONTENT_BLACKOUT_START = 1.16;
-const CONTENT_BLACKOUT_END = 1.28;
-const FAQ_ENTRY_START = 1.3;
-const FAQ_ENTRY_END = 1.46;
+const BASE_CONTENT_BLACKOUT_START = 1.16;
+const BASE_CONTENT_BLACKOUT_END = 1.28;
+const BASE_FAQ_ENTRY_START = 1.3;
+const BASE_FAQ_ENTRY_END = 1.46;
 const FAQ_GAP = 56;
 const FAQ_INITIAL_OFFSET_MOBILE = 360;
 const FAQ_INITIAL_OFFSET_DESKTOP = 420;
@@ -34,11 +34,11 @@ const FIRST_HEADING_END = 0.9;
 const FIRST_TEXT_ENTRY_START = 0.88;
 const FIRST_TEXT_ENTRY_END = 0.98;
 const FIRST_TEXT_SCROLL_START = 0.98;
-const FIRST_TEXT_SCROLL_END = 1.16;
-const MOBILE_SIGNATURE_START = 0.99;
-const MOBILE_SIGNATURE_END = 1.13;
-const SECOND_HEADING_FADE_IN_START = 1.28;
-const SECOND_HEADING_FADE_IN_END = 1.36;
+const BASE_FIRST_TEXT_SCROLL_END = 1.16;
+const BASE_MOBILE_SIGNATURE_START = 0.99;
+const BASE_MOBILE_SIGNATURE_END = 1.13;
+const BASE_SECOND_HEADING_FADE_IN_START = 1.28;
+const BASE_SECOND_HEADING_FADE_IN_END = 1.36;
 
 
 type ObjectKey =
@@ -347,7 +347,8 @@ function getSequenceState(
   textEntryStart: number,
   textEntryEnd: number,
   textScrollStart: number,
-  textScrollEnd: number
+  textScrollEnd: number,
+  textLiftDistance: number
 ) {
   const headingOpacity = clamp(
     (progress - headingStart) / (headingEnd - headingStart),
@@ -364,8 +365,7 @@ function getSequenceState(
     0,
     1
   );
-  const textLift =
-    (isMobile ? MOBILE_TEXT_LIFT : DESKTOP_TEXT_LIFT) * textScrollProgress;
+  const textLift = textLiftDistance * textScrollProgress;
   const headingTranslateY = -textLift;
   const textTranslateY =
     (1 - textEntryProgress) *
@@ -401,8 +401,12 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
   const mobilePeekTimeoutRef = useRef<number | null>(null);
   const logoVideoRef = useRef<HTMLVideoElement>(null);
   const firstBodyCopyRef = useRef<HTMLDivElement>(null);
+  const firstContentRef = useRef<HTMLDivElement>(null);
   const secondHeadingRef = useRef<HTMLHeadingElement>(null);
   const finalStageScrollRef = useRef<HTMLDivElement>(null);
+  const [firstTextLiftDistance, setFirstTextLiftDistance] = useState(
+    DESKTOP_TEXT_LIFT
+  );
 
   useEffect(() => {
     const media = window.matchMedia("(max-width: 767px)");
@@ -436,8 +440,56 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
   }, [canHoverDesktopObjects, isMobile]);
 
   useEffect(() => {
+    const content = firstContentRef.current;
+    if (!content || viewport.height === 0) return;
+
+    const updateFirstTextLiftDistance = () => {
+      const contentHeight = content.scrollHeight;
+      const topOffset =
+        viewport.height / 2 + (isMobile ? 92 : 126) + TEXT_BLOCK_GAP;
+      const bottomPadding = isMobile ? 32 : 48;
+      const visibleHeight = Math.max(
+        viewport.height - topOffset - bottomPadding,
+        0
+      );
+      const baseLift = isMobile ? MOBILE_TEXT_LIFT : DESKTOP_TEXT_LIFT;
+      const requiredLift = Math.max(contentHeight - visibleHeight, 0);
+
+      setFirstTextLiftDistance(Math.max(baseLift, requiredLift));
+    };
+
+    updateFirstTextLiftDistance();
+
+    const observer = new ResizeObserver(updateFirstTextLiftDistance);
+    observer.observe(content);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [isMobile, viewport.height, viewport.width]);
+
+  const baseTextLift = isMobile ? MOBILE_TEXT_LIFT : DESKTOP_TEXT_LIFT;
+  const textLiftDistance = Math.max(firstTextLiftDistance, baseTextLift);
+  const baseTextScrollSpan = BASE_FIRST_TEXT_SCROLL_END - FIRST_TEXT_SCROLL_START;
+  const extendedTextScrollEnd =
+    FIRST_TEXT_SCROLL_START +
+    baseTextScrollSpan * (textLiftDistance / baseTextLift);
+  const timelineShift = extendedTextScrollEnd - BASE_FIRST_TEXT_SCROLL_END;
+  const contentBlackoutStart = BASE_CONTENT_BLACKOUT_START + timelineShift;
+  const contentBlackoutEnd = BASE_CONTENT_BLACKOUT_END + timelineShift;
+  const faqEntryStart = BASE_FAQ_ENTRY_START + timelineShift;
+  const faqEntryEnd = BASE_FAQ_ENTRY_END + timelineShift;
+  const secondHeadingFadeInStart =
+    BASE_SECOND_HEADING_FADE_IN_START + timelineShift;
+  const secondHeadingFadeInEnd =
+    BASE_SECOND_HEADING_FADE_IN_END + timelineShift;
+  const mobileSignatureStart = BASE_MOBILE_SIGNATURE_START + timelineShift;
+  const mobileSignatureEnd = BASE_MOBILE_SIGNATURE_END + timelineShift;
+  const maxHeroProgress = BASE_MAX_HERO_PROGRESS + timelineShift;
+
+  useEffect(() => {
     const updateProgress = (delta: number) => {
-      const next = clamp(progressRef.current + delta, 0, MAX_HERO_PROGRESS);
+      const next = clamp(progressRef.current + delta, 0, maxHeroProgress);
       progressRef.current = next;
       setProgress(next);
     };
@@ -449,7 +501,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
       progressRef.current > 0 && atTop() && finalStageAtTop() && deltaY < 0;
 
     const handleWheel = (event: WheelEvent) => {
-      if (progressRef.current < MAX_HERO_PROGRESS || shouldReverseHero(event.deltaY)) {
+      if (progressRef.current < maxHeroProgress || shouldReverseHero(event.deltaY)) {
         event.preventDefault();
         updateProgress(event.deltaY / 2200);
       }
@@ -465,7 +517,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
 
       const delta = touchYRef.current - currentY;
       const shouldControlHero =
-        progressRef.current < MAX_HERO_PROGRESS ||
+        progressRef.current < maxHeroProgress ||
         (progressRef.current > 0 && atTop() && finalStageAtTop() && delta < 0);
 
       if (!shouldControlHero) {
@@ -493,10 +545,10 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, []);
+  }, [maxHeroProgress]);
 
   useEffect(() => {
-    const shouldLock = progress < MAX_HERO_PROGRESS;
+    const shouldLock = progress < maxHeroProgress;
     document.documentElement.style.overflow = shouldLock ? "hidden" : "";
     document.body.style.overflow = shouldLock ? "hidden" : "";
     document.body.style.overscrollBehavior = shouldLock ? "none" : "";
@@ -506,7 +558,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
       document.body.style.overflow = "";
       document.body.style.overscrollBehavior = "";
     };
-  }, [progress]);
+  }, [maxHeroProgress, progress]);
 
   useEffect(() => {
     const video = logoVideoRef.current;
@@ -554,7 +606,8 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
     FIRST_TEXT_ENTRY_START,
     FIRST_TEXT_ENTRY_END,
     FIRST_TEXT_SCROLL_START,
-    FIRST_TEXT_SCROLL_END
+    extendedTextScrollEnd,
+    textLiftDistance
   );
   const desktopScale =
     viewport.width && viewport.height
@@ -564,29 +617,29 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
         )
       : 1;
   const faqEntryProgress = clamp(
-    (progress - FAQ_ENTRY_START) / (FAQ_ENTRY_END - FAQ_ENTRY_START),
+    (progress - faqEntryStart) / (faqEntryEnd - faqEntryStart),
     0,
     1
   );
   const contentBlackoutProgress = clamp(
-    (progress - CONTENT_BLACKOUT_START) /
-      (CONTENT_BLACKOUT_END - CONTENT_BLACKOUT_START),
+    (progress - contentBlackoutStart) /
+      (contentBlackoutEnd - contentBlackoutStart),
     0,
     1
   );
   const contentOpacity = 1 - contentBlackoutProgress;
   const secondHeadingOpacity =
     clamp(
-      (progress - SECOND_HEADING_FADE_IN_START) /
-        (SECOND_HEADING_FADE_IN_END - SECOND_HEADING_FADE_IN_START),
+      (progress - secondHeadingFadeInStart) /
+        (secondHeadingFadeInEnd - secondHeadingFadeInStart),
       0,
       1
     );
   const secondHeadingTranslateY =
     (1 -
       clamp(
-        (progress - SECOND_HEADING_FADE_IN_START) /
-          (SECOND_HEADING_FADE_IN_END - SECOND_HEADING_FADE_IN_START),
+        (progress - secondHeadingFadeInStart) /
+          (secondHeadingFadeInEnd - secondHeadingFadeInStart),
         0,
         1
       )) *
@@ -599,8 +652,8 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
   useEffect(() => {
     if (isMobile) {
       const nextProgress = clamp(
-        (progress - MOBILE_SIGNATURE_START) /
-          (MOBILE_SIGNATURE_END - MOBILE_SIGNATURE_START),
+        (progress - mobileSignatureStart) /
+          (mobileSignatureEnd - mobileSignatureStart),
         0,
         1
       );
@@ -645,10 +698,10 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
   }, [isMobile, viewport.width]);
 
   useEffect(() => {
-    if (progress < FAQ_ENTRY_END && finalStageScrollRef.current) {
+    if (progress < faqEntryEnd && finalStageScrollRef.current) {
       finalStageScrollRef.current.scrollTop = 0;
     }
-  }, [progress]);
+  }, [faqEntryEnd, progress]);
 
   useEffect(() => {
     return () => {
@@ -866,6 +919,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
           }}
         >
           <div
+            ref={firstContentRef}
             className="mx-auto text-left text-white/80"
             style={{
               marginTop: `${TEXT_BLOCK_GAP}px`,
@@ -878,17 +932,15 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
           >
             <div ref={firstBodyCopyRef}>
               <p>
-                Hi! I&apos;m Nicole. Maybe you know from a past life, maybe you know
-                me through a mutual, maybe we&apos;re new friends. I&apos;m a South
+                Maybe you know from a past life, through a mutual, maybe we&apos;re new friends. I&apos;m a South
                 Korean country girl at heart with the privilege of growing up in
                 cities around the world because my Swiss dad was a chef at fancy
                 hotels. When I moved to the US for college, I became the first in
                 my line to graduate high school, get a bachelor&apos;s degree - and
                 through many mistakes slash happy accidents, work my way into
-                Silicon Valley. The rest is history (or tragic dramedy, time will
-                tell). Long story short, I make apps and websites. For Code &
-                Theory, Mayvenn Hair, Credit Karma, Genies, and recently by the
-                grace of God, luck, and capitalism - myself.
+                Silicon Valley. Long story short, I make apps and websites. Previously at Code &
+                Theory, Mayvenn Hair, Credit Karma, and Genies. Recently, by the
+                grace of God, luck, and capitalism - for myself.
               </p>
               <p style={{ marginTop: 24 }}>
                 Along the way I noticed some paradoxical truths;
