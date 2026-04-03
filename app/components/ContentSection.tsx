@@ -89,133 +89,99 @@ export default function ContentSection() {
               paddingRight: isMobile ? "16px" : "0px",
             }}
           >
+            <p> Hi! I'm Nicole. Maybe you know from a past life, maybe you know me through a mutual, maybe we're new friends. I'm a South Korean country girl at heart with the privilege of growing up in cities around the world because my Swiss dad was a chef at fancy hotels. When I moved to the US for college, I became the first in my line to graduate high school, get a bachelor's degree - and through many mistakes slash happy accidents, work my way into Silicon Valley. The rest is history (or tragic dramedy, time will tell). Long story short, I make apps and websites. For Code & Theory, Mayvenn Hair, Credit Karma, Genies, and recently by the grace of God, luck, and capitalism - myself.</p>
             <p>
-              Social media became a content business and culture outgrew dating
-              apps. Public and legal opinion of today&apos;s connection tools are at
-              historic lows. The Jury has like, literally, spoken.
+            Along the way I noticed some paradoxical truths;
             </p>
 
-            <p className="mt-5 md:mt-6">
-              Now imagine everyone on Match, Bumble, Grindr &amp; Her invited 3 of
-              their closest friends to join. Imagine everyone frustrated with
-              social media &amp; big tech had a healthy and fun alternative they
-              could trust. Imagine your wallflower friends had something to do on
-              their phone other than lurk. Imagine a social network without ads.
+            <ol className="list-decimal space-y-4 pl-5">
+              <li>
+                <p>
+                  Good technology is magic. It is literal witchcraft but bad
+                  technology drains the soul out of you and wastes your fucking
+                  time. See; filing unemployment (why do I have to
+                  input the same job I'm emailing every week?), insurance
+                  claims, or any other adult activity that's not sex-related.
+                </p>
+              </li>
+              <li>
+                <p>
+                  A lot of technology businesses make a fuck tonne of money
+                  because i) very few people on this planet have the privilege
+                  of creating software and ii) it's not like operating a
+                  restaurant which has a fixed amount of seats/limited IRL
+                  access. For some reason, the unbridled scaling power of
+                  software comes at the cost of a good user experience (what the
+                  REAL person on the ground feels when they use it).
+                  <em>Do businesses take we the people for granted?</em>
+                </p>
+              </li>
+              <li>
+                <p>
+                  As culture progresses towards a more people-first system that
+                  corrects the current overindexing on state and business rights
+                  over individual freedom and collective liberation and
+                  physical safety (yes, I'm an optimist - even if transitions
+                  are difficult and take longer than expected), so must our
+                  standards for businesses, business leaders, and generally,
+                  vibes (<em>VOIBES</em>).
+                </p>
+              </li>
+            </ol>
+
+            <p>
+              In 2020 when the world temporarily shut down, I married new skills
+              with old questions. Markets froze and we were all figuring out
+              how to stay sane;
             </p>
-
-            <p className="mt-5 md:mt-6">
-              That&apos;s Jury. Your friends build your profile and swipe for you.
-              The outcome of this Social Intelligence gets people outside with our
-              signed event partners. If you&apos;re dating, meet your match in
-              person. No in-app chat. If it&apos;s awkward IRL, that&apos;s fine -
-              you&apos;re still outside having a good time with friends. Our Social
-              AI gathers group intelligence about you through your Jury&apos;s
-              behavior, merges it into an ever-evolving identity characterization,
-              and matches you with real-world experiences.
-            </p>
-
-            <ul className="mt-8 space-y-4 pl-6 marker:text-white/55 md:mt-10 md:space-y-5 md:pl-7">
+            <ul className="mt-4 list-disc space-y-2 pl-6">
               <li>
-                It&apos;s working; we validated a 2.5x organic viral coefficient out
-                the gate with $0 paid acquisition. After 1 year of designing with
-                local partners and another bigger investment in quality UX, brand
-                &amp; motion design, we&apos;ve proven immediate velocity on iOS.
+                Why does money anxiety feel <em>SO bad?</em>
               </li>
-
               <li>
-                We are embedded in pre-gentrified culture; on the ground,
-                in-person, hipster-punk-experimental-underground-ish, home-grown
-                in Silver Lake, Los Angeles. It&apos;s your cool friend&apos;s cool
-                secret spot. That&apos;s our HQ. We know LA neighborhoods by style
-                &amp; substance, not just as a zipcode.
+                What are my richer friends doing that I'm not, other than being
+                born into stability?
               </li>
-
+              <li>How can I do more things with friends?</li>
               <li>
-                On top of that, as mentioned, it is possible I can turn my
-                situation (recap: invasion of privacy and ongoing data leak during
-                stealth which was distributed to people I follow on Instagram who
-                have been following my journey for a year +; this includes your
-                favorite rappers, musicians, supermodels, fashion designers,
-                actors, directors, writers, comedians, athletes, podcasters,
-                photographers, influencers, businesspeople, ETC.) into
-                distribution partnerships if we can secure Jury&apos;s brand
-                together.
-              </li>
-
-              <li>
-                Our moat against foundational models; we literally create our own
-                data to train social intelligence. And - brand. And I&apos;m not
-                talking about marketing campaigns. This is FUBU. You can&apos;t fake
-                authenticity.
-              </li>
-
-              <li>
-                I&apos;m a solo founder, digital product designer by trade for 12
-                years; my dad was a chef working in hotels. I grew up an only
-                child moving continents every 2~4 years. I&apos;m the first in my line
-                to graduate high school. I moved to America for college alone and
-                worked my way into Silicon Valley designing ads for Farmville at
-                programmatic agencies in the Zynga-era. I married young. Moved to
-                NYC and joined a creative agency working out of Andy Warhol&apos;s old
-                library where Kanye used to drop-in. Moved back to SF and joined a
-                startup to disrupt the hair industry for Black women; bundles,
-                wigs, closures, etc. My career was cemented at Credit Karma when I
-                joined as a very early designer and was promoted 1x/year (rare) as
-                the company tripled in size on the way to Intuit&apos;s acquisition.
-                This is where I started my personal thesis in 2020 on Social
-                Utility for next-era consumer which Anish Acharya at a16z
-                evangelized too. It started as &quot;your friends involved in your
-                finances&quot; where I began designing whole products and relational
-                account configuration &amp; onboarding for teens. Ken &amp; Ryan (CEO
-                &amp; CTO) gave us green light to build a separate app from the
-                mothership but that ended up ruffling too many mid-level
-                management feathers. I got bored with growth work and left to join
-                a social avatar companion app in LA. We designed and shipped a
-                mediocre use-case that I couldn&apos;t pivot successfully for
-                political reasons. I quit and started Jury as I began separating
-                from a decade-long marriage. In the last 2 and a half years
-                I&apos;ve learned how to become the Product, Design, and Engineering
-                team all in one and am only just getting started despite
-                extraordinary headwinds. I haven&apos;t even hit my prime.
+                And most importantly, <em>why am I still so damn lonely?</em>
               </li>
             </ul>
 
-            <p className="mt-8 md:mt-10">
-              My goal was to reach 3yrs bootstrapped, but I&apos;ve encountered
-              unexpected ongoing legal/security costs, sudden changes with aging
-              dependents, and recently a small car accident. So - it&apos;s now or
-              never for me and Jury. This is it. I&apos;m raising a $1.44M seed on
-              post-money{" "}
-              <a
-                className="underline underline-offset-2"
-                href={SAFE_GUIDE_URL}
-                rel="noreferrer"
-                target="_blank"
-              >
-                SAFE
-              </a>{" "}
-              at a $12M valuation which is an intentional probably 50%
-              discount. I have no idea how the investment world works and
-              truthfully it&apos;s not my priority, so I&apos;m open to feedback.
-              I&apos;ve intentionally limited investor outreach to select and elite
-              partners. This is not spray &amp; pray. This is not accelerator
-              material. This is outside system, kinda-punk, for the culture-type
-              entrepreneurship. The floor is iconic and the ceiling doesn&apos;t
-              exist. You guys would be my second marriage and I&apos;m cognizant of
-              the work that goes into that, atop of company building - something
-              I&apos;m new to but really excited to figure out in unchartered waters.
-            </p>
+            <p> Along the way I had a front row seat to the only tech billionare I'd endorse for President; Kenneth J. Lin. I quietly watched this humble visionary build a $9B business that protected people from predators, empowered them with transparency and optionality, prioritized employee health and equity, while co-sponsoring an NBA team and PRINTING money for shareholders.</p>  
 
-            <p className="mt-5 md:mt-6">
-              We have GTM partners ready to execute, a small army of passionate
-              fans, and interested investors but I just need someone brave enough
-              to take the lead so we can relaunch Jury together and, excuse my
-              French, just fucking GO. Jury needs a Hero; a Midwife
-            </p>
+            <p> But something nagged at me. First, despite our best efforts to unlock financial progress for 1 out of 3 Americans on our app, the American Dream is not within reach for the majority of Americans. The best technology in the world can't fix this. It's a systemic problem that can be summarized in one chart.</p>
+            <p> <img src="/images/chart.png" alt="Chart" className="w-full h-auto" /> </p>
 
-            <p className="mt-5 text-white/92 md:mt-6">
-              There&apos;s a beautiful era just around the corner.
-            </p>
+            <p> The internet, and now AI, has made shareholder value so easy to unlock but wages haven't adjusted. Second, the business model was still fundamentally based on ads. I didn't like that, personally.</p>
+
+            <p> I mean, look at today's largest consumer software non-retail ad business; Meta. Don't get me wrong. I <em>have</em> to leave room for diplomacy because I'm trying to be a big girll; and there are many solid people earning great livings from Meta's payroll, so I don't wish harm on the business. And, I celebrate Wasian babies and the Chan-Zuckerberg kids are gonna cure cancer so, God bless the family. But look at our digital system today. Outside of chat, our Social tools revolve around an interaction of posting content for external feedback (likes, shares, reposts, follows). The product became a content business, which is great for the brilliant and baddie creatives pioneering careers in a new world, but awful for our attention spans and standards since the machine incentivizes volume and organic content punches through the noise using rage and scandal to be noticed. All of this is a system that normalizes divisiveness & fear & an insiduous depression that hijacks our ability to generate dopamine elsewhere. </p>
+
+            <p> It's not healthy to be exposed to everything, everyone, all at once, all the time. </p>
+
+            <p> I know. I know you know, too. </p>
+
+            <p> Our other connection tool is dating. Idk man - I think a lot of us just outgrew the dating apps but don't really have another choice, especially in a more remote school and work culture. </p>
+
+            <p> In 2023, I began my quest to redesign social. After failing to launch a Social x Finance app (a concept warmly dubbed "Karmic Vision"), I left the fintech world in SF and launched an app at a hot social startup in LA. That didn't work out other. The scales tipped and I focused next on Online x Offline integrations, then on Social x Dating; what if your friends were included in your dating app experience? People already give each other their phones at brunch or send screenshots in the group chat. </p>
+            
+            <p> I spent most of 2024 alchemizing our first round of feedback into a functional prototype, iterating with women in LA and Pasadena. By the end of the year, I sunsetted the app to redesign it from the ground up with everything we had learned, rebrand our energy, while beginning to learn how to vibe code shittily with super-early AI tools until I hit a wall and got professional and specialized help to launch our not-so-basic MVP on the App Store in 2025. Post-launch was a flurry of "oh shit, gotta fix this" while getting folks to try the app. Chaos, but hey, we live!</p>
+
+            <p> The good news; the most important thing that needed to happen (for that stage) happened. We saw a 2.5x viral coefficient out the gate without using any paid acquisition, which meant we could reliabily keep growing without forcing a shit tonne of ads down your throat. Personally? Fuck yeah. I don't ever wanna force someone to loving me or loving my art - and I dont enjoy the limelight so I'd rather you hear about us through your friends. </p>
+            
+            <p>The bad news? Holy shit, there is so much work to do. I need help.</p>
+
+            <p>So here we are. If you've been following me for a minute, you know some other crazy shit happened. Two obsessed, relentless, fanatic stalkers who hacked my shit and shared it with many other people while I was building and starting life over post-marriage. Then the jealous friend of someone I went on 4 dates with who, despite us no longer being active, took it upon themselves to harass me, hijack an early-fledgling business, steal unreleased work as their own, publicly joke about my hack, threaten to expose intimate content, and just straight up bully me to... notice her? Idk. It's weird, and not the good kind.</p>
+
+            <p>So, some drama. A different kind of workplace politics, I guess. Some celeb exposure. Some imaginary players, some big business. Heavy on existential crisis. But I need to be real with you; all of this is a distraction from the main thing that needs to stay the main thing. We don't need it. We have something that works, something real, something that people are excited about, that culture needs.</p>
+
+            <p>Something new. </p>
+            
+            <p>We just have to get it outside.</p>
+
+            <p>Meet me outside?</p>
+
+            <p>There's a beautiful era just around the corner. At minimum, at least a cheeky cig, good hangs with friends, and a crush here or there :) </p>
           </div>
         </Reveal>
 
