@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback } from "react";
 import PaymentModal, { type PaymentCompletion } from "./components/PaymentModal";
 import DonorHome from "./components/DonorHome";
 import ObjectsHero from "./components/ObjectsHero";
-import ContentSection from "./components/ContentSection";
 
 const STORAGE_KEY = "vest_investment_state";
 
@@ -62,7 +61,6 @@ export default function Home() {
   return (
     <div className="bg-black">
       <ObjectsHero onInvest={handleInvest} />
-      <ContentSection />
       {showPayment && (
         <PaymentModal
           onSuccess={handlePaymentSuccess}
