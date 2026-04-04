@@ -938,7 +938,11 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
             <video
               ref={logoVideoRef}
               className="relative h-auto w-full max-w-[min(82vw,1200px)]"
-              src="/assets/logo-clips/gothic-wordmark-alpha.mov"
+              src={
+                isMobile
+                  ? "/assets/logo-clips/gothic-wordmark.mp4"
+                  : "/assets/logo-clips/gothic-wordmark-alpha.mov"
+              }
               muted
               playsInline
               preload="auto"
