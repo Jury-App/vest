@@ -35,6 +35,7 @@ const FIRST_TEXT_SCROLL_START = 0.98;
 const BASE_FIRST_TEXT_SCROLL_END = 1.16;
 const BASE_MOBILE_SIGNATURE_START = 0.99;
 const BASE_MOBILE_SIGNATURE_END = 1.13;
+const MOBILE_SIGNATURE_TRIGGER_PROGRESS = 0.99;
 const BASE_SECOND_HEADING_FADE_IN_START = 1.28;
 const BASE_SECOND_HEADING_FADE_IN_END = 1.36;
 
@@ -472,12 +473,18 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
   const baseTextLift = isMobile ? MOBILE_TEXT_LIFT : DESKTOP_TEXT_LIFT;
   const textLiftDistance = Math.max(firstTextLiftDistance, baseTextLift);
   const baseTextScrollSpan = BASE_FIRST_TEXT_SCROLL_END - FIRST_TEXT_SCROLL_START;
+  const mobileSignatureDuration =
+    BASE_MOBILE_SIGNATURE_END - BASE_MOBILE_SIGNATURE_START;
   const extendedTextScrollEnd =
     FIRST_TEXT_SCROLL_START +
     baseTextScrollSpan * (textLiftDistance / baseTextLift);
   const timelineShift = extendedTextScrollEnd - BASE_FIRST_TEXT_SCROLL_END;
-  const mobileSignatureStart = BASE_MOBILE_SIGNATURE_START + timelineShift;
-  const mobileSignatureEnd = BASE_MOBILE_SIGNATURE_END + timelineShift;
+  const mobileSignatureStart = isMobile
+    ? FIRST_TEXT_SCROLL_START +
+      (extendedTextScrollEnd - FIRST_TEXT_SCROLL_START) *
+        MOBILE_SIGNATURE_TRIGGER_PROGRESS
+    : BASE_MOBILE_SIGNATURE_START + timelineShift;
+  const mobileSignatureEnd = mobileSignatureStart + mobileSignatureDuration;
   const signatureTimelineOffset = isMobile ? 0 : 0.16;
   const signatureStart = mobileSignatureStart + signatureTimelineOffset;
   const signatureEnd = mobileSignatureEnd + signatureTimelineOffset;
@@ -1178,9 +1185,9 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               className="flex justify-end"
               style={{ marginTop: 0 }}
             >
-              <div className="w-[105px] overflow-visible md:w-[184px] md:overflow-hidden">
+              <div className="w-[184px] overflow-hidden">
                 <SignatureDraw
-                  className="h-auto w-[105px] md:w-[252px] md:translate-x-[44px]"
+                  className="h-auto w-[252px] translate-x-[44px]"
                   progress={firstSignatureProgress}
                 />
               </div>
