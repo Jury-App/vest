@@ -974,7 +974,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
             <p style={{ marginTop: 48 }}>Hi friend,</p>
               <br />
               <p>
-                Maybe we know eachother from a past life, through a mutual, maybe we&apos;re newly acquainted. I&apos;m a South Korean country girl at heart with the privilege of growing up in cities around the world because my Swiss dad was a chef at fancy hotels. When I moved to the US for college, I became the first in my line to graduate high school, get a bachelor&apos;s degree - and through many mistakes/happy accidents, worked my way into Silicon Valley. Long story short, I make apps and websites. Previously at Code & Theory, Mayvenn Hair, Credit Karma, and Genies. Recently, by the grace of God, luck, and capitalism - for myself.
+                Maybe we know eachother from a past life, through a mutual, maybe we&apos;re newly acquainted. I&apos;m a South Korean country girl with the privilege of growing up in cities around the world because my Swiss dad was a chef at fancy hotels. When I moved to the US for college, I became the first in my line to graduate high school, get a bachelor&apos;s degree - and through many mistakes/happy accidents, worked my way into Silicon Valley. Long story short, I make apps and websites. Previously at Code & Theory, Mayvenn Hair, Credit Karma, and Genies. Recently, by the grace of God, luck, and capitalism - for myself.
               </p>
               <br />
               <p style={{ marginTop: 0 }}>
@@ -987,7 +987,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 <li>
                   <p>
                     <strong>
-                      Good technology is magic but difficult-to-use technology drains your
+                      Good technology is magic but hard-to-use tech drains your
                       soul and wastes precious time.
                     </strong>{" "}
                     See; filing unemployment <em>(why input the same job you're emailing every week?)</em>, insurance claims, taxes, etc. <br /><br />
@@ -1027,9 +1027,9 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                   What are my richer friends doing that I&apos;m not, other than
                   being born into stability?
                 </li> 
-                <li>How can I do more things with friends?</li>
+                <li>How can I throw more parties with friends?</li>
                 <li> 
-                  And most importantly, <em>why am I still so damn lonely?</em>
+                  <em>And why am I still so damn lonely?</em>
                 </li>
               </ul>
 
@@ -1047,13 +1047,9 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 unlock financial progress for many, many, many people, the
                 American Dream is still not within reach for most and no "app" can fix that.
                It&apos;s a
-                systemic problem summarized in one chart.
-                </p>  
-
-              <p>The internet, and now AI, has made shareholder value so easy to
+                systemic problem; the internet, and now AI, has made shareholder value so easy to
                 unlock but wages and social safety nets haven&apos;t evolved at the same rate.
                 </p>
-              </p>
               <p style={{ marginTop: 24 }}>
                 <img src="/images/prodwages.png" alt="Productivity has grown 2.7x as much as pay" className="h-auto w-full rounded-[22px]" />
               </p>
@@ -1083,8 +1079,8 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 for our attention spans since the machine incentivizes
                 volume and therefore, organic content must punch through the noise using rage and
                 scandal to be noticed. All of this is a system that normalizes
-                divisiveness & fear & an insiduous depression that numbs our
-                ability to generate dopamine naturally. Also like... are we really trying to run another election on Facebook adspend again? Cap it.
+                divisiveness & fear & jealousy & insecurity & an insiduous depression that numbs our
+                ability to generate dopamine naturally.  Also like... are we really gonna decide another election based on Facebook adspend again? <strong>Cap it. </strong>
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1095,27 +1091,27 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               <p style={{ marginTop: 24 }}>
                 Our other connection tool is dating and... idk. I just think a lot of us
                  outgrew the dating apps but don&apos;t really have another
-                choice, especially in an increasingly remote culture.
+                choice, especially now.
               </p>
 
               <p style={{ marginTop: 24 }}>
-                Fast forward a couple years later in 2023, I began a quest to redesign Social. After failing to
-                launch a Social x Finance app lovingly named "Karmic
+                So began my quest to redesign Social. After failing in 2021 to
+                build the Social x Finance app lovingly named "Karmic
                 Vision", I left the fintech world in SF and launched an app at a
-                hot social startup in LA. That didn&apos;t work out either. But the scales
-                tipped and I focused next on Online x Offline integrations, then on
+                hot social startup in LA in 2023. That didn&apos;t work out either. But the scales
+                tipped and I focused next on Online x Offline prototypes, then on
                 Social x Dating. What if your friends were involved in your dating
                 app? People already give each other their phones at
-                brunch or send screenshots in the group chat. How could I make this better?
+                brunch or send screenshots in the group chat. How will I make this better?
               </p>
 
               <p style={{ marginTop: 24 }}>
                 I spent most of 2024 alchemizing the first round of feedback into a
                 functional prototype, iterating with women in LA and Pasadena. By
                 the end of the year, I sunsetted the app to redesign it from the
-                ground up with everything we had learned, rebrand our marketing, while
-                learning how to vibe code poorly with super early AI
-                tools until I hit a wall and got professional and specialized help
+                ground up with every learned insight, rebranded our marketing, while
+                learning how to vibe code poorly with nascent AI
+                tools until I hit a wall and got professional + specialized help
                 to launch our not-so-basic MVP on the App Store in 2025. Post-launch
                 was a flurry of "oh shit, gotta fix this" while getting folks to try
                 the app. Chaos, but hey, we're live!
@@ -1142,39 +1138,38 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               <p style={{ marginTop: 24 }}>
                 The good news; the most important thing that needed to happen (for
                 that stage) happened. In Q1 2026, we saw a 2.5x viral coefficient out the gate
-                without using any paid acquisition, which means we can reliabily
+                without using any paid acquisition, which means we can
                 keep growing without forcing a shit tonne of ads down your throat.
                 Personally? Hell yeah, baby! I don&apos;t ever wanna force someone to
-                love our work - and I dont enjoy the limelight so prefer you hear about us through your friends.
+                love us - and I dont enjoy the limelight so prefer you hear about us through your friends (primarily).
               </p>
 
               <p style={{ marginTop: 24 }}>
-                The bad news? Holy shit, there is so much more to do. Jury needs help.
+                The bad news? Holy shit, there is so much more to do. <strong>Jury needs more help.</strong>
               </p>
 
               <p style={{ marginTop: 24 }}>
-                If you&apos;ve been following our journey, you also
-                know this disclosure: A small group of
+                It has been really, <em>really,</em>{" "} <strong><em>REALLY</em></strong>{" "}hard. </p>
+                
+              <p style={{ marginTop: 24 }}>
+                Ngl at all, lol.
+                </p>
+
+              <p style={{ marginTop: 24 }}>
+                If you&apos;ve been following the journey (choose your platform at your peril - I like Chaka, am every woman), you also
+                know this happened while building: A small group of
                 fanatic distant mutuals hacked my phones and broadcasted its live activity to <em>many</em> {" "}other
-                people. They used this access to manipulate my digital environment and risk physical safety. One of them focused on my mental health and took it upon themselves to personally expose and taunt my private data on public social media accounts - consistently posting targeted content over 8 months that would threaten leaking intimate content, make light of my surveillance, and steal Jury work to use for their own.
+                people. They used this access to manipulate my digital environment and expose me to wayyyyyyy bigger threats of physical safety. One of them focused on attacking my mental health and took it upon themselves to consistently post targeted content on their social accounts over ~9 months that would make light of my ongoing surveillance, taunt my private data by posting reactions to everything I was doing, steal Jury work as their own, and threaten to leak my most intimate content.
               </p>
 
               <p style={{ marginTop: 24 }}>
-                There's a lot to say, but for now - 
-                
-                Oh, the drama. An unexpected kind of workplace politics.
-                Some celeb exposure. A few imaginary players. And big businesses at stake.
-                Heavy on existential crisis.
-                
-                This is all of a distraction from the main thing that I sought out to stay the main
-                thing. We don&apos;t need this. We have something else that works,
-                something real, something that people are excited about, that
-                culture needs - and is about to be really, really fun.
+                We needed a new paradigm of social & dating... <em>yesterday</em>. Like why else are these trolls so obsessive and violent and exploitive and dry and wannabe?
+                Just be about yourself, go about your shit with the ones you love, and call it a day. None of this needed to happen. We don&apos;t need more BS. We've got something else that <em>works.</em> {" "}
+                Something <em>real.</em> {""} Something that people across a mixed range of backgrounds are <em>excited</em> {" "} about. That
+                culture <em>needs!!</em> {" "} And it's about to get really... <em>really...</em> {" "} fun.
               </p>
 
-              <p style={{ marginTop: 24 }}>Something new.</p>
-
-              <p style={{ marginTop: 24 }}>We just have to get it outside.</p>
+              <p style={{ marginTop: 24 }}>We just have to get <strong>outside</strong>{" "}😘</p> 
 
               <p style={{ marginTop: 24 }}>Meet me there?</p>
             </div>
