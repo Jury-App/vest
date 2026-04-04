@@ -650,6 +650,8 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
     clamp(fadeProgress / 0.08, 0, 1) *
     (1 - clamp((fadeProgress - 0.72) / 0.14, 0, 1));
   const logoGlowStrength = clamp(fadeProgress * 1.6, 0, 1);
+  const mobileLogoGlowOpacity = logoOpacity * clamp(0.16 + logoGlowStrength * 0.84, 0, 1);
+  const mobileLogoBaseScale = 1 + logoGlowStrength * 0.02;
   const firstSequence = getSequenceState(
     progress,
     isMobile,
@@ -903,33 +905,67 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
           className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
           style={{ opacity: logoOpacity }}
         >
-          <video
-            ref={logoVideoRef}
-            className="h-auto w-full max-w-[min(82vw,1200px)]"
-            src="/assets/logo-clips/gothic-wordmark-alpha.mov"
-            muted
-            playsInline
-            preload="auto"
-            aria-hidden="true"
-            style={{
-              filter:
-                `brightness(${1 + logoGlowStrength * 0.42}) contrast(${1 +
-                  logoGlowStrength * 0.18}) saturate(${1 +
-                  logoGlowStrength * 0.32}) drop-shadow(0 0 ${26 +
-                  logoGlowStrength * 54}px rgba(255, 250, 235, ${0.38 +
-                  logoGlowStrength * 0.38})) drop-shadow(0 0 ${64 +
-                  logoGlowStrength * 76}px rgba(255, 244, 214, ${0.24 +
-                  logoGlowStrength * 0.3})) drop-shadow(0 0 ${120 +
-                  logoGlowStrength * 110}px rgba(255, 214, 140, ${0.1 +
-                  logoGlowStrength * 0.22}))`,
-            }}
-            onLoadedMetadata={(event) => {
-              const duration = event.currentTarget.duration;
-              if (Number.isFinite(duration) && duration > 0) {
-                setLogoDuration(duration);
-              }
-            }}
-          />
+          <div className="relative flex w-full justify-center">
+            {isMobile ? (
+              <>
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-y-1/2 left-1/2 w-full max-w-[min(82vw,1200px)] rounded-full"
+                  style={{
+                    height: "18%",
+                    background:
+                      "radial-gradient(circle, rgba(255, 247, 231, 0.94) 0%, rgba(255, 235, 192, 0.72) 42%, rgba(255, 209, 134, 0.22) 72%, rgba(255, 209, 134, 0) 100%)",
+                    opacity: mobileLogoGlowOpacity,
+                    filter: `blur(${22 + logoGlowStrength * 20}px)`,
+                    transform: `translate(-50%, -50%) scale(${1.02 + logoGlowStrength * 0.08}, ${0.92 + logoGlowStrength * 0.14})`,
+                  }}
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-y-1/2 left-1/2 w-full max-w-[min(82vw,1200px)] rounded-full"
+                  style={{
+                    height: "28%",
+                    background:
+                      "radial-gradient(circle, rgba(255, 241, 207, 0.48) 0%, rgba(255, 223, 170, 0.26) 48%, rgba(255, 214, 140, 0.08) 72%, rgba(255, 214, 140, 0) 100%)",
+                    opacity: mobileLogoGlowOpacity * 0.82,
+                    filter: `blur(${42 + logoGlowStrength * 36}px)`,
+                    transform: `translate(-50%, -50%) scale(${1.14 + logoGlowStrength * 0.14}, ${1 + logoGlowStrength * 0.18})`,
+                  }}
+                />
+              </>
+            ) : null}
+
+            <video
+              ref={logoVideoRef}
+              className="relative h-auto w-full max-w-[min(82vw,1200px)]"
+              src="/assets/logo-clips/gothic-wordmark-alpha.mov"
+              muted
+              playsInline
+              preload="auto"
+              aria-hidden="true"
+              style={{
+                transform: isMobile ? `scale(${mobileLogoBaseScale})` : undefined,
+                filter: isMobile
+                  ? `brightness(${1 + logoGlowStrength * 0.12}) contrast(${1 +
+                      logoGlowStrength * 0.08}) saturate(${1 + logoGlowStrength * 0.1})`
+                  : `brightness(${1 + logoGlowStrength * 0.42}) contrast(${1 +
+                      logoGlowStrength * 0.18}) saturate(${1 +
+                      logoGlowStrength * 0.32}) drop-shadow(0 0 ${26 +
+                      logoGlowStrength * 54}px rgba(255, 250, 235, ${0.38 +
+                      logoGlowStrength * 0.38})) drop-shadow(0 0 ${64 +
+                      logoGlowStrength * 76}px rgba(255, 244, 214, ${0.24 +
+                      logoGlowStrength * 0.3})) drop-shadow(0 0 ${120 +
+                      logoGlowStrength * 110}px rgba(255, 214, 140, ${0.1 +
+                      logoGlowStrength * 0.22}))`,
+              }}
+              onLoadedMetadata={(event) => {
+                const duration = event.currentTarget.duration;
+                if (Number.isFinite(duration) && duration > 0) {
+                  setLogoDuration(duration);
+                }
+              }}
+            />
+          </div>
         </div>
 
         <div
