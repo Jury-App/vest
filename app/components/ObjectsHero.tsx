@@ -581,6 +581,31 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
   useEffect(() => {
     const video = logoVideoRef.current;
     if (!video) return;
+    video.load();
+  }, [isMobile]);
+
+  useEffect(() => {
+    const video = logoVideoRef.current;
+    if (!video || !isMobile) return;
+    if (video.readyState < HTMLMediaElement.HAVE_METADATA) return;
+
+    video.currentTime = 0.001;
+
+    const primePlayback = async () => {
+      try {
+        await video.play();
+        video.pause();
+      } catch {
+        // Mobile browsers can reject priming if media policies change.
+      }
+    };
+
+    void primePlayback();
+  }, [isMobile, logoDuration]);
+
+  useEffect(() => {
+    const video = logoVideoRef.current;
+    if (!video) return;
     if (video.readyState === 0) return;
     const targetFadeProgress = clamp(
       (progress - CLIP_START_PROGRESS) / (1 - CLIP_START_PROGRESS),
