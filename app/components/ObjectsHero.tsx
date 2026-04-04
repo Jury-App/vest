@@ -1108,11 +1108,6 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
 
               <p style={{ marginTop: 24 }}>We just have to get it outside.</p>
 
-              <p style={{ marginTop: 24 }}>
-                There&apos;s a legendary era just around the corner. At minimum,
-                good hangs with friends, maybe a cheeky cig, and if we're good, a crush or two or... 🙃
-              </p>
-
               <p style={{ marginTop: 24 }}>Meet me there?</p>
             </div>
 
