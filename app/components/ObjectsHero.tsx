@@ -1336,6 +1336,17 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                   onClick={handleStoryVideoToggle}
                 />
               </div>
+              <p
+                style={{
+                  marginTop: 10,
+                  fontSize: isMobile ? "13px" : "14px",
+                  lineHeight: 1.5,
+                  opacity: 0.72,
+                  textAlign: "center",
+                }}
+              >
+                Jury in 4 seconds for your viewing pleasure
+              </p>
 
               <p style={{ marginTop: 24 }}>
                 The good news; the most important thing that needed to happen (for
