@@ -65,11 +65,12 @@ export async function sendPaymentFailedEmail({ email, name, amountCents }: Email
 
 export async function sendPaymentReceivedEmail({ email, name, amountCents }: EmailParams) {
   const amount = formatAmount(amountCents);
+  const schedulingUrl = "https://calendly.com/nicole-meetjury/jury-seed";
   await sendEmail({
     to: email,
     subject: "We received your Jury investment",
-    text: `Hi ${name}, we received your ${amount ?? "investment"}. Next up is ops and paperwork review. Watch this inbox for the next steps!`,
-    html: `<p>Hi ${name}, we received your ${amount ?? "investment"}. Next up is ops and paperwork review. Watch this inbox for the next steps!</p>`,
+    text: `Hi ${name}, we received your ${amount ?? "investment"}. Next up is ops and paperwork review! Let's start with a quick hello and Q&A. Schedule here: ${schedulingUrl}`,
+    html: `<p>Hi ${name}, we received your ${amount ?? "investment"}. Next up is ops and paperwork review! Let's start with a quick hello and Q&A. <a href="${schedulingUrl}">Schedule here.</a></p>`,
   });
 }
 
