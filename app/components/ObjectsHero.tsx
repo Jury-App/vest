@@ -38,6 +38,8 @@ const BASE_MOBILE_SIGNATURE_END = 1.13;
 const MOBILE_SIGNATURE_TRIGGER_PROGRESS = 0.99;
 const BASE_SECOND_HEADING_FADE_IN_START = 1.28;
 const BASE_SECOND_HEADING_FADE_IN_END = 1.36;
+const MOBILE_LOGO_KEY_MIN = 18;
+const MOBILE_LOGO_KEY_MAX = 84;
 
 
 type ObjectKey =
@@ -399,6 +401,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
   const touchYRef = useRef<number | null>(null);
   const mobilePeekTimeoutRef = useRef<number | null>(null);
   const logoVideoRef = useRef<HTMLVideoElement>(null);
+  const mobileLogoCanvasRef = useRef<HTMLCanvasElement>(null);
   const storyVideoRef = useRef<HTMLVideoElement>(null);
   const storyVideoContainerRef = useRef<HTMLDivElement>(null);
   const hasAutoPlayedStoryVideoRef = useRef(false);
@@ -583,6 +586,59 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
     if (!video) return;
     video.load();
   }, [isMobile]);
+
+  useEffect(() => {
+    const video = logoVideoRef.current;
+    const canvas = mobileLogoCanvasRef.current;
+    if (!video || !canvas || !isMobile) return;
+    if (video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) return;
+
+    const width = video.videoWidth || 1920;
+    const height = video.videoHeight || 1080;
+
+    if (canvas.width !== width) {
+      canvas.width = width;
+    }
+
+    if (canvas.height !== height) {
+      canvas.height = height;
+    }
+
+    const context = canvas.getContext("2d", { willReadFrequently: true });
+    if (!context) return;
+
+    context.clearRect(0, 0, width, height);
+    context.drawImage(video, 0, 0, width, height);
+
+    const frame = context.getImageData(0, 0, width, height);
+    const { data } = frame;
+
+    for (let index = 0; index < data.length; index += 4) {
+      const r = data[index];
+      const g = data[index + 1];
+      const b = data[index + 2];
+      const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+
+      if (luminance <= MOBILE_LOGO_KEY_MIN) {
+        data[index + 3] = 0;
+        continue;
+      }
+
+      if (luminance >= MOBILE_LOGO_KEY_MAX) {
+        data[index + 3] = 255;
+        continue;
+      }
+
+      const alpha =
+        ((luminance - MOBILE_LOGO_KEY_MIN) /
+          (MOBILE_LOGO_KEY_MAX - MOBILE_LOGO_KEY_MIN)) *
+        255;
+
+      data[index + 3] = Math.round(alpha);
+    }
+
+    context.putImageData(frame, 0, 0);
+  }, [isMobile, logoDuration, progress]);
 
   useEffect(() => {
     const video = logoVideoRef.current;
@@ -960,40 +1016,62 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </>
             ) : null}
 
-            <video
-              ref={logoVideoRef}
-              className="relative h-auto w-full max-w-[min(82vw,1200px)]"
-              src={
-                isMobile
-                  ? "/assets/logo-clips/gothic-wordmark.mp4"
-                  : "/assets/logo-clips/gothic-wordmark-alpha.mov"
-              }
-              muted
-              playsInline
-              preload="auto"
-              aria-hidden="true"
-              style={{
-                transform: isMobile ? `scale(${mobileLogoBaseScale})` : undefined,
-                filter: isMobile
-                  ? `brightness(${1 + logoGlowStrength * 0.12}) contrast(${1 +
-                      logoGlowStrength * 0.08}) saturate(${1 + logoGlowStrength * 0.1})`
-                  : `brightness(${1 + logoGlowStrength * 0.42}) contrast(${1 +
-                      logoGlowStrength * 0.18}) saturate(${1 +
-                      logoGlowStrength * 0.32}) drop-shadow(0 0 ${26 +
-                      logoGlowStrength * 54}px rgba(255, 250, 235, ${0.38 +
-                      logoGlowStrength * 0.38})) drop-shadow(0 0 ${64 +
-                      logoGlowStrength * 76}px rgba(255, 244, 214, ${0.24 +
-                      logoGlowStrength * 0.3})) drop-shadow(0 0 ${120 +
-                      logoGlowStrength * 110}px rgba(255, 214, 140, ${0.1 +
-                      logoGlowStrength * 0.22}))`,
-              }}
-              onLoadedMetadata={(event) => {
-                const duration = event.currentTarget.duration;
-                if (Number.isFinite(duration) && duration > 0) {
-                  setLogoDuration(duration);
-                }
-              }}
-            />
+            {isMobile ? (
+              <>
+                <canvas
+                  ref={mobileLogoCanvasRef}
+                  className="relative h-auto w-full max-w-[min(82vw,1200px)]"
+                  aria-hidden="true"
+                  style={{
+                    transform: `scale(${mobileLogoBaseScale})`,
+                    filter: `brightness(${1 + logoGlowStrength * 0.12}) contrast(${1 +
+                      logoGlowStrength * 0.08}) saturate(${1 + logoGlowStrength * 0.1})`,
+                  }}
+                />
+                <video
+                  ref={logoVideoRef}
+                  className="absolute h-px w-px opacity-0"
+                  src="/assets/logo-clips/gothic-wordmark.mp4"
+                  muted
+                  playsInline
+                  preload="auto"
+                  aria-hidden="true"
+                  onLoadedMetadata={(event) => {
+                    const duration = event.currentTarget.duration;
+                    if (Number.isFinite(duration) && duration > 0) {
+                      setLogoDuration(duration);
+                    }
+                  }}
+                />
+              </>
+            ) : (
+              <video
+                ref={logoVideoRef}
+                className="relative h-auto w-full max-w-[min(82vw,1200px)]"
+                src="/assets/logo-clips/gothic-wordmark-alpha.mov"
+                muted
+                playsInline
+                preload="auto"
+                aria-hidden="true"
+                style={{
+                  filter: `brightness(${1 + logoGlowStrength * 0.42}) contrast(${1 +
+                    logoGlowStrength * 0.18}) saturate(${1 +
+                    logoGlowStrength * 0.32}) drop-shadow(0 0 ${26 +
+                    logoGlowStrength * 54}px rgba(255, 250, 235, ${0.38 +
+                    logoGlowStrength * 0.38})) drop-shadow(0 0 ${64 +
+                    logoGlowStrength * 76}px rgba(255, 244, 214, ${0.24 +
+                    logoGlowStrength * 0.3})) drop-shadow(0 0 ${120 +
+                    logoGlowStrength * 110}px rgba(255, 214, 140, ${0.1 +
+                    logoGlowStrength * 0.22}))`,
+                }}
+                onLoadedMetadata={(event) => {
+                  const duration = event.currentTarget.duration;
+                  if (Number.isFinite(duration) && duration > 0) {
+                    setLogoDuration(duration);
+                  }
+                }}
+              />
+            )}
           </div>
         </div>
 
