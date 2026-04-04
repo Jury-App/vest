@@ -392,6 +392,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
   const [logoDuration, setLogoDuration] = useState(FALLBACK_LOGO_DURATION);
   const [firstSignatureProgress, setFirstSignatureProgress] = useState(0);
   const [secondHeadingHeight, setSecondHeadingHeight] = useState(0);
+  const [isStoryVideoReady, setIsStoryVideoReady] = useState(false);
   const [flashlightPosition, setFlashlightPosition] = useState({
     x: 50,
     y: 50,
@@ -806,6 +807,35 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
 
     video.pause();
   };
+
+  useEffect(() => {
+    const video = storyVideoRef.current;
+    if (!video) return;
+
+    const markStoryVideoReady = () => {
+      setIsStoryVideoReady(true);
+    };
+
+    const resetStoryVideoReady = () => {
+      setIsStoryVideoReady(false);
+    };
+
+    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+      markStoryVideoReady();
+    } else {
+      resetStoryVideoReady();
+    }
+
+    video.addEventListener("loadeddata", markStoryVideoReady);
+    video.addEventListener("canplay", markStoryVideoReady);
+    video.addEventListener("emptied", resetStoryVideoReady);
+
+    return () => {
+      video.removeEventListener("loadeddata", markStoryVideoReady);
+      video.removeEventListener("canplay", markStoryVideoReady);
+      video.removeEventListener("emptied", resetStoryVideoReady);
+    };
+  }, []);
 
   useEffect(() => {
     const nextProgress = clamp(
@@ -1280,17 +1310,28 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
 
               <div
                 ref={storyVideoContainerRef}
-                className="pointer-events-auto"
-                style={{ marginTop: 24 }}
+                className="pointer-events-auto relative overflow-hidden rounded-[22px]"
+                style={{ marginTop: 24, aspectRatio: "2616 / 2474" }}
               >
+                <img
+                  src="/assets/logo-clips/webgif-poster-1200.png"
+                  alt=""
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${
+                    isStoryVideoReady ? "opacity-0" : "opacity-100"
+                  }`}
+                />
                 <video
                   ref={storyVideoRef}
                   aria-label="Jury app demo video"
-                  className="h-auto w-full cursor-pointer rounded-[22px] bg-white/5 object-cover"
+                  className={`relative z-10 h-full w-full cursor-pointer object-cover transition-opacity duration-300 ${
+                    isStoryVideoReady ? "opacity-100" : "opacity-0"
+                  }`}
                   loop
                   muted
                   playsInline
                   preload="metadata"
+                  poster="/assets/logo-clips/webgif-poster-1200.png"
                   src="/assets/logo-clips/WebGif.mov"
                   onClick={handleStoryVideoToggle}
                 />
