@@ -398,6 +398,9 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
   const touchYRef = useRef<number | null>(null);
   const mobilePeekTimeoutRef = useRef<number | null>(null);
   const logoVideoRef = useRef<HTMLVideoElement>(null);
+  const storyVideoRef = useRef<HTMLVideoElement>(null);
+  const storyVideoContainerRef = useRef<HTMLDivElement>(null);
+  const hasAutoPlayedStoryVideoRef = useRef(false);
   const firstBodyCopyRef = useRef<HTMLDivElement>(null);
   const firstContentRef = useRef<HTMLDivElement>(null);
   const secondHeadingRef = useRef<HTMLHeadingElement>(null);
@@ -584,6 +587,40 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
     }
   }, [logoDuration, progress]);
 
+  useEffect(() => {
+    const container = storyVideoContainerRef.current;
+    const video = storyVideoRef.current;
+    if (!container || !video) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting || hasAutoPlayedStoryVideoRef.current) return;
+
+        const rect = entry.boundingClientRect;
+        const viewportCenter = window.innerHeight / 2;
+        const elementCenter = rect.top + rect.height / 2;
+        const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
+        const centerTolerance = Math.min(window.innerHeight * 0.18, 120);
+
+        if (distanceFromCenter > centerTolerance) return;
+
+        hasAutoPlayedStoryVideoRef.current = true;
+        void video.play().catch(() => {
+          hasAutoPlayedStoryVideoRef.current = false;
+        });
+      },
+      {
+        threshold: [0.35, 0.6, 0.85],
+      }
+    );
+
+    observer.observe(container);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   const mobileObjects = useMemo(() => MOBILE_OBJECTS, []);
   const sceneProgress = clamp(progress / OBJECTS_EXIT_PROGRESS, 0, 1);
   const fadeProgress = clamp(
@@ -656,6 +693,18 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
   const faqTranslateY =
     (1 - faqEntryProgress) *
     (isMobile ? FAQ_INITIAL_OFFSET_MOBILE : FAQ_INITIAL_OFFSET_DESKTOP);
+
+  const handleStoryVideoToggle = () => {
+    const video = storyVideoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      void video.play();
+      return;
+    }
+
+    video.pause();
+  };
 
   useEffect(() => {
     const nextProgress = clamp(
@@ -925,7 +974,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
             <p style={{ marginTop: 48 }}>Hi friend,</p>
               <br />
               <p>
-                Maybe you know from a past life, through a mutual, maybe we&apos;re newly acquainted. I&apos;m a South Korean country girl at heart with the privilege of growing up in cities around the world because my Swiss dad was a chef at fancy hotels. When I moved to the US for college, I became the first in my line to graduate high school, get a bachelor&apos;s degree - and through many mistakes/happy accidents, worked my way into Silicon Valley. Long story short, I make apps and websites. Previously at Code & Theory, Mayvenn Hair, Credit Karma, and Genies. Recently, by the grace of God, luck, and capitalism - for myself.
+                Maybe we know eachother from a past life, through a mutual, maybe we&apos;re newly acquainted. I&apos;m a South Korean country girl at heart with the privilege of growing up in cities around the world because my Swiss dad was a chef at fancy hotels. When I moved to the US for college, I became the first in my line to graduate high school, get a bachelor&apos;s degree - and through many mistakes/happy accidents, worked my way into Silicon Valley. Long story short, I make apps and websites. Previously at Code & Theory, Mayvenn Hair, Credit Karma, and Genies. Recently, by the grace of God, luck, and capitalism - for myself.
               </p>
               <br />
               <p style={{ marginTop: 0 }}>
@@ -938,21 +987,20 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 <li>
                   <p>
                     <strong>
-                      Good technology is magic but bad technology drains your
-                      soul and wastes your fucking time.
+                      Good technology is magic but difficult-to-use technology drains your
+                      soul and wastes precious time.
                     </strong>{" "}
-                    See; filing unemployment <em>(why do I have to input the same job I&apos;m emailing every week?)</em>, insurance claims, taxes, etc. <br /><br />
+                    See; filing unemployment <em>(why input the same job you're emailing every week?)</em>, insurance claims, taxes, etc. <br /><br />
                   </p>
                 </li>
                 <li>
                   <p>
-                   <strong>For some reason, the unbridled scaling power of software comes at the cost of a good user experience. </strong>A lot of tech businesses make a fuck tonne of money
-                    because i) very few people on this planet have the privilege of
+                   <strong>For some reason, the unbridled scaling power of software usually comes at the cost of a good user experience. </strong>A lot of tech businesses make boatloads of money
+                    because i) few people on this planet have the privilege of
                     creating software (even with AI!) and ii) it&apos;s not like operating a
                     restaurant which has a fixed amount of seats and limited IRL access. 
                     {" "}
-                    <em>Do businesses take we the
-                    people for granted?</em> <br /><br />
+                    <em>When building incredible products, why sacrifice quality & precision when speed is baked-in?</em> <br /><br />
                   </p>
                 </li>
                 <li>
@@ -965,9 +1013,8 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </ol>
 
               <p style={{ marginTop: 24 }}>
-                So in 2020 when the world temporarily shut down, I tried to apply new skills
-                with old questions. Life froze and we were all figuring out how
-                to stay sane;
+                So in 2020 when the world temporarily froze, I tried to apply new skills
+                to old questions;
               </p>
               <ul
                 className="mt-4 list-disc space-y-2 pl-6"
@@ -988,37 +1035,44 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
 
               <p style={{ marginTop: 24 }}>
                 Along the way I had a front row seat to the only tech billionare
-                I&apos;d endorse for President; Kenneth J. Lin. I watched
-                him build a $9B business that protected people
+                we should endorse for President; Kenneth J. Lin. I watched how he
+                built an $8B business that protected people
                 from predators, empowered them with transparency and optionality,
                 prioritized employee health and equity, while co-sponsoring an NBA
                 team and PRINTING money for shareholders. Quietly, no ego.
               </p>
 
               <p style={{ marginTop: 24 }}>
-                But something nagged at me. First, despite our best efforts to
-                unlock financial progress for many, many people, the
-                American Dream is still not within reach for the majority of folks and no app can fix that.
+                But something nagged. Despite our best efforts to
+                unlock financial progress for many, many, many people, the
+                American Dream is still not within reach for most and no "app" can fix that.
                It&apos;s a
-                systemic problem that can be summarized in one chart.
+                systemic problem summarized in one chart.
+                </p>  
+
+              <p>The internet, and now AI, has made shareholder value so easy to
+                unlock but wages and social safety nets haven&apos;t evolved at the same rate.
+                </p>
               </p>
               <p style={{ marginTop: 24 }}>
-                <img src="/images/prodwages.png" alt="Productivity has grown 2.7x as much as pay" className="h-auto w-full" />
+                <img src="/images/prodwages.png" alt="Productivity has grown 2.7x as much as pay" className="h-auto w-full rounded-[22px]" />
               </p>
-              <p className="mt-[16px] px-[16px] text-center text-[10px] leading-4 tracking-[0.01em] text-white/30 sm:text-[11px]">
-                Productivity has grown 2.7x as much as pay
+              <p
+                className="px-[16px] text-center text-[10px] leading-4 tracking-[0.01em] text-white/30 sm:text-[11px]"
+                style={{ marginTop: 8 }}
+              >
+                Productivity has grown 2.7x as much as pay. Yes, I know there is an alternative way to measure the accuracy of wages between EPI or FRED data but each measures scale - the gap is the point.  
               </p>
 
               <p style={{ marginTop: 24 }}>
-                The internet, and now AI, has made shareholder value so easy to
-                unlock but wages and social safety nets haven&apos;t evolved at the same rate. The other issue was more personal; I don't like ad-based business models.
+                 The other issue was more personal; I don't like ad-based business models.
               </p>
 
               <p style={{ marginTop: 24 }}>
                 I mean, look at today&apos;s largest consumer software (non-retail) ad
                 business; Meta. Don&apos;t get me wrong. I <em>have</em> {" "}to leave
                 room for diplomacy because I&apos;m trying to be a big girl and
-                there are many solid people earning tremendous livings from Meta&apos;s
+                there are many solid people earning tremendous livings from Meta
                 payroll. I don&apos;t wish harm on the business. In fact, I celebrate
                 Wasian babies and the Chan-Zuckerberg kids are gonna cure cancer so,
                 God bless the family. But look at our digital environment today. Outside
@@ -1029,8 +1083,8 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 for our attention spans since the machine incentivizes
                 volume and therefore, organic content must punch through the noise using rage and
                 scandal to be noticed. All of this is a system that normalizes
-                divisiveness & fear & an insiduous depression that hijacks our
-                ability to generate dopamine elsewhere. Also like... we trying to run another election on Facebook adspend, or...? Cap it, my guy.
+                divisiveness & fear & an insiduous depression that numbs our
+                ability to generate dopamine naturally. Also like... are we really trying to run another election on Facebook adspend again? Cap it.
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1041,18 +1095,18 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               <p style={{ marginTop: 24 }}>
                 Our other connection tool is dating and... idk. I just think a lot of us
                  outgrew the dating apps but don&apos;t really have another
-                choice, especially in a more remote culture.
+                choice, especially in an increasingly remote culture.
               </p>
 
               <p style={{ marginTop: 24 }}>
-                So then in 2023, I began my quest to redesign Social. After failing to
-                launch a Social x Finance app (aforementioned prototype called "Karmic
-                Vision"), I left the fintech world in SF and launched an app at a
+                Fast forward a couple years later in 2023, I began a quest to redesign Social. After failing to
+                launch a Social x Finance app lovingly named "Karmic
+                Vision", I left the fintech world in SF and launched an app at a
                 hot social startup in LA. That didn&apos;t work out either. But the scales
                 tipped and I focused next on Online x Offline integrations, then on
                 Social x Dating. What if your friends were involved in your dating
                 app? People already give each other their phones at
-                brunch or send screenshots in the group chat.
+                brunch or send screenshots in the group chat. How could I make this better?
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1067,41 +1121,55 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 the app. Chaos, but hey, we're live!
               </p>
 
+              <div
+                ref={storyVideoContainerRef}
+                className="pointer-events-auto"
+                style={{ marginTop: 24 }}
+              >
+                <video
+                  ref={storyVideoRef}
+                  aria-label="Jury app demo video"
+                  className="h-auto w-full cursor-pointer rounded-[22px] bg-white/5 object-cover"
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                  src="/assets/logo-clips/WebGif.mov"
+                  onClick={handleStoryVideoToggle}
+                />
+              </div>
+
               <p style={{ marginTop: 24 }}>
                 The good news; the most important thing that needed to happen (for
                 that stage) happened. In Q1 2026, we saw a 2.5x viral coefficient out the gate
-                without using any paid acquisition, which meant we could reliabily
+                without using any paid acquisition, which means we can reliabily
                 keep growing without forcing a shit tonne of ads down your throat.
-                Personally? Fuck yeah. I don&apos;t ever wanna force someone to
-                love me or my art - and I dont enjoy the limelight so I&apos;d
-                rather you hear about us through your friends.
+                Personally? Hell yeah, baby! I don&apos;t ever wanna force someone to
+                love our work - and I dont enjoy the limelight so prefer you hear about us through your friends.
               </p>
 
               <p style={{ marginTop: 24 }}>
-                The bad news? Holy shit, there is so much work to do. Jury needs help.
+                The bad news? Holy shit, there is so much more to do. Jury needs help.
               </p>
 
               <p style={{ marginTop: 24 }}>
-                If you&apos;ve been following me for a minute, you
-                know some other crazy shit happened. Two obsessed, relentless,
-                fanatic stalkers who hacked my shit and shared it with many other
-                people while I was also starting life over post-marriage.
-                Then the jealous friend of someone I didn't even date, who,
-                despite us no longer talking, took it upon themselves to harass
-                me on the world wide web, hijack an early-fledgling business, steal unreleased work as
-                their own, publicly joke about my hack, threaten to expose intimate
-                content, and just straight up bully me to... notice her? Idk.
-                It&apos;s weird. Not the good kind.
+                If you&apos;ve been following our journey, you also
+                know this disclosure: A small group of
+                fanatic distant mutuals hacked my phones and broadcasted its live activity to <em>many</em> {" "}other
+                people. They used this access to manipulate my digital environment and risk physical safety. One of them focused on my mental health and took it upon themselves to personally expose and taunt my private data on public social media accounts - consistently posting targeted content over 8 months that would threaten leaking intimate content, make light of my surveillance, and steal Jury work to use for their own.
               </p>
 
               <p style={{ marginTop: 24 }}>
-                So, some drama. A different kind of workplace politics, I guess.
-                Some celeb exposure. Some imaginary players. Some big business at stake.
-                Heavy on existential crisis. But I need to be real with you; all of
-                this is a distraction from the main thing that needs to stay the main
-                thing. We don&apos;t need it. We have something that works,
+                There's a lot to say, but for now - 
+                
+                Oh, the drama. An unexpected kind of workplace politics.
+                Some celeb exposure. A few imaginary players. And big businesses at stake.
+                Heavy on existential crisis.
+                
+                This is all of a distraction from the main thing that I sought out to stay the main
+                thing. We don&apos;t need this. We have something else that works,
                 something real, something that people are excited about, that
-                culture needs.
+                culture needs - and is about to be really, really fun.
               </p>
 
               <p style={{ marginTop: 24 }}>Something new.</p>
