@@ -1188,6 +1188,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               <div className="w-[184px] overflow-hidden">
                 <SignatureDraw
                   className="h-auto w-[252px] translate-x-[44px]"
+                  isMobile={isMobile}
                   progress={firstSignatureProgress}
                 />
               </div>

@@ -4,14 +4,17 @@ import { useId } from "react";
 
 type SignatureDrawProps = {
   className?: string;
+  isMobile?: boolean;
   progress: number;
 };
 
 export default function SignatureDraw({
   className = "",
+  isMobile = false,
   progress,
 }: SignatureDrawProps) {
   const maskId = useId();
+  const whiteFilterId = useId();
   const clampedProgress = Math.min(1, Math.max(0, progress));
   const dashOffset = 1 - clampedProgress;
   const glowOpacity = 0.16 + clampedProgress * 0.42;
@@ -27,6 +30,10 @@ export default function SignatureDraw({
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
+        <filter id={whiteFilterId} colorInterpolationFilters="sRGB">
+          <feFlood floodColor="#ffffff" result="whiteFill" />
+          <feComposite in="whiteFill" in2="SourceAlpha" operator="in" />
+        </filter>
         <mask id={maskId} maskUnits="userSpaceOnUse">
           <rect width="1040" height="576" fill="black" />
           <polyline
@@ -60,13 +67,23 @@ export default function SignatureDraw({
           transition: "stroke-dashoffset 120ms linear, stroke 120ms linear",
         }}
       />
-      <image
-        height="576"
-        href="/assets/signature-exact.png"
-        mask={`url(#${maskId})`}
-        style={{ filter: "brightness(0) invert(1)" }}
-        width="1040"
-      />
+      {isMobile ? (
+        <image
+          height="576"
+          href="/assets/signature-exact.png"
+          mask={`url(#${maskId})`}
+          filter={`url(#${whiteFilterId})`}
+          width="1040"
+        />
+      ) : (
+        <image
+          height="576"
+          href="/assets/signature-exact.png"
+          mask={`url(#${maskId})`}
+          style={{ filter: "brightness(0) invert(1)" }}
+          width="1040"
+        />
+      )}
       <path
         d="M906 316
         C894 293 862 293 862 322
