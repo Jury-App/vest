@@ -1193,7 +1193,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 </li>
                 <li>
                   <p>
-                    <strong>Infrastructure is changing; too quickly, too slowly. </strong>{" "}Is the floor rising or lowering and what do the nuances tell us?</em>
+                    <strong>Infrastructure is changing; too quickly, too slowly. </strong>{" "}Is the floor rising or lowering and what do the nuances tell us?
                   </p>
                 </li>
               </ol>
