@@ -1162,10 +1162,10 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
             }}
           >
             <div ref={firstBodyCopyRef}>
-            <p style={{ marginTop: 48 }}>Hi friend,</p>
+            <p style={{ marginTop: 48 }}>Hi,</p>
               <br />
               <p>
-                Maybe we know eachother from a past life, through a mutual, maybe we&apos;re newly acquainted. I&apos;m a South Korean country girl with the privilege of growing up in cities around the world because my Swiss dad was a chef at fancy hotels. When I moved to the US for college, I became the first in my line to graduate high school, get a bachelor&apos;s degree - and through many mistakes/happy accidents, worked my way into Silicon Valley. Long story short, I make apps and websites. Previously at Code & Theory, Mayvenn Hair, Credit Karma, and Genies. Recently, by the grace of God, luck, and capitalism - for myself.
+                Maybe we know each other from a past life, but quick refresh; I&apos;m a South Korean country girl with the privilege of growing up in cities around the world because my Swiss dad was a chef at fancy hotels. I became the first in my line to graduate high school, move to these United States, get a bachelor&apos;s degree, and work my way into Silicon Valley through a series of mistakes and happy accidents. Long story short, I make apps and websites. Previously at Credit Karma, Genies, Code & Theory, and Mayvenn Hair. Recently by the grace of God, luck, and capitalism - for myself.
               </p>
               <br />
               <p style={{ marginTop: 0 }}>
@@ -1178,68 +1178,45 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 <li>
                   <p>
                     <strong>
-                      Good technology is magic but hard-to-use tech drains your
-                      soul and wastes precious time.
+                      Good tech is magic but hard-to-use software drains your
+                      soul.
                     </strong>{" "}
-                    See; filing unemployment <em>(why input the same job you're emailing every week?)</em>, insurance claims, taxes, etc. <br /><br />
+                    See; filing unemployment, insurance claims, taxes, etc. <br /><br />
                   </p>
                 </li>
                 <li>
                   <p>
-                   <strong>For some reason, the unbridled scaling power of software usually comes at the cost of a good user experience. </strong>A lot of tech businesses make boatloads of money
-                    because i) few people on this planet have the privilege of
-                    creating software (even with AI!) and ii) it&apos;s not like operating a
-                    restaurant which has a fixed amount of seats and limited IRL access. 
+                   <strong>The unbridled scaling power of software often comes at the cost of good user experience. </strong>
                     {" "}
-                    <em>When building incredible products, why sacrifice quality & precision when speed is baked-in?</em> <br /><br />
+                    Why sacrifice quality & precision when speed is baked-in? <br /><br />
                   </p>
                 </li>
                 <li>
                   <p>
-                    <strong>Infrastructure is changing; too quickly, too slowly. </strong>{" "}As culture progresses towards a people-first system that
-                    rebalances overindexing on state and business rights
-                    towards equitable individual freedom and collective liberation (yes, I&apos;m an optimist playing the long game), so must our standards... for everything.
+                    <strong>Infrastructure is changing; too quickly, too slowly. </strong>{" "}Is the floor rising or lowering and what do the nuances tell us?</em>
                   </p>
                 </li>
               </ol>
 
               <p style={{ marginTop: 24 }}>
-                So in 2020 when the world temporarily froze, I tried to apply new skills
-                to old questions;
+                The deeper I waded into my career (and self-confidence), the bigger my questions became. What started as "How do I find stability in life and thrive?" evolved into "How can all of us do this?" and then "What's stopping that from being real?".
               </p>
-              <ul
-                className="mt-4 list-disc space-y-2 pl-6"
-                style={{ marginLeft: isMobile ? 12 : 24 }}
-              >
-                <li>
-                  Why does money anxiety feel <em>so <strong>SO</strong> </em>bad?
-                </li> 
-                <li>
-                  What are my richer friends doing that I&apos;m not, other than
-                  being born into stability?
-                </li> 
-                <li>How can I throw more parties with friends?</li>
-                <li> 
-                  <em>And why am I still so damn lonely?</em>
-                </li>
-              </ul>
 
               <p style={{ marginTop: 24 }}>
-                Along the way I had a front row seat to the only tech billionare
-                we should endorse for President; Kenneth J. Lin. I watched how he
+                Along the way I had a window into a CEO named Kenneth J. Lin as he
                 built an $8B business that protected people
                 from predators, empowered them with transparency and optionality,
-                prioritized employee health and equity, while co-sponsoring an NBA
-                team and PRINTING money for shareholders. Quietly, no ego.
+                prioritized employee health and equity, while co-sponsoring the Houston Rockets, aid civic participation,
+                and <em>PRINT</em> money for shareholders. Quietly, no ego.
               </p>
 
               <p style={{ marginTop: 24 }}>
-                But something nagged. Despite our best efforts to
-                unlock financial progress for many, many, many people, the
+                Despite our best efforts to
+                extend financial progress to many, many people, the
                 American Dream is still not within reach for most and no "app" can fix that.
                It&apos;s a
-                systemic problem; the internet, and now AI, has made shareholder value so easy to
-                unlock but wages and social safety nets haven&apos;t evolved at the same rate.
+                systemic problem with many tendrils but ultimately housed under one roof if we follow the threads; <strong>the internet, and now AI, has made shareholder value so easy to
+                unlock but wages nor social safety nets are evolving at the same rate.</strong>
                 </p>
               <p style={{ marginTop: 24 }}>
                 <img src="/images/prodwages.png" alt="Productivity has grown 2.7x as much as pay" className="h-auto w-full rounded-[22px]" />
@@ -1248,11 +1225,15 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 className="px-[16px] text-center text-[10px] leading-4 tracking-[0.01em] text-white/30 sm:text-[11px]"
                 style={{ marginTop: 8 }}
               >
-                Productivity has grown 2.7x as much as pay. Yes, I know there is an alternative way to measure the accuracy of wages between EPI or FRED data but each measures scale - the gap is the point.  
+                Productivity has grown 2.7x as much as pay. How will this chart look 20 years from now with AI?  
               </p>
 
               <p style={{ marginTop: 24 }}>
-                 The other issue was more personal; I don't like ad-based business models.
+                Don't these priorities feel backwards? America is about <strong>FREEDOM</strong>{" "} and <em>personal liberty;</em>{" "} to convene, to love, to worship, to earn, to express. So long we don't harm each other; violently with intent, accidentally with regret. Evidently we have prioritized business health at the sacrifice of everyday people's cortisol. Can government adapt to transition us further into an era of nuclear-level productivity? Or will the cost fall on the end-user again with tighter labor scarcity? Can private corporations normalize generosity? Or is this all a race to an ugly bottom. Otherwise, can privatized UBI set the standard for industries outside tech? 
+              </p>
+
+              <p style={{ marginTop: 24 }}>
+                The underlying assumption is that people help others once they've secured their shit. That's not always true but if humans echo the systems we participate within, why shouldn't software introduce a habit of checking in on friends to help out, go outside together, and have great times meeting others? The friends we keep, the leaders we respect, the content we consume... it all influences how we show up in the world.
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1269,14 +1250,24 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 and baddie creatives pioneering careers in a new world, but awful
                 for our attention spans since the machine incentivizes
                 volume and therefore, organic content must punch through the noise using rage and
-                scandal to be noticed. All of this is a system that normalizes
+                scandal to be noticed. All of this is a system that at best keeps us consuming, at worst normalizes
                 divisiveness & fear & jealousy & insecurity & an insiduous depression that numbs our
                 ability to generate dopamine naturally.  Also like... are we really gonna decide another election based on Facebook adspend again? <strong>Cap it. </strong>
               </p>
 
               <p style={{ marginTop: 24 }}>
+                <img src="/images/thesis.png" alt="Individual and Communal health is more imporant than Business and State rights" className="h-auto w-full rounded-[22px]" />
+              </p>
+              <p
+                className="px-[16px] text-center text-[10px] leading-4 tracking-[0.01em] text-white/30 sm:text-[11px]"
+                style={{ marginTop: 8 }}
+              >
+                Individual and communal health is more important than business and state rights. Can we be more thoughtful in the systems we build?
+              </p>
+
+              <p style={{ marginTop: 24 }}>
                 It&apos;s not healthy to be exposed to everything, everyone, all at
-                once, all the time.
+                once, all the time. Especially when more of us are living on spiritual islands, burned out, creating false attachments for cope, and consuming community more than we contribute. It's not sustainable. I've been there myself.
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1286,14 +1277,14 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
 
               <p style={{ marginTop: 24 }}>
-                So began my quest to redesign Social. After failing in 2021 to
+                So began the quest to redesign Social. After failing in 2021 to
                 build the Social x Finance app lovingly named "Karmic
                 Vision", I left the fintech world in SF and launched an app at a
                 hot social startup in LA in 2023. That didn&apos;t work out either. But the scales
                 tipped and I focused next on Online x Offline prototypes, then on
                 Social x Dating. What if your friends were involved in your dating
-                app? People already give each other their phones at
-                brunch or send screenshots in the group chat. How will I make this better?
+                app? We already give each other our phones at
+                brunch or send screenshots in the group chat.
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1345,42 +1336,38 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                   textAlign: "center",
                 }}
               >
-                Jury in 4 seconds for your viewing pleasure
+                Tap to play and pause
               </p>
 
               <p style={{ marginTop: 24 }}>
                 The good news; the most important thing that needed to happen (for
                 that stage) happened. In Q1 2026, we saw a 2.5x viral coefficient out the gate
                 without using any paid acquisition, which means we can
-                keep growing without forcing a shit tonne of ads down your throat.
-                Personally? Hell yeah, baby! I don&apos;t ever wanna force someone to
-                love us - and I dont enjoy the limelight so prefer you hear about us through your friends (primarily).
+                keep growing reliably through word of mouth. That's a really big deal.
               </p>
 
               <p style={{ marginTop: 24 }}>
-                The bad news? Holy shit, there is so much more to do. <strong>Jury needs more help.</strong>
+                The bad news? There is soooo much to do. <strong>Jury needs your help.</strong>
               </p>
 
               <p style={{ marginTop: 24 }}>
-                It has been really, <em>really,</em>{" "} <strong><em>REALLY</em></strong>{" "}hard. </p>
-                
+                We built a Social AI that creates group intelligence from your invited friends to make your profile and match you to events with other people. If you're dating, meet your Jury-suggested match IRL. If it's not a vibe, that's fine - you're still outside with friends. Imagine creating a profile with your college friends and using that to go out one weekend, then creating a new profile with a different crew to check out that scene.
+              </p>
+
               <p style={{ marginTop: 24 }}>
-                Ngl at all, lol.
+                Jury is about you. It's about who you are with your people. Who are your people? Who are you with your people? And who will you meet because of them?
+                </p>
+
+                <p style={{ marginTop: 24 }}>
+                Jury is about you. It's about who you are with your people. Who are your people? Who are you with your people? And who will you meet because of them?
                 </p>
 
               <p style={{ marginTop: 24 }}>
-                If you&apos;ve been following the journey (choose your platform at your peril - I like Chaka, am every woman), you also
-                know this happened while building: A small group of
-                fanatic distant mutuals hacked my phones and broadcasted its live activity to <em>many</em> {" "}other
-                people. They used this access to manipulate my digital environment and expose me to wayyyyyyy bigger threats of physical safety. One of them focused on attacking my mental health and took it upon themselves to consistently post targeted content on their social accounts over ~9 months that would make light of my ongoing surveillance, taunt my private data by posting reactions to everything I was doing, steal Jury work as their own, and threaten to leak my most intimate content.
-              </p>
-
-              <p style={{ marginTop: 24 }}>
-                We needed a new paradigm of social & dating... <em>yesterday</em>. Like why else are these trolls so obsessive and violent and exploitive and dry and wannabe?
-                Just be about yourself, go about your shit with the ones you love, and call it a day. None of this needed to happen. We don&apos;t need more BS. We've got something else that <em>works.</em> {" "}
-                Something <em>real.</em> {""} Something that people across a mixed range of backgrounds are <em>excited</em> {" "} about. That
+                This isn't Social or Dating like we've ever known it in software form, but it's familiar because we used to do this. Before engagement and follower count and views and waitlists and likes and DMs.
+                We've got something new that <em>works.</em> {" "}
+                Something <em>real.</em> {""} Something that people across a mixed range of backgrounds are <em>excited</em> {" "} about (ok maybe some nervous). That
                 culture <em>needs!!</em> {" "} And it's about to get really... <em>really...</em> {" "} fun.
-              </p>
+               </p>
 
               <p style={{ marginTop: 24 }}>We just have to get <strong>outside</strong>{" "}😘</p> 
 
