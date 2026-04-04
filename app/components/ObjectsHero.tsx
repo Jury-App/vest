@@ -591,53 +591,64 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
     const video = logoVideoRef.current;
     const canvas = mobileLogoCanvasRef.current;
     if (!video || !canvas || !isMobile) return;
-    if (video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) return;
+    const drawKeyedFrame = () => {
+      if (video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA) return;
 
-    const width = video.videoWidth || 1920;
-    const height = video.videoHeight || 1080;
+      const width = video.videoWidth || 1920;
+      const height = video.videoHeight || 1080;
 
-    if (canvas.width !== width) {
-      canvas.width = width;
-    }
-
-    if (canvas.height !== height) {
-      canvas.height = height;
-    }
-
-    const context = canvas.getContext("2d", { willReadFrequently: true });
-    if (!context) return;
-
-    context.clearRect(0, 0, width, height);
-    context.drawImage(video, 0, 0, width, height);
-
-    const frame = context.getImageData(0, 0, width, height);
-    const { data } = frame;
-
-    for (let index = 0; index < data.length; index += 4) {
-      const r = data[index];
-      const g = data[index + 1];
-      const b = data[index + 2];
-      const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-
-      if (luminance <= MOBILE_LOGO_KEY_MIN) {
-        data[index + 3] = 0;
-        continue;
+      if (canvas.width !== width) {
+        canvas.width = width;
       }
 
-      if (luminance >= MOBILE_LOGO_KEY_MAX) {
-        data[index + 3] = 255;
-        continue;
+      if (canvas.height !== height) {
+        canvas.height = height;
       }
 
-      const alpha =
-        ((luminance - MOBILE_LOGO_KEY_MIN) /
-          (MOBILE_LOGO_KEY_MAX - MOBILE_LOGO_KEY_MIN)) *
-        255;
+      const context = canvas.getContext("2d", { willReadFrequently: true });
+      if (!context) return;
 
-      data[index + 3] = Math.round(alpha);
-    }
+      context.clearRect(0, 0, width, height);
+      context.drawImage(video, 0, 0, width, height);
 
-    context.putImageData(frame, 0, 0);
+      const frame = context.getImageData(0, 0, width, height);
+      const { data } = frame;
+
+      for (let index = 0; index < data.length; index += 4) {
+        const r = data[index];
+        const g = data[index + 1];
+        const b = data[index + 2];
+        const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+
+        if (luminance <= MOBILE_LOGO_KEY_MIN) {
+          data[index + 3] = 0;
+          continue;
+        }
+
+        if (luminance >= MOBILE_LOGO_KEY_MAX) {
+          data[index + 3] = 255;
+          continue;
+        }
+
+        const alpha =
+          ((luminance - MOBILE_LOGO_KEY_MIN) /
+            (MOBILE_LOGO_KEY_MAX - MOBILE_LOGO_KEY_MIN)) *
+          255;
+
+        data[index + 3] = Math.round(alpha);
+      }
+
+      context.putImageData(frame, 0, 0);
+    };
+
+    drawKeyedFrame();
+    video.addEventListener("seeked", drawKeyedFrame);
+    video.addEventListener("loadeddata", drawKeyedFrame);
+
+    return () => {
+      video.removeEventListener("seeked", drawKeyedFrame);
+      video.removeEventListener("loadeddata", drawKeyedFrame);
+    };
   }, [isMobile, logoDuration, progress]);
 
   useEffect(() => {
