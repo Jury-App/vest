@@ -1169,7 +1169,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
               <br />
               <p style={{ marginTop: 0 }}>
-             Along the way I noticed some paradoxical truths;
+             Along the way I noticed some paradoxical truths!
               </p>
               <ol
                 className="list-decimal space-y-4 pl-6"
@@ -1193,17 +1193,17 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 </li>
                 <li>
                   <p>
-                    <strong>Infrastructure is changing; too quickly, too slowly. </strong>{" "}Is the floor rising or lowering and what do the nuances tell us?
+                    <strong>Infrastructure is changing; too quickly, too slowly. </strong>{" "}Is the floor rising or lowering and what does nuance reveal?
                   </p>
                 </li>
               </ol>
 
               <p style={{ marginTop: 24 }}>
-                The deeper I waded into my career (and self-confidence), the bigger my questions became. What started as "How do I find stability in life and thrive?" evolved into "How can all of us do this?" and then "What's stopping that from being real?".
+                The deeper I waded into my career, the bigger internal questions became. What started as "How do I find stability in life and thrive?" evolved into "How can all of us do this?" and then "What's stopping that from being real?".
               </p>
 
               <p style={{ marginTop: 24 }}>
-                Along the way I had a window into a CEO named Kenneth J. Lin as he
+                Along the way I had a window into a great CEO named Kenneth J. Lin as he
                 built an $8B business that protected people
                 from predators, empowered them with transparency and optionality,
                 prioritized employee health and equity, while co-sponsoring the Houston Rockets, aid civic participation,
@@ -1216,7 +1216,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 American Dream is still not within reach for most and no "app" can fix that.
                It&apos;s a
                 systemic problem with many tendrils but ultimately housed under one roof if we follow the threads; <strong>the internet, and now AI, has made shareholder value so easy to
-                unlock but wages nor social safety nets are evolving at the same rate.</strong>
+                unlock but neither wages nor social safety nets evolve at the same rate.</strong>
                 </p>
               <p style={{ marginTop: 24 }}>
                 <img src="/images/prodwages.png" alt="Productivity has grown 2.7x as much as pay" className="h-auto w-full rounded-[22px]" />
@@ -1229,19 +1229,15 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
 
               <p style={{ marginTop: 24 }}>
-                Don't these priorities feel backwards? America is about <strong>FREEDOM</strong>{" "} and <em>personal liberty;</em>{" "} yet we have prioritized business health at the sacrifice of everyday people's cortisol. Can government adapt to transition us further into an era of nuclear-level productivity? Or will the cost fall on the end-user again with tighter labor scarcity? Can private corporations normalize generosity? Or is this all a race to an ugly bottom. Otherwise, can privatized UBI set the standard for industries outside tech? 
-              </p>
-
-              <p style={{ marginTop: 24 }}>
-                The underlying assumption is that people help others once they've secured their shit. That's not always true but if humans echo the systems we participate within, why shouldn't software introduce a habit of checking in on friends to help out, go outside together, and have great times meeting others? The friends we keep, the leaders we respect, the content we consume... it all influences how we show up in the world.
+                Don't these priorities feel backwards? America is about <strong>freedom</strong>{" "} and <em>personal liberty;</em>{" "} yet we have prioritized business health at the sacrifice of everyday people's cortisol.
               </p>
 
               <p style={{ marginTop: 24 }}>
                 I mean, look at today&apos;s largest consumer software (non-retail) ad
                 business; Meta. Don&apos;t get me wrong. I <em>have</em> {" "}to leave
-                room for diplomacy because I&apos;m trying to be a big girl and
+                room for diplomacy because I&apos;m a big girl and
                 there are many solid people earning tremendous livings from Meta
-                payroll. I don&apos;t wish harm on the business. In fact, I celebrate
+                payroll so I don&apos;t wish harm on the business. In fact, I celebrate
                 Wasian babies and the Chan-Zuckerberg kids are gonna cure cancer so,
                 God bless the family. But look at our digital environment today. Outside
                 of chat, our Social tools revolve around an interaction of posting
@@ -1251,8 +1247,8 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 for our attention spans since the machine incentivizes
                 volume and therefore, organic content must punch through the noise using rage and
                 scandal to be noticed. All of this is a system that at best keeps us checked in, at worst normalizes
-                that internal icky feeling ~and~ numbs our
-                ability to generate dopamine naturally.  Also like... are we really gonna decide another election based on Facebook adspend again? <strong>Cap it! </strong>
+                that internal icky gloomy feeling ~and~ numbs our
+                ability to generate dopamine naturally. Also like... are we really gonna decide another election based on Facebook adspend again? <strong>Cap it! </strong>
               </p>
 
               <p style={{ marginTop: 24 }}>
