@@ -1229,7 +1229,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
 
               <p style={{ marginTop: 24 }}>
-                Don't these priorities feel backwards? America is about <strong>FREEDOM</strong>{" "} and <em>personal liberty;</em>{" "} to convene, to love, to worship, to earn, to express. So long we don't harm each other; violently with intent, accidentally with regret. Evidently we have prioritized business health at the sacrifice of everyday people's cortisol. Can government adapt to transition us further into an era of nuclear-level productivity? Or will the cost fall on the end-user again with tighter labor scarcity? Can private corporations normalize generosity? Or is this all a race to an ugly bottom. Otherwise, can privatized UBI set the standard for industries outside tech? 
+                Don't these priorities feel backwards? America is about <strong>FREEDOM</strong>{" "} and <em>personal liberty;</em>{" "} yet we have prioritized business health at the sacrifice of everyday people's cortisol. Can government adapt to transition us further into an era of nuclear-level productivity? Or will the cost fall on the end-user again with tighter labor scarcity? Can private corporations normalize generosity? Or is this all a race to an ugly bottom. Otherwise, can privatized UBI set the standard for industries outside tech? 
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1250,9 +1250,9 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 and baddie creatives pioneering careers in a new world, but awful
                 for our attention spans since the machine incentivizes
                 volume and therefore, organic content must punch through the noise using rage and
-                scandal to be noticed. All of this is a system that at best keeps us consuming, at worst normalizes
-                divisiveness & fear & jealousy & insecurity & an insiduous depression that numbs our
-                ability to generate dopamine naturally.  Also like... are we really gonna decide another election based on Facebook adspend again? <strong>Cap it. </strong>
+                scandal to be noticed. All of this is a system that at best keeps us checked in, at worst normalizes
+                that internal icky feeling ~and~ numbs our
+                ability to generate dopamine naturally.  Also like... are we really gonna decide another election based on Facebook adspend again? <strong>Cap it! </strong>
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1342,34 +1342,29 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               <p style={{ marginTop: 24 }}>
                 The good news; the most important thing that needed to happen (for
                 that stage) happened. In Q1 2026, we saw a 2.5x viral coefficient out the gate
-                without using any paid acquisition, which means we can
-                keep growing reliably through word of mouth. That's a really big deal.
+                without using any paid acquisition, which tells me we built an experience that earns people's trust and will, at least partially, convert - sight unseen. An important accelerator given the cold-start network dynamics of marketplace products (of which we are claiming triple-sided) and scaling power laws.
               </p>
 
               <p style={{ marginTop: 24 }}>
-                The bad news? There is soooo much to do. <strong>Jury needs your help.</strong>
+                The bad news? There is so much to do. <strong>Jury needs your help.</strong>
               </p>
 
               <p style={{ marginTop: 24 }}>
-                We built a Social AI that creates group intelligence from your invited friends to make your profile and match you to events with other people. If you're dating, meet your Jury-suggested match IRL. If it's not a vibe, that's fine - you're still outside with friends. Imagine creating a profile with your college friends and using that to go out one weekend, then creating a new profile with a different crew to check out that scene.
+                We built a new Social app that creates group Intelligence from invited friends to make your profile and match you with events and others. If you're dating, meet your Jury-suggested match IRL. If it's not a vibe, that's fine! You're still outside with friends 🥂 Imagine creating a profile and using that to go out one weekend, then create a new profile with a different crew another weekend. And all the while, we'll keep learning what makes you <em>you</em> - through <em>them</em>.
               </p>
 
               <p style={{ marginTop: 24 }}>
-                Jury is about you. It's about who you are with your people. Who are your people? Who are you with your people? And who will you meet because of them?
-                </p>
-
-                <p style={{ marginTop: 24 }}>
-                Jury is about you. It's about who you are with your people. Who are your people? Who are you with your people? And who will you meet because of them?
+                Jury is who you are with your people. Who <em>are</em>{""} your people? Who are you <em>with</em>{""} your people? And who will you meet because of them?
                 </p>
 
               <p style={{ marginTop: 24 }}>
-                This isn't Social or Dating like we've ever known it in software form, but it's familiar because we used to do this. Before engagement and follower count and views and waitlists and likes and DMs.
-                We've got something new that <em>works.</em> {" "}
-                Something <em>real.</em> {""} Something that people across a mixed range of backgrounds are <em>excited</em> {" "} about (ok maybe some nervous). That
-                culture <em>needs!!</em> {" "} And it's about to get really... <em>really...</em> {" "} fun.
+                This isn't Social or Dating like we've ever seen it before, but it's familiar because we used to do this naturally before engagement and follower count and views and waitlists and likes and DMs.
+                We've got something new (but also kinda old, technically technically) that <em>works.</em> {" "}
+                Something <em>real.</em> {""} Something that people across a mixed range of backgrounds are <em>excited</em> {" "} about (ok maybe some nervous...). That
+                culture <em>needs!!</em> {" "} And it's about to get really... <em>hopefully...</em> {" "} fun.
                </p>
 
-              <p style={{ marginTop: 24 }}>We just have to get <strong>outside</strong>{" "}😘</p> 
+              <p style={{ marginTop: 24 }}>We just have to get <strong>outside</strong>{" "}🩰🪩</p> 
 
               <p style={{ marginTop: 24 }}>Meet me there?</p>
             </div>
