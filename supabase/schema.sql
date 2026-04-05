@@ -17,7 +17,7 @@ create table if not exists public.investments (
   stripe_payment_intent_id text not null unique,
   investor_reference text,
   amount integer not null,
-  payment_status text not null check (payment_status in ('processing', 'succeeded', 'payment_failed')),
+  payment_status text not null check (payment_status in ('initiated', 'processing', 'succeeded', 'payment_failed')),
   approval_status text not null default 'inconversation' check (approval_status in ('inconversation', 'approved', 'nothanks')),
   paperwork_status text not null default 'not_sent' check (paperwork_status in ('not_sent', 'sent', 'completed')),
   pending_email_sent_at timestamptz,

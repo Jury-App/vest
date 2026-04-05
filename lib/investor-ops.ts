@@ -113,7 +113,7 @@ export async function createInvestment({
         stripe_payment_intent_id: stripePaymentIntentId,
         investor_reference: investorReference,
         amount,
-        payment_status: "processing",
+        payment_status: "initiated",
         approval_status: "inconversation",
         paperwork_status: "not_sent",
       },

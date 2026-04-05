@@ -3,6 +3,12 @@ import { redirect } from "next/navigation";
 import { createSupabaseAdminClient, createSupabaseServerClient, type DonorRow, type InvestmentRow } from "@/lib/supabase";
 import { linkAuthUserToDonor } from "@/lib/investor-ops";
 
+function formatPaymentStatus(status: InvestmentRow["payment_status"]) {
+  if (status === "initiated") return "started";
+  if (status === "payment_failed") return "failed";
+  return status;
+}
+
 export default async function DonorPage() {
   const supabase = await createSupabaseServerClient();
   const {
@@ -97,7 +103,7 @@ export default async function DonorPage() {
                     })}
                   </p>
                   <p className="mt-2 text-sm text-white/70">
-                    Payment: {investment.payment_status}
+                    Payment: {formatPaymentStatus(investment.payment_status)}
                   </p>
                   <p className="mt-1 text-sm text-white/70">
                     Approval: {investment.approval_status}

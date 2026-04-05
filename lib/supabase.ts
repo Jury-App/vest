@@ -20,12 +20,17 @@ function getSupabaseUrl() {
 
 function getSupabaseAnonKey() {
   return (
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY ||
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-    requireEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY")
+    requireEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY")
   );
 }
 
-export type PaymentStatus = "processing" | "succeeded" | "payment_failed";
+export type PaymentStatus =
+  | "initiated"
+  | "processing"
+  | "succeeded"
+  | "payment_failed";
 export type ApprovalStatus = "inconversation" | "approved" | "nothanks";
 export type PaperworkStatus = "not_sent" | "sent" | "completed";
 
