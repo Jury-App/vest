@@ -1165,7 +1165,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
             <p style={{ marginTop: 48 }}>Hi,</p>
               <br />
               <p>
-                Maybe we know each other from a past life, but quick refresh; I&apos;m a South Korean country girl with the privilege of growing up in cities around the world because my Swiss dad was a chef at fancy hotels. I became the first in my line to graduate high school, move to these United States, get a bachelor&apos;s degree, and work my way into Silicon Valley through a series of mistakes and happy accidents. Long story short, I make and design software. Previously at Credit Karma, Genies, Code & Theory, and Mayvenn Hair. Recently by the grace of God, luck, and capitalism - for myself.
+                Quick recap; I&apos;m a South Korean country girl with the privilege of growing up in cities around the world because my Swiss dad was a chef at fancy hotels. I became the first in my line to graduate high school, move to these United States, get a bachelor&apos;s degree, and work my way into Silicon Valley through a series of mistakes and happy accidents. Long story short, I make and design software. Previously at Credit Karma, Genies, Code & Theory, and Mayvenn Hair. Recently by the grace of God, luck, and capitalism - for myself.
               </p>
               <br />
               <p style={{ marginTop: 0 }}>
