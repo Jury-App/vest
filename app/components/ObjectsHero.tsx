@@ -1360,7 +1360,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 culture <em>needs!!</em> {" "} And it's about to get really... <em>hopefully...</em> {" "} fun.
                </p>
 
-              <p style={{ marginTop: 24 }}>We just have to get <strong>outside</strong>{" "}🩰🪩</p> 
+              <p style={{ marginTop: 24 }}>We just have to get <strong>outside</strong>{" "}🩰🪩😈</p> 
 
               <p style={{ marginTop: 24 }}>Meet me there?</p>
             </div>
