@@ -1234,12 +1234,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
 
               <p style={{ marginTop: 24 }}>
                 I mean, look at today&apos;s largest consumer software (non-retail) ad
-                business; Meta. Don&apos;t get me wrong. I <em>have</em> {" "}to leave
-                room for diplomacy because I&apos;m a big girl and
-                there are many solid people earning tremendous livings from Meta
-                payroll so I don&apos;t wish harm on the business. In fact, I celebrate
-                Wasian babies and the Chan-Zuckerberg kids are gonna cure cancer so,
-                God bless the family. But look at our digital environment today. Outside
+                business; Meta. If we look at our digital environment today, outside
                 of chat, our Social tools revolve around an interaction of posting
                 content for external feedback (likes, shares, reposts, follows). The
                 product became a content business, which is great for the brilliant
@@ -1248,7 +1243,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 volume and therefore, organic content must punch through the noise using rage and
                 scandal to be noticed. All of this is a system that at best keeps us checked in, at worst normalizes
                 that internal icky gloomy feeling ~and~ numbs our
-                ability to generate dopamine naturally. Also like... are we really gonna decide another election based on Facebook adspend again? <strong>Cap it! </strong>
+                ability to generate dopamine naturally. Also like... are we really gonna decide another election based on Facebook adspend again? <strong>Cap it 👍 </strong>
               </p>
 
               <p style={{ marginTop: 24 }}>
