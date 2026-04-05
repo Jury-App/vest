@@ -1165,7 +1165,11 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
             <p style={{ marginTop: 48 }}>Hi,</p>
               <br />
               <p>
-                Quick recap; I&apos;m a South Korean country girl with the privilege of growing up in cities around the world because my Swiss dad was a chef at fancy hotels. I became the first in my line to graduate high school, move to the US, get a bachelor&apos;s degree, and work my way into Silicon Valley through a series of mistakes and happy accidents. Long story short, I make and design software products. Previously at Credit Karma, Genies, Code & Theory, and Mayvenn Hair. Now, by the grace of God, luck, and capitalism - for myself.
+                Forgive the recap, but you all are a very mixed group of people <em>lol;</em>
+              </p>
+          
+              <p style={{ marginTop: 0 }}>
+               I&apos;m a 🇰🇷 country girl with the privilege of growing up in cities around the world because my 🇨🇭 dad was a chef at fancy hotels. I became the first in my fam to graduate high school, move to 🇺🇸, get a degree, and work my way into Silicon Valley through a series of mistakes and happy accidents. Long story short, I make and design software products for a range of people. Previously at Credit Karma, Genies, Code & Theory, and Mayvenn Hair. Now, by the grace of God, luck, and capitalism - for myself :)
               </p>
               <br />
               <p style={{ marginTop: 0 }}>
@@ -1181,14 +1185,14 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                       Good tech is magic but hard-to-use software drains your
                       soul.
                     </strong>{" "}
-                    See; filing unemployment, insurance claims, taxes, etc. <br /><br />
+                    See; filing unemployment, insurance claims, taxes, etc. This is a design problem painful enough to solve.<br /><br />
                   </p>
                 </li>
                 <li>
                   <p>
                    <strong>The unbridled scaling power of software often comes at the cost of good user experience. </strong>
                     {" "}
-                    Why sacrifice quality & precision when speed is baked-in? <br /><br />
+                    Why sacrifice quality & precision when speed is baked-in and decisions affect so many people? <br /><br />
                   </p>
                 </li>
                 <li>
@@ -1205,7 +1209,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               <p style={{ marginTop: 24 }}>
                 Along the way I had a window into a great CEO named Kenneth J. Lin as he
                 built an $8B business that protected people
-                from predators, empowered them with transparency and optionality,
+                from financial predation, empowered them with transparency and optionality,
                 prioritized employee health and equity, while co-sponsoring the Houston Rockets, aid civic participation,
                 and <em>PRINT</em> money for shareholders. Quietly, no ego.
               </p>
@@ -1215,7 +1219,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 extend financial progress to many, many people, the
                 American Dream is still not within reach for most and no "app" can fix that.
                It&apos;s a
-                systemic problem with many tendrils but ultimately housed under one roof if we follow the threads; <strong>the internet, and now AI, has made shareholder value so easy to
+                systemic problem with many tendrils but ultimately housed under "Money"; <strong>the internet, and now AI, has made shareholder value so easy to
                 unlock but neither wages nor social safety nets evolve at the same rate.</strong>
                 </p>
               <p style={{ marginTop: 24 }}>
@@ -1225,25 +1229,40 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 className="px-[16px] text-center text-[10px] leading-4 tracking-[0.01em] text-white/30 sm:text-[11px]"
                 style={{ marginTop: 8 }}
               >
-                Productivity has grown 2.7x as much as pay. How will this chart look 20 years from now with AI?  
+                Productivity has grown 2.7x as much as pay. How will this chart look 20 years from now?  
               </p>
 
               <p style={{ marginTop: 24 }}>
-                Don't these priorities feel backwards? America is about <strong>freedom</strong>{" "} and <em>personal liberty;</em>{" "} yet we have prioritized business health at the sacrifice of everyday people's cortisol.
+                Don't these priorities feel backwards? America is about <strong>freedom</strong>{" "} and <em>personal liberty;</em>{" "} yet we have prioritized business health at the sacrifice of everyday people's cortisol. Insult to injury, we shame and punish people simply asking for less violence. </p>
+                  
+              <p style={{ marginTop: 24 }}>
+                With all the privileges afforded to me by tech, I've tried to stay conscious of where energy goes. Personal sustainability is behaviour and the everyday choices we make about how we treat ourselves and others. Easier said than done, FR FR. So I've hit a ceiling with financial empowerment software; how else might I be useful? <strong>How are people otherwise empowered today to feel good, strong, loving, lovable, and generous? </strong> 
               </p>
 
               <p style={{ marginTop: 24 }}>
-                I mean, look at today&apos;s largest consumer software (non-retail) ad
-                business; Meta. If we look at our digital environment today, outside
-                of chat, our Social tools revolve around an interaction of posting
-                content for external feedback (likes, shares, reposts, follows). The
-                product became a content business, which is great for the brilliant
+                <img src="/images/TheFlowchart.png" alt="If I don't like a system I'm in, I can communicate and collaborate out of it, change my mind, or leave." className="h-auto w-full rounded-[22px]" />
+              </p>
+              <p
+                className="px-[16px] text-center text-[10px] leading-4 tracking-[0.01em] text-white/30 sm:text-[11px]"
+                style={{ marginTop: 8 }}
+              >
+                There's a shit tonne work that goes into communication, constantly evolving in context. Does it require logic and practicality? Is it to bond and connect on a deeper emotional level? Even within these, approach and style varies. Not to mention! Verbal, body language, referential, linguistic... Spiritual, even. Also - leaving is a privilege. For me, work as cope helped.
+              </p>
+
+              <p style={{ marginTop: 24 }}>
+              If social connection empowers, let's look at how we connect online today. The largest consumer social (non-retail) software is Meta.
+              </p>
+
+              <p style={{ marginTop: 24 }}>
+                Outside
+                of Chat (Messenger, WhatsApp), our Social tools (Facebook, Instagram, Threads) revolve around an interaction of posting
+                content for discrete binary feedback (likes, shares, reposts, follows). The
+                company became a content business, which is great for the brilliant
                 and baddie creatives pioneering careers in a new world, but awful
-                for our attention spans since the machine incentivizes
+                for our attention spans since the machine incentivizes production
                 volume and therefore, organic content must punch through the noise using rage and
                 scandal to be noticed. All of this is a system that at best keeps us checked in, at worst normalizes
-                that internal icky gloomy feeling ~and~ numbs our
-                ability to generate dopamine naturally. Also like... are we really gonna decide another election based on Facebook adspend again? <strong>Cap it 👍 </strong>
+                a digital culture hinged on external validation to generate self-worth, identity and relationships naturally. Also like... are we really gonna decide another election based on Facebook adspend again? <strong>Cap it 👍 </strong>
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1258,18 +1277,18 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
 
               <p style={{ marginTop: 24 }}>
                 It&apos;s not healthy to be exposed to everything, everyone, all at
-                once, all the time. Especially when more of us are living on spiritual islands, burned out, creating false attachments for cope, and consuming community more than we contribute. It's not sustainable. I've been there myself.
+                once, all the time. Especially when more of us are living on spiritual islands, burned out, creating false attachments for cope, and consuming community more than we contribute. It's not sustainable. Plus - with all the world's best engineers in the world, why must we harvest revenue from selling people's data? I'm still bullish on a Premium paid version of IG with no ads. Take my money.
               </p>
 
               <p style={{ marginTop: 24 }}>
-                Our other connection tool is dating and... idk. I just think a lot of us
+                Our other connection tool is dating and, idk. I just think we
                  outgrew the dating apps but don&apos;t really have another
                 choice, especially now.
               </p>
 
               <p style={{ marginTop: 24 }}>
                 So began the quest to redesign Social. After failing in 2021 to
-                build the Social x Finance app lovingly named "Karmic
+                build the Social x Finance app I lovingly named "Karmic
                 Vision", I left the fintech world in SF and launched an app at a
                 hot social startup in LA in 2023. That didn&apos;t work out either. But the scales
                 tipped and I focused next on Online x Offline prototypes, then on
@@ -1349,7 +1368,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 </p>
 
               <p style={{ marginTop: 24 }}>
-                This isn't Social or Dating like we've ever seen it before, but it's familiar because we used to do this naturally before engagement and follower count and views and waitlists and likes and DMs.
+                This isn't Social or Dating like we've ever seen it before, but it's familiar because we used to do this naturally before engagement and follower count and views and waitlists and likes and DMs and Boosts and Roses...
                 We've got something new (but also kinda old, technically technically) that <em>works.</em> {" "}
                 Something <em>real.</em> {""} Something that people across a mixed range of backgrounds are <em>excited</em> {" "} about (ok maybe some nervous...). That
                 culture <em>needs!!</em> {" "} And it's about to get really... <em>hopefully...</em> {" "} fun.
@@ -1486,9 +1505,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 risk of total loss of investment. Past performance is not indicative
                 of future results. Nothing on this page should be construed as legal,
                 tax, or investment advice. This opportunity is available only to
-                individuals with a pre-existing relationship with Jury App Inc. and
-                its founder. If you received this link directly, you&apos;re in the
-                right place.
+                individuals who have been following the Jury App Inc. journey, have a pre-existing relationship with the founder, or were introduced via mutuals. Remember: we have the right to refuse service.
                 <br />
                 <br />
                 © 2026 Jury App Inc. All rights reserved.
