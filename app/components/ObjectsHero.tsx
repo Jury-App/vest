@@ -1165,7 +1165,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
             <p style={{ marginTop: 48 }}>Hi,</p>
               <br />
               <p>
-                Forgive the recap, but you all are a very mixed group of people <em>lol;</em>
+                Forgive the recap, but you all are a very mixed group of people.
               </p>
           
               <p style={{ marginTop: 0 }}>
@@ -1173,7 +1173,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
               <br />
               <p style={{ marginTop: 0 }}>
-             Along the way I noticed some paradoxical truths!
+              Along the way I noticed some common paradoxical truths!
               </p>
               <ol
                 className="list-decimal space-y-4 pl-6"
@@ -1197,13 +1197,13 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 </li>
                 <li>
                   <p>
-                    <strong>Infrastructure is changing; too quickly, too slowly. </strong>{" "}Is the floor rising or lowering and what does nuance reveal?
+                    <strong>Infrastructure changes too quickly, too slowly. </strong>{" "}Is the floor rising or lowering and what does nuance reveal?
                   </p>
                 </li>
               </ol>
 
               <p style={{ marginTop: 24 }}>
-                The deeper I waded into my career, the bigger internal questions became. What started as "How do I find stability in life and thrive?" evolved into "How can all of us do this?" and then "What's stopping that from being real?".
+                Deeper I went into my career, the bigger internal questions became. What started as "How do I find stability in life and thrive?" evolved into "How can all of us do this?" and then "What's stopping that from being real?".
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1236,7 +1236,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 Don't these priorities feel backwards? America is about <strong>freedom</strong>{" "} and <em>personal liberty;</em>{" "} yet we have prioritized business health at the sacrifice of everyday people's cortisol. Insult to injury, we shame and punish people simply asking for less violence. </p>
                   
               <p style={{ marginTop: 24 }}>
-                With all the privileges afforded to me by tech, I've tried to stay conscious of where energy goes. Personal sustainability is behaviour and the everyday choices we make about how we treat ourselves and others. Easier said than done, FR FR. So I've hit a ceiling with financial empowerment software; how else might I be useful? <strong>How are people otherwise empowered today to feel good, strong, loving, lovable, and generous? </strong> 
+                With all the privileges afforded by tech, I've tried to be conscious of where energy goes. Personal sustainability is behaviour and the everyday choices we make. Easier said than done, FR FR. So I've hit a ceiling with financial empowerment software; how else might I be useful? <strong>How are people otherwise empowered today to feel good, strong, loving, lovable, and generous? </strong> 
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1246,7 +1246,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 className="px-[16px] text-center text-[10px] leading-4 tracking-[0.01em] text-white/30 sm:text-[11px]"
                 style={{ marginTop: 8 }}
               >
-                There's a shit tonne work that goes into communication, constantly evolving in context. Does it require logic and practicality? Is it to bond and connect on a deeper emotional level? Even within these, approach and style varies. Not to mention! Verbal, body language, referential, linguistic... Spiritual, even. Also - leaving is a privilege. For me, work as cope helped.
+                There's a fuck tonne of work that goes into communication, constantly evolving in context. Does it require logic and practicality? Is it's purpose to bond and connect on a deeper emotional level? Within, approach and style varies. Not to mention! Categories: Verbal, body language, referential, linguistic, spiritual. Leaving is also privilege. For me, work helped.
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1254,15 +1254,14 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
 
               <p style={{ marginTop: 24 }}>
-                Outside
-                of Chat (Messenger, WhatsApp), our Social tools (Facebook, Instagram, Threads) revolve around an interaction of posting
+                Outside Chat (Messenger, WhatsApp), our primary Social tools (Facebook, Instagram, Threads) revolve around an interaction of posting
                 content for discrete binary feedback (likes, shares, reposts, follows). The
                 company became a content business, which is great for the brilliant
                 and baddie creatives pioneering careers in a new world, but awful
                 for our attention spans since the machine incentivizes production
                 volume and therefore, organic content must punch through the noise using rage and
                 scandal to be noticed. All of this is a system that at best keeps us checked in, at worst normalizes
-                a digital culture hinged on external validation to generate self-worth, identity and relationships naturally. Also like... are we really gonna decide another election based on Facebook adspend again? <strong>Cap it 👍 </strong>
+                a digital culture hinged on external validation to generate self-worth, identity and relationships naturally. Also like... are we really gonna decide another election based on adspend again?
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1277,7 +1276,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
 
               <p style={{ marginTop: 24 }}>
                 It&apos;s not healthy to be exposed to everything, everyone, all at
-                once, all the time. Especially when more of us are living on spiritual islands, burned out, creating false attachments for cope, and consuming community more than we contribute. It's not sustainable. Plus - with all the world's best engineers in the world, why must we harvest revenue from selling people's data? I'm still bullish on a Premium paid version of IG with no ads. Take my money.
+                once, all the time. Especially when more of us are living on spiritual islands, burned out, creating false attachments for cope, and consuming community more than we contribute. It's not sustainable. Plus - with most of the world's software not yet built, why must we harvest revenue from selling people's data? I'm still bullish on a Premium paid version of IG with no ads. Take my money.
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1287,14 +1286,14 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
 
               <p style={{ marginTop: 24 }}>
-                So began the quest to redesign Social. After failing in 2021 to
+                So began the quest to redesign Social (why not?!). After failing in 2021 to
                 build the Social x Finance app I lovingly named "Karmic
                 Vision", I left the fintech world in SF and launched an app at a
                 hot social startup in LA in 2023. That didn&apos;t work out either. But the scales
                 tipped and I focused next on Online x Offline prototypes, then on
                 Social x Dating. What if your friends were involved in your dating
                 app? We already give each other our phones at
-                brunch or send screenshots in the group chat.
+                brunch or send screenshots in the group chat and tell stories at dinner.
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1306,7 +1305,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 tools until I hit a wall and got professional + specialized help
                 to launch our not-so-basic MVP on the App Store in 2025. Post-launch
                 was a flurry of "oh shit, gotta fix this" while getting folks to try
-                the app. Chaos, but hey, we're live!
+                the app. Chaos, but hey, it's live!
               </p>
 
               <div
@@ -1352,11 +1351,11 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               <p style={{ marginTop: 24 }}>
                 The good news; the most important thing that needed to happen (for
                 that stage) happened. In Q1 2026, we saw a 2.5x viral coefficient out the gate
-                without using any paid acquisition, which tells me we built an experience that earns people's trust and will, at least partially, convert - sight unseen. An important accelerator given the cold-start network dynamics of marketplace products (of which we are claiming triple-sided) and scaling power laws.
+                without using any paid acquisition, which indicates we built an experience that earns people's trust and will, at least partially, convert - sight unseen. An important accelerator given the cold-start network dynamics of marketplace products (of which we seemingly claim triple-sided) and scaling power laws.
               </p>
 
               <p style={{ marginTop: 24 }}>
-                The bad news? There is so much to do. <strong>Jury needs your help.</strong>
+                But now? There is so much to do. <strong>Jury needs your help.</strong>
               </p>
 
               <p style={{ marginTop: 24 }}>
