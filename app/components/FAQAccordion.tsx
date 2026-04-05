@@ -231,11 +231,17 @@ export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
           paddingBottom: "64px",
         }}
       >
-        <img
-          alt="Punctuation mark"
-          className="h-auto w-[72px] md:w-[108px]"
-          src="/assets/punct.png"
-        />
+        <a
+          href="https://nicoleyoung.substack.com/p/what-happened-tldr"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <img
+            alt="Punctuation mark"
+            className="h-auto w-[72px] cursor-pointer md:w-[108px]"
+            src="/assets/punct.png"
+          />
+        </a>
       </div>
     </div>
   );
