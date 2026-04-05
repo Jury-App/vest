@@ -1253,7 +1253,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 className="px-[16px] text-center text-[10px] leading-4 tracking-[0.01em] text-white/30 sm:text-[11px]"
                 style={{ marginTop: 8 }}
               >
-                Individual and communal health is more important than business and state rights. Can we be more thoughtful in the systems we build?
+                Can we be more thoughtful in the systems we build?
               </p>
 
               <p style={{ marginTop: 24 }}>
