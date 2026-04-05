@@ -178,7 +178,7 @@ export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
       ),
     },
     {
-      question: "Convincing! How do I invest?",
+      question: "How do I invest?",
       answer: (
         <div className="space-y-4">
           <p>
