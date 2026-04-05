@@ -1168,7 +1168,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 Forgive the recap, but you all are a very mixed group of people.
               </p>
           
-              <p style={{ marginTop: 0 }}>
+              <p style={{ marginTop: 24 }}>
                I&apos;m a 🇰🇷 country girl with the privilege of growing up in cities around the world because my 🇨🇭 dad was a chef at fancy hotels. I became the first in my fam to graduate high school, move to 🇺🇸, get a degree, and work my way into Silicon Valley through a series of mistakes and happy accidents. Long story short, I make and design software products for a range of people. Previously at Credit Karma, Genies, Code & Theory, and Mayvenn Hair. Now, by the grace of God, luck, and capitalism - for myself :)
               </p>
               <br />
@@ -1207,11 +1207,15 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
 
               <p style={{ marginTop: 24 }}>
-                Along the way I had a window into a great CEO named Kenneth J. Lin as he
+                For 5 years I had a window into a great CEO named Kenneth J. Lin as he
                 built an $8B business that protected people
                 from financial predation, empowered them with transparency and optionality,
                 prioritized employee health and equity, while co-sponsoring the Houston Rockets, aid civic participation,
-                and <em>PRINT</em> money for shareholders. Quietly, no ego.
+                and <em>PRINT</em> money for shareholders.
+                </p>
+                
+              <p style={{ marginTop: 24 }}>
+                Quietly, no ego.
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1276,7 +1280,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
 
               <p style={{ marginTop: 24 }}>
                 It&apos;s not healthy to be exposed to everything, everyone, all at
-                once, all the time. Especially when more of us are living on spiritual islands, burned out, creating false attachments for cope, and consuming community more than we contribute. It's not sustainable. Plus - with most of the world's software not yet built, why must we harvest revenue from selling people's data? I'm still bullish on a Premium paid version of IG with no ads. Take my money.
+                once, all the time. Especially when more of us are living on spiritual islands, burned out, creating false attachments for cope, and consuming community more than we contribute. It's not sustainable. Plus - with most of the world's software not yet built, why must we harvest revenue from selling people's data? I'm still bullish on a paid version of IG with no ads. Take my money.
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1305,7 +1309,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 tools until I hit a wall and got professional + specialized help
                 to launch our not-so-basic MVP on the App Store in 2025. Post-launch
                 was a flurry of "oh shit, gotta fix this" while getting folks to try
-                the app. Chaos, but hey, it's live!
+                the app. Chaos, but hey, live!
               </p>
 
               <div
@@ -1359,11 +1363,15 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
 
               <p style={{ marginTop: 24 }}>
-                We built a new Social app that creates group Intelligence from invited friends to make your profile and match you with events and others. If you're dating, meet your Jury-suggested match IRL. If it's not a vibe, that's fine! You're still outside with friends 🥂 Imagine creating a profile and using that to go out one weekend, then create a new profile with a different crew another weekend. And all the while, we'll keep learning what makes you <em>you</em> - through <em>them</em>.
+                We built a new Social app that creates group Intelligence from invited friends to make your profile and match you with events and others. If you're dating, meet your Jury-suggested match IRL. If it's not a vibe, that's fine! You're still outside with friends 🥂
+                </p>
+                
+                <p style={{ marginTop: 24 }}>
+                Imagine creating a profile and using that to go out one weekend, then create a new profile with a different crew another weekend. And all the while, we'll keep learning what makes you <em>you</em> - through <em>them</em> 🪞
               </p>
 
               <p style={{ marginTop: 24 }}>
-                Jury is who you are with your people. Who <em>are</em>{""} your people? Who are you <em>with</em>{""} your people? And who will you meet because of them?
+                <strong>Jury is who you are with your people.</strong> {" "}Who <em>are</em>{""} your people? Who are you <em>with</em>{""} your people? And who will you meet because of them?
                 </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1373,7 +1381,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 culture <em>needs!!</em> {" "} And it's about to get really... <em>hopefully...</em> {" "} fun.
                </p>
 
-              <p style={{ marginTop: 24 }}>We just have to get <strong>outside</strong>{" "}🩰🪩😈</p> 
+              <p style={{ marginTop: 24 }}>We just have to go <strong>outside</strong>{" "}🩰🪩😈</p> 
 
               <p style={{ marginTop: 24 }}>Meet me there?</p>
             </div>
