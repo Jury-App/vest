@@ -1507,7 +1507,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                       : "translateY(-8px)",
                   }}
                 >
-                  Are you fucking kidding me?
+                  What happened?
                 </a>
               </div>
             </div>
