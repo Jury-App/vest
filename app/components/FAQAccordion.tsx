@@ -157,7 +157,7 @@ export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
 
   const faqs = [
     {
-      question: "What is the Jury Community Fund?",
+      question: "What is the Jury Community Pool?",
       answer:
         "The Community Fund is a way for non-wealthy and non-institutional friends (and friends of friends) to invest in Jury as we hard-launch, keep building and grow. We are opening a single cap table line item via Reg D 506(b) which allows up to 35 non-accredited sophisticated investors (financially literate, risk-aware, and below $250,000 annual income) and unlimited checks from accredited investors.",
     },
