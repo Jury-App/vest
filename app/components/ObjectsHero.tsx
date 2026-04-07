@@ -40,6 +40,8 @@ const BASE_SECOND_HEADING_FADE_IN_START = 1.28;
 const BASE_SECOND_HEADING_FADE_IN_END = 1.36;
 const MOBILE_LOGO_KEY_MIN = 18;
 const MOBILE_LOGO_KEY_MAX = 84;
+const GLOBE_EMOJIS = ["🌏", "🌍", "🌎"] as const;
+const GLOBE_EMOJI_INTERVAL_MS = 900;
 
 
 type ObjectKey =
@@ -140,11 +142,10 @@ const DESKTOP_OBJECTS: DesktopObjectConfig[] = [
     src: "/assets/sinners/Games.png",
     alt: "Blue yo-yo",
     zIndex: 4,
-    backgroundSize: "cover",
-    flipY: true,
-    start: { left: 248, top: 8, width: 453, height: 453, rotate: 180 },
-    mid: { left: -618, top: -649, width: 857, height: 472, rotate: 6.067 },
-    end: { left: -1200, top: -1200, width: 857, height: 472, rotate: 6.067 },
+    backgroundSize: "contain",
+    start: { left: 358, top: 58, width: 500.565, height: 500.565, rotate: 8 },
+    mid: { left: -508, top: -599, width: 946.985, height: 521.56, rotate: 12 },
+    end: { left: -1090, top: -1150, width: 946.985, height: 521.56, rotate: 12 },
   },
   {
     key: "Lighter",
@@ -201,9 +202,9 @@ const MOBILE_OBJECTS: MobileObjectConfig[] = [
   },
   {
     key: "Games",
-    src: "/assets/sinners/Toys.png",
-    alt: "Orange device",
-    width: "clamp(312px, 78vw, 436px)",
+    src: "/assets/sinners/Games.png",
+    alt: "Yellow Game Boy",
+    width: "clamp(156px, 39vw, 218px)",
     zIndex: 4,
     start: { x: 20, y: 80, rotate: 45, scale: 1 },
     mid: { x: 10, y: 86, rotate: 45, scale: 1 },
@@ -253,7 +254,7 @@ const MOBILE_OBJECTS: MobileObjectConfig[] = [
     key: "Narcissism",
     src: "/assets/sinners/Narcissism.png",
     alt: "Kodak disposable camera",
-    width: "clamp(780px, 198vw, 1140px)",
+    width: "clamp(585px, 148.5vw, 855px)",
     zIndex: 2,
     start: { x: 0, y: 50, rotate: -18, scale: 1 },
     mid: { x: -10, y: 56, rotate: -10, scale: 1 },
@@ -385,6 +386,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
   const [progress, setProgress] = useState(0);
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const [globeEmojiIndex, setGlobeEmojiIndex] = useState(0);
   const [canHoverDesktopObjects, setCanHoverDesktopObjects] = useState(false);
   const [hoveredDesktopObject, setHoveredDesktopObject] = useState<ObjectKey | null>(
     null
@@ -413,6 +415,14 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
   const [firstTextLiftDistance, setFirstTextLiftDistance] = useState(
     DESKTOP_TEXT_LIFT
   );
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setGlobeEmojiIndex((currentIndex) => (currentIndex + 1) % GLOBE_EMOJIS.length);
+    }, GLOBE_EMOJI_INTERVAL_MS);
+
+    return () => window.clearInterval(intervalId);
+  }, []);
 
   useEffect(() => {
     const media = window.matchMedia("(max-width: 767px)");
@@ -1165,11 +1175,11 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
             <p style={{ marginTop: 48 }}>Hi,</p>
               <br />
               <p>
-                Forgive the recap, but you all are a very mixed group of people.
+                Forgive the recap, but you all are a very mixed group.
               </p>
           
               <p style={{ marginTop: 24 }}>
-               I&apos;m a 🇰🇷 country girl with the privilege of growing up in cities around the world because my 🇨🇭 dad was a chef at fancy hotels. I became the first in my fam to graduate high school, move to 🇺🇸, get a degree, and work my way into Silicon Valley through a series of mistakes and happy accidents. Long story short, I make and design software products for a range of people. Previously at Credit Karma, Genies, Code & Theory, and Mayvenn Hair. Now, by the grace of God, luck, and capitalism - for myself :)
+               I&apos;m a 🇰🇷 country girl with the privilege of growing up in cities around the {GLOBE_EMOJIS[globeEmojiIndex]} because my 🇨🇭 dad was a chef at fancy hotels. I became the first in my fam to graduate high school, move to 🇺🇸, get a degree, and work my way into Silicon Valley through a series of mistakes and happy accidents. Long story short, I make and design software products for a range of people. Previously at Credit Karma, Genies, Code & Theory, and Mayvenn Hair. Now, by the grace of God, luck, and capitalism - for myself 🙏
               </p>
               <br />
               <p style={{ marginTop: 0 }}>
@@ -1192,7 +1202,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                   <p>
                    <strong>The unbridled scaling power of software often comes at the cost of good user experience. </strong>
                     {" "}
-                    Why sacrifice quality & precision when speed is baked-in and decisions affect so many people? <br /><br />
+                    Why sacrifice quality, precision & creativity when speed is baked-in and distribution accessible? <br /><br />
                   </p>
                 </li>
                 <li>
@@ -1207,15 +1217,19 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
 
               <p style={{ marginTop: 24 }}>
+                I also began hosting some really fun trips and parties but this would come into play later, to my own surprise 👼 
+              </p>
+
+              <p style={{ marginTop: 24 }}>
                 For 5 years I had a window into a great CEO named Kenneth J. Lin as he
                 built an $8B business that protected people
                 from financial predation, empowered them with transparency and optionality,
-                prioritized employee health and equity, while co-sponsoring the Houston Rockets, aid civic participation,
+                significantly prioritized employee health and equity, while co-sponsoring the Houston Rockets, aid civic participation,
                 and <em>PRINT</em> money for shareholders.
                 </p>
                 
               <p style={{ marginTop: 24 }}>
-                Quietly, no ego.
+                Quietly, no ego 💪
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1223,9 +1237,13 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 extend financial progress to many, many people, the
                 American Dream is still not within reach for most and no "app" can fix that.
                It&apos;s a
-                systemic problem with many tendrils but ultimately housed under "Money"; <strong>the internet, and now AI, has made shareholder value so easy to
+                systemic problem with many tendrils but ultimately housed under roof if we follow the money.</p>
+              
+              <p style={{ marginTop: 24 }}>
+              <strong>The internet, and now AI, has made shareholder value so easy to
                 unlock but neither wages nor social safety nets evolve at the same rate.</strong>
                 </p>
+
               <p style={{ marginTop: 24 }}>
                 <img src="/images/prodwages.png" alt="Productivity has grown 2.7x as much as pay" className="h-auto w-full rounded-[22px]" />
               </p>
@@ -1233,14 +1251,14 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 className="px-[16px] text-center text-[10px] leading-4 tracking-[0.01em] text-white/30 sm:text-[11px]"
                 style={{ marginTop: 8 }}
               >
-                Productivity has grown 2.7x as much as pay. How will this chart look 20 years from now?  
+                Productivity has grown 2.7x as much as pay. How will this chart look in 20 years?  
               </p>
 
               <p style={{ marginTop: 24 }}>
                 Don't these priorities feel backwards? America is about <strong>freedom</strong>{" "} and <em>personal liberty;</em>{" "} yet we have prioritized business health at the sacrifice of everyday people's cortisol. Insult to injury, we shame and punish people simply asking for less violence. </p>
                   
               <p style={{ marginTop: 24 }}>
-                With all the privileges afforded by tech, I've tried to be conscious of where energy goes. Personal sustainability is behaviour and the everyday choices we make. Easier said than done, FR FR. So I've hit a ceiling with financial empowerment software; how else might I be useful? <strong>How are people otherwise empowered today to feel good, strong, loving, lovable, and generous? </strong> 
+                With all the privileges afforded by tech, I've tried to be conscious of where energy goes. Easier said than done, FR FR. So I've hit a ceiling with financial empowerment software; how else might I be useful? <strong>How are people otherwise empowered today to feel good, strong, loving, lovable, and generous? </strong> 
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1250,11 +1268,11 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 className="px-[16px] text-center text-[10px] leading-4 tracking-[0.01em] text-white/30 sm:text-[11px]"
                 style={{ marginTop: 8 }}
               >
-                There's a fuck tonne of work that goes into communication, constantly evolving in context. Does it require logic and practicality? Is it's purpose to bond and connect on a deeper emotional level? Within, approach and style varies. Not to mention! Categories: Verbal, body language, referential, linguistic, spiritual. Leaving is also privilege. For me, work helped.
+                There's a fuck tonne of work that goes into communication, constantly evolving in context. Does it require logic and practicality? Is it's purpose incite action or to bond and connect on a deeper level? Within, approach and style varies. Not to mention! Categories: Verbal, body language, referential, linguistic, spiritual. Leaving is also privilege. For me, work helped.
               </p>
 
               <p style={{ marginTop: 24 }}>
-              If social connection empowers, let's look at how we connect online today. The largest consumer social (non-retail) software is Meta.
+              Apparently social connection empowers. So, let's look at how we connect online today. The largest consumer social (non-retail) software is Meta.
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1263,9 +1281,9 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 company became a content business, which is great for the brilliant
                 and baddie creatives pioneering careers in a new world, but awful
                 for our attention spans since the machine incentivizes production
-                volume and therefore, organic content must punch through the noise using rage and
-                scandal to be noticed. All of this is a system that at best keeps us checked in, at worst normalizes
-                a digital culture hinged on external validation to generate self-worth, identity and relationships naturally. Also like... are we really gonna decide another election based on adspend again?
+                volume and therefore, organic content must punch through the noise often using rage and
+                scandal to be noticed. All of this is a system that at best keeps us checked in and creative, at worst normalizes
+                a digital culture hinged on external validation to generate self-worth, identity and default relationships to parasocialism. Also like... are we really gonna decide another election based on adspend again?
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1285,15 +1303,14 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
 
               <p style={{ marginTop: 24 }}>
                 Our other connection tool is dating and, idk. I just think we
-                 outgrew the dating apps but don&apos;t really have another
-                choice, especially now.
+                 outgrew the dating apps but don&apos;t really have better alternatives, especially now.
               </p>
 
               <p style={{ marginTop: 24 }}>
-                So began the quest to redesign Social (why not?!). After failing in 2021 to
-                build the Social x Finance app I lovingly named "Karmic
+                So began the quest to redesign Social (soops chill, ik). After failing in 2021 to
+                build the Social x Finance app I called "Karmic
                 Vision", I left the fintech world in SF and launched an app at a
-                hot social startup in LA in 2023. That didn&apos;t work out either. But the scales
+                hot social startup in LA in 2023. That didn&apos;t work out either! But the scales
                 tipped and I focused next on Online x Offline prototypes, then on
                 Social x Dating. What if your friends were involved in your dating
                 app? We already give each other our phones at
@@ -1301,10 +1318,10 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
 
               <p style={{ marginTop: 24 }}>
-                I spent most of 2024 alchemizing the first round of feedback into a
+                I spent most of 2024 alchemizing the first round of design feedback into a
                 functional prototype, iterating with women in LA and Pasadena. By
                 the end of the year, I sunsetted the app to redesign it from the
-                ground up with every learned insight, rebranded our marketing, while
+                ground up with every learned insight, rebranded marketing, while
                 learning how to vibe code poorly with nascent AI
                 tools until I hit a wall and got professional + specialized help
                 to launch our not-so-basic MVP on the App Store in 2025. Post-launch
