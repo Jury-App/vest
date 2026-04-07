@@ -42,6 +42,8 @@ const MOBILE_LOGO_KEY_MIN = 18;
 const MOBILE_LOGO_KEY_MAX = 84;
 const GLOBE_EMOJIS = ["🌏", "🌍", "🌎"] as const;
 const GLOBE_EMOJI_INTERVAL_MS = 900;
+const SECRET_LINK_URL = "https://nicoleyoung.substack.com/p/what-happened-tldr";
+const MOBILE_SECRET_PEEK_MS = 2400;
 
 
 type ObjectKey =
@@ -892,6 +894,21 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
     };
   }, []);
 
+  const clearMobileSecretPeekTimeout = () => {
+    if (mobilePeekTimeoutRef.current != null) {
+      window.clearTimeout(mobilePeekTimeoutRef.current);
+      mobilePeekTimeoutRef.current = null;
+    }
+  };
+
+  const scheduleMobileSecretPeekReset = () => {
+    clearMobileSecretPeekTimeout();
+    mobilePeekTimeoutRef.current = window.setTimeout(() => {
+      setFlashlightPosition((current) => ({ ...current, active: false }));
+      mobilePeekTimeoutRef.current = null;
+    }, MOBILE_SECRET_PEEK_MS);
+  };
+
   const handleSecretRevealMove = (event: PointerEvent<HTMLDivElement>) => {
     const bounds = event.currentTarget.getBoundingClientRect();
     if (bounds.width === 0 || bounds.height === 0) return;
@@ -907,15 +924,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
     if (!isMobile) return;
 
     handleSecretRevealMove(event);
-
-    if (mobilePeekTimeoutRef.current != null) {
-      window.clearTimeout(mobilePeekTimeoutRef.current);
-    }
-
-    mobilePeekTimeoutRef.current = window.setTimeout(() => {
-      setFlashlightPosition((current) => ({ ...current, active: false }));
-      mobilePeekTimeoutRef.current = null;
-    }, 300);
+    scheduleMobileSecretPeekReset();
   };
 
   return (
@@ -1442,7 +1451,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               }}
             >
               <div
-                className="pointer-events-auto"
+                className="pointer-events-auto flex flex-col items-center"
                 onPointerDown={handleSecretRevealPointerDown}
                 onPointerEnter={isMobile ? undefined : handleSecretRevealMove}
                 onPointerMove={isMobile ? undefined : handleSecretRevealMove}
@@ -1480,14 +1489,26 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                   <span className="flashlight-reveal__base">
                     Thank you for your service
                   </span>
-                  <span
-                    aria-hidden="true"
-                    className="flashlight-reveal__secret"
-                  >
+                  <span className="flashlight-reveal__secret">
                     <span className="block">Fuck you,</span>
                     <span className="block">Pay me</span>
                   </span>
                 </h2>
+                <a
+                  className="secret-drawer-link"
+                  href={SECRET_LINK_URL}
+                  rel="noreferrer"
+                  target="_blank"
+                  style={{
+                    opacity: flashlightPosition.active ? 1 : 0,
+                    pointerEvents: flashlightPosition.active ? "auto" : "none",
+                    transform: flashlightPosition.active
+                      ? "translateY(0)"
+                      : "translateY(-8px)",
+                  }}
+                >
+                  Are you fucking kidding me?
+                </a>
               </div>
             </div>
 
