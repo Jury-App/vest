@@ -770,7 +770,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
   );
   const desktopScale =
     viewport.width && viewport.height
-      ? Math.min(
+      ? Math.max(
           viewport.width / DESKTOP_SCENE_WIDTH,
           viewport.height / DESKTOP_SCENE_HEIGHT
         )
