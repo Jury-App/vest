@@ -159,7 +159,7 @@ export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
     {
       question: "What is the Jury Community Fund?",
       answer:
-        "The Community Fund is a way for non-wealthy and non-institutional friends (and friends of friends) to invest in Jury as we hard-launch, build and grow. We are opening a single cap table line item via Reg D 506(b) which allows up to 35 non-accredited sophisticated investors (financially literate, risk-aware, and below $250,000 annual income) and unlimited checks from accredited investors.",
+        "The Community Fund is a way for non-wealthy and non-institutional friends (and friends of friends) to invest in Jury as we hard-launch, keep building and grow. We are opening a single cap table line item via Reg D 506(b) which allows up to 35 non-accredited sophisticated investors (financially literate, risk-aware, and below $250,000 annual income) and unlimited checks from accredited investors.",
     },
     {
       question: "What are the terms?",
@@ -190,7 +190,7 @@ export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
             >
               here
             </button>{" "}
-            to submit your payment through Stripe. We'll follow up with a SAFE agreement and the necessary paperwork.
+            to submit your deposit through Stripe. We'll follow up to schedule a 20 minute call and if approved (bidrectionally), send you a SAFE agreement and the necessary paperwork. If not mutually approved, we'll refund you within 30 days of written notice.
           </p>
         </div>
       ),
@@ -231,17 +231,11 @@ export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
           paddingBottom: "64px",
         }}
       >
-        <a
-          href="https://nicoleyoung.substack.com/p/what-happened-tldr"
-          rel="noreferrer"
-          target="_blank"
-        >
-          <img
-            alt="Punctuation mark"
-            className="h-auto w-[72px] cursor-pointer md:w-[108px]"
-            src="/assets/punct.png"
-          />
-        </a>
+        <img
+          alt="Punctuation mark"
+          className="h-auto w-[72px] md:w-[108px]"
+          src="/assets/punct.png"
+        />
       </div>
     </div>
   );

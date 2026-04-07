@@ -1217,7 +1217,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
 
               <p style={{ marginTop: 24 }}>
-                I also began hosting some really fun trips and parties but this would come into play later, to my own surprise 👼 
+                I also began hosting some epic trips and parties but this would come into play later 👼 
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1237,7 +1237,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 extend financial progress to many, many people, the
                 American Dream is still not within reach for most and no "app" can fix that.
                It&apos;s a
-                systemic problem with many tendrils but ultimately housed under roof if we follow the money.</p>
+                systemic problem with many tendrils but ultimately housed under one roof if we follow the money.</p>
               
               <p style={{ marginTop: 24 }}>
               <strong>The internet, and now AI, has made shareholder value so easy to
@@ -1319,10 +1319,10 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
 
               <p style={{ marginTop: 24 }}>
                 I spent most of 2024 alchemizing the first round of design feedback into a
-                functional prototype, iterating with women in LA and Pasadena. By
+                React/Firebase prototype, iterating with women in LA and Pasadena. By
                 the end of the year, I sunsetted the app to redesign it from the
                 ground up with every learned insight, rebranded marketing, while
-                learning how to vibe code poorly with nascent AI
+                learning how to vibe code Swift poorly with nascent AI
                 tools until I hit a wall and got professional + specialized help
                 to launch our not-so-basic MVP on the App Store in 2025. Post-launch
                 was a flurry of "oh shit, gotta fix this" while getting folks to try
