@@ -18,6 +18,10 @@ function getFromEmail() {
   return requireEnv("RESEND_FROM_EMAIL");
 }
 
+function getReplyToEmail() {
+  return "nicole@meetjury.com";
+}
+
 interface EmailParams {
   email: string;
   name: string;
@@ -46,6 +50,7 @@ async function sendEmail({
 }) {
   return getResendClient().emails.send({
     from: getFromEmail(),
+    replyTo: getReplyToEmail(),
     to,
     subject,
     html,
