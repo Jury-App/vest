@@ -138,6 +138,53 @@ function FAQItem({
   );
 }
 
+function Countdown() {
+  const [remaining, setRemaining] = useState<{
+    d: number;
+    h: number;
+    m: number;
+    s: number;
+  } | null>(null);
+
+  useEffect(() => {
+    const target = new Date("2026-04-30T23:59:59").getTime();
+    const update = () => {
+      const diff = Math.max(0, target - Date.now());
+      const d = Math.floor(diff / 86_400_000);
+      const h = Math.floor((diff % 86_400_000) / 3_600_000);
+      const m = Math.floor((diff % 3_600_000) / 60_000);
+      const s = Math.floor((diff % 60_000) / 1_000);
+      setRemaining({ d, h, m, s });
+    };
+    update();
+    const id = setInterval(update, 1_000);
+    return () => clearInterval(id);
+  }, []);
+
+  if (remaining === null) return null;
+
+  const pad = (n: number) => String(n).padStart(2, "0");
+
+  return (
+    <div className="text-center" style={{ color: "#ffffff" }}>
+      <p
+        className="font-extrabold tracking-tight"
+        style={{ fontSize: "clamp(1.4rem, 4vw, 2.8rem)" }}
+      >
+        {remaining.d}d:{pad(remaining.h)}h:{pad(remaining.m)}m:{pad(remaining.s)}s
+      </p>
+      <p
+        style={{
+          fontSize: "clamp(0.875rem, 2vw, 1.125rem)",
+          marginTop: "8px",
+        }}
+      >
+        to bring Jury back!
+      </p>
+    </div>
+  );
+}
+
 export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
   const [expandedPanel, setExpandedPanel] = useState<string | false>("panel-0");
   const [isMobile, setIsMobile] = useState(false);
@@ -257,6 +304,8 @@ export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
           src="/assets/punct.png"
         />
       </div>
+
+      <Countdown />
     </div>
   );
 }
