@@ -266,7 +266,7 @@ export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
 
   return (
     <div
-      className="mx-auto w-full max-w-[860px] space-y-8"
+      className="mx-auto w-full max-w-[860px]"
       style={{
         paddingLeft: isMobile ? "16px" : "0px",
         paddingRight: isMobile ? "16px" : "0px",
