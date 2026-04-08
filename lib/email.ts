@@ -71,6 +71,7 @@ export async function sendPaymentReceivedEmail({ email, name, amountCents }: Ema
     subject: "Your Jury investment deposit is in!",
     text: `Hi ${name}, we received your ${amount ?? "investment"} deposit. Thank you for your support! The early buy-in means a lot. So this is how things are gonna go; Let's start with a quick hello and go over any fine details. I'll send you more info once that's booked, and then follow up with SAFE agreements once mutually confirmed! If not, your money is refunded. Schedule 15m here: ${schedulingUrl}`,
     html: `<p>Hi ${name}, we received your ${amount ?? "investment"} deposit. Thank you for your support! The early buy-in means a lot. So this is how things are gonna go; Let's start with a quick hello and go over any fine details. I'll send you more info once that's booked, and then follow up with SAFE agreements once mutually confirmed! If not, your money is refunded. <a href="${schedulingUrl}">Schedule 15m here.</a></p>`,
+  });
 }
 
 export async function sendInvestmentApprovedEmail({
