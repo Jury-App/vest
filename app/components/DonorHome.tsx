@@ -59,7 +59,7 @@ export default function DonorHome({
 
   return (
     <div
-      className="fixed inset-0 flex flex-col items-center justify-center bg-black px-6 text-center"
+      className="fixed inset-0 flex flex-col items-center justify-center bg-black px-4 text-center"
       style={{ height: "100dvh" }}
     >
       <p
