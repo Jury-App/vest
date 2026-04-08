@@ -82,7 +82,7 @@ export default function ContentSection() {
           <div
             style={{
               transform: `translateY(${copyOffset}px)`,
-              transition: "transform 120ms linear",
+              transition: "transform 220ms cubic-bezier(0.25, 0.1, 0.25, 1)",
               willChange: "transform",
               marginTop: "42px",
               paddingLeft: isMobile ? "16px" : "0px",

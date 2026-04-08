@@ -403,6 +403,8 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
     active: false,
   });
   const progressRef = useRef(0);
+  const targetProgressRef = useRef(0);
+  const lerpFrameRef = useRef(0);
   const touchYRef = useRef<number | null>(null);
   const mobilePeekTimeoutRef = useRef<number | null>(null);
   const logoVideoRef = useRef<HTMLVideoElement>(null);
@@ -522,22 +524,50 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
   const maxHeroProgress = BASE_MAX_HERO_PROGRESS + timelineShift + downstreamTimelineShift;
 
   useEffect(() => {
-    const updateProgress = (delta: number) => {
-      const next = clamp(progressRef.current + delta, 0, maxHeroProgress);
-      progressRef.current = next;
-      setProgress(next);
+    const LERP_SPEED = 0.18;
+    const LERP_EPSILON = 0.0001;
+
+    const nudgeTarget = (delta: number) => {
+      targetProgressRef.current = clamp(
+        targetProgressRef.current + delta,
+        0,
+        maxHeroProgress
+      );
+      startLerp();
+    };
+
+    const startLerp = () => {
+      if (lerpFrameRef.current) return;
+      const tick = () => {
+        const current = progressRef.current;
+        const target = targetProgressRef.current;
+        const diff = target - current;
+
+        if (Math.abs(diff) < LERP_EPSILON) {
+          progressRef.current = target;
+          setProgress(target);
+          lerpFrameRef.current = 0;
+          return;
+        }
+
+        const next = current + diff * LERP_SPEED;
+        progressRef.current = next;
+        setProgress(next);
+        lerpFrameRef.current = requestAnimationFrame(tick);
+      };
+      lerpFrameRef.current = requestAnimationFrame(tick);
     };
 
     const atTop = () => window.scrollY <= 0;
     const finalStageAtTop = () =>
       (finalStageScrollRef.current?.scrollTop ?? 0) <= 0;
     const shouldReverseHero = (deltaY: number) =>
-      progressRef.current > 0 && atTop() && finalStageAtTop() && deltaY < 0;
+      targetProgressRef.current > 0 && atTop() && finalStageAtTop() && deltaY < 0;
 
     const handleWheel = (event: WheelEvent) => {
-      if (progressRef.current < maxHeroProgress || shouldReverseHero(event.deltaY)) {
+      if (targetProgressRef.current < maxHeroProgress || shouldReverseHero(event.deltaY)) {
         event.preventDefault();
-        updateProgress(event.deltaY / 2200);
+        nudgeTarget(event.deltaY / 2200);
       }
     };
 
@@ -551,8 +581,8 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
 
       const delta = touchYRef.current - currentY;
       const shouldControlHero =
-        progressRef.current < maxHeroProgress ||
-        (progressRef.current > 0 && atTop() && finalStageAtTop() && delta < 0);
+        targetProgressRef.current < maxHeroProgress ||
+        (targetProgressRef.current > 0 && atTop() && finalStageAtTop() && delta < 0);
 
       if (!shouldControlHero) {
         touchYRef.current = currentY;
@@ -561,7 +591,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
 
       event.preventDefault();
       touchYRef.current = currentY;
-      updateProgress(delta / 900);
+      nudgeTarget(delta / 900);
     };
 
     const handleTouchEnd = () => {
@@ -578,6 +608,10 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("touchend", handleTouchEnd);
+      if (lerpFrameRef.current) {
+        cancelAnimationFrame(lerpFrameRef.current);
+        lerpFrameRef.current = 0;
+      }
     };
   }, [maxHeroProgress]);
 
