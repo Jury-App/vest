@@ -388,7 +388,7 @@ export default function PaymentModal({ onSuccess, onClose }: PaymentModalProps) 
               >
                 {step === "amount"
                   ? "Minimum investment is $2,500 and the maximum is $999,999."
-                  : "We use your name and email to identify your investment and send SAFE paperwork. If paperwork and verification is incomplete, your money will be refunded within 30 days of written failed approval notice."}
+                  : "We use your name and email to identify your investment and send SAFE paperwork. If paperwork and verification is incomplete, your money will be refunded immediately."}
               </p>
             </div>
           ) : (

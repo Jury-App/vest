@@ -201,8 +201,7 @@ export function FAQSection({ onInvest }: FAQSectionProps) {
             to submit your payment which is processed through Stripe. We&apos;ll
             follow up and send you a SAFE agreement and necessary paperwork. If
             for whatever reason we cannot proceed due to i) a filled round or
-            ii) audit risk, we will refund you within 30 days of written
-            acceptance decision.
+            ii) audit risk, we will refund your money immediately.
           </p>
           <p>Reach out to nicole@meetjury.com for questions.</p>
         </div>
