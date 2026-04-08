@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Jury; Private Investment Invite",
+  title: "Jury; Investor Invite",
   description: "Invest in what matters",
   robots: {
     index: false,
