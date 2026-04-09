@@ -207,7 +207,7 @@ export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
       question: "What is the Jury Community Pool?",
       answer: (
         <p>
-          The Community Pool is a way for non-wealthy and non-institutional
+          The Community Pool is a way for
           friends (and friends of friends) to invest in{" "}
           <a
             className="underline underline-offset-2"
