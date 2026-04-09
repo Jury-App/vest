@@ -254,7 +254,7 @@ export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
             >
               here
             </button>{" "}
-            to submit your refundable investment reservation through Stripe and receive SAFE drafts. We'll follow up with a 15 minute call and if mutually approved, finalize paperwork then you're in!
+            to submit your refundable investment reservation through Stripe and receive SAFE drafts. We'll follow up with a 15 minute call and if mutually greenlit, finalize paperwork then you're in!
           </p>
           <p style={{ paddingTop: 24 }}>
             Thank you for the early support!!!
