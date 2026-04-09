@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import type { InvestmentRow } from "@/lib/supabase";
 import { absoluteUrl } from "@/lib/site";
+import { generateSafeDraftPdf } from "@/lib/safe-pdf";
 
 function requireEnv(name: string) {
   const value = process.env[name];
@@ -48,11 +49,16 @@ async function sendEmail({
   subject,
   html,
   text,
+  attachments,
 }: {
   to: string;
   subject: string;
   html: string;
   text: string;
+  attachments?: Array<{
+    filename: string;
+    content: string;
+  }>;
 }) {
   return getResendClient().emails.send({
     from: getFromEmail(),
@@ -61,6 +67,7 @@ async function sendEmail({
     subject,
     html,
     text,
+    attachments,
   });
 }
 
@@ -93,6 +100,17 @@ export async function sendSafeDraftEmail({
 }: EmailParams) {
   const amount = formatAmount(amountCents) ?? "your indicated investment amount";
   const referenceLine = investorReference ? `Investor reference: ${investorReference}` : null;
+  const safeDraftPdf = await generateSafeDraftPdf({
+    investorName: name,
+    investorEmail: email,
+    amountCents: amountCents ?? 0,
+    investorReference,
+  });
+  const attachmentName =
+    name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "") || "investor";
 
   await sendEmail({
     to: email,
@@ -100,7 +118,7 @@ export async function sendSafeDraftEmail({
     text: [
       `Hi ${name},`,
       "",
-      `Attached below is your draft SAFE summary for a proposed ${amount} investment in ${COMPANY_NAME}.`,
+      `Attached is your draft SAFE agreement PDF for a proposed ${amount} investment in ${COMPANY_NAME}.`,
       "",
       "Draft SAFE terms:",
       `- Investor: ${name}`,
@@ -119,7 +137,7 @@ export async function sendSafeDraftEmail({
       .join("\n"),
     html: [
       `<p>Hi ${name},</p>`,
-      `<p>Attached below is your draft SAFE summary for a proposed <strong>${amount}</strong> investment in <strong>${COMPANY_NAME}</strong>.</p>`,
+      `<p>Attached is your draft SAFE agreement PDF for a proposed <strong>${amount}</strong> investment in <strong>${COMPANY_NAME}</strong>.</p>`,
       "<p><strong>Draft SAFE terms</strong></p>",
       "<ul>",
       `<li>Investor: ${name}</li>`,
@@ -135,6 +153,12 @@ export async function sendSafeDraftEmail({
     ]
       .filter(Boolean)
       .join(""),
+    attachments: [
+      {
+        filename: `jury-safe-draft-${attachmentName}.pdf`,
+        content: safeDraftPdf.toString("base64"),
+      },
+    ],
   });
 }
 
