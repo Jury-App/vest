@@ -75,7 +75,7 @@ export default function DonorHome({
         ${formatted}
       </p>
       <p className="max-w-md text-sm text-white/60" style={{ marginTop: "42px" }}>
-        Your investment will be confirmed after diligence is all done! Check {investment.email} for next steps! If this process is not completed successfully, your money will be refunded immediately. Remember that we have a right to refuse service.
+       <strong> Thank you for your investment reservation! </strong>{" "}Your investment will be confirmed after diligence is all done! Check {investment.email} for next steps! Remember that this is a mutual agreement; and refundable :)
       </p>
     </div>
   );

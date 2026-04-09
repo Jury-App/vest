@@ -94,7 +94,7 @@ export default function ContentSection() {
             Along the way I noticed some paradoxical truths;
             </p>
 
-            <ol className="list-decimal space-y-4 pl-5">
+            <ol className="list-decimal pl-5">
               <li>
                 <p>
                   Good technology is magic. It is literal witchcraft but bad

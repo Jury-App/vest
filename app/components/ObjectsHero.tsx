@@ -1229,7 +1229,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               Along the way I noticed some common paradoxical truths!
               </p>
               <ol
-                className="list-decimal space-y-4 pl-6"
+                className="list-decimal pl-6"
                 style={{ marginTop: 24, marginLeft: isMobile ? 12 : 24 }}
               >
                 <li>
@@ -1350,7 +1350,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
 
               <p style={{ marginTop: 24 }}>
-                So began the quest to redesign Social (soops chill, ik). After failing in 2021 to
+                So began the quest to redesign Social (v chill, sorry ik). After failing in 2021 to
                 build the Social x Finance app I called "Karmic
                 Vision", I left the fintech world in SF and launched an app at a
                 hot social startup in LA in 2023. That didn&apos;t work out either! But the scales
@@ -1415,7 +1415,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               <p style={{ marginTop: 24 }}>
                 The good news; the most important thing that needed to happen (for
                 that stage) happened. In Q1 2026, we saw a 2.5x viral coefficient out the gate
-                without using any paid acquisition, which indicates we built an experience that earns people's trust and will, at least partially, convert - sight unseen. An important accelerator given the cold-start network dynamics of marketplace products (of which we seemingly claim triple-sided) and scaling power laws.
+                without using any paid acquisition, which indicates we built an experience that earns people's trust and will, at least partially, convert - sight unseen. An important accelerator given the cold-start network dynamics of marketplace products (of which we seemingly claim triple-sided) and opportunity of scaling power laws.
               </p>
 
               <p style={{ marginTop: 24 }}>

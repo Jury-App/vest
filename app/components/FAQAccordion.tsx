@@ -254,10 +254,10 @@ export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
             >
               here
             </button>{" "}
-            to submit your deposit through Stripe. We'll follow up to schedule a 20 minute call and if approved (bidrectionally), send you a SAFE agreement and the necessary paperwork.
+            to submit your refundable investment reservation through Stripe and receive SAFE drafts. We'll follow up with a 15 minute call and if mutually approved, finalize paperwork then you're in!
           </p>
           <p style={{ paddingTop: 24 }}>
-            If not mutually approved, we'll refund you immediately.
+            Thank you for the early support!!!
           </p>
         </div>
       ),
