@@ -208,7 +208,7 @@ export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
       answer: (
         <p>
           The Community Pool is a way for
-          friends (and friends of friends) to invest in{" "}
+          friends, friends of friends, and anyone who's been following my journey to invest in{" "}
           <a
             className="underline underline-offset-2"
             href="https://meetjury.com"
