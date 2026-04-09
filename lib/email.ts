@@ -133,9 +133,9 @@ export async function sendPaymentReceivedEmail({
       .join("\n"),
     html: [
       `<p>Hi ${name},</p>`,
-      `<p>We received your <strong>${resolvedAmount}</strong> deposit. Thank you for your support!</p>`,
+      `<p>We received your investment reservation. Thank you for your support!</p>`,
       `<p>Attached is your draft SAFE agreement PDF for a proposed <strong>${resolvedAmount}</strong> investment in <strong>${COMPANY_NAME}</strong>.</p>`,
-      "<p><strong>Draft SAFE terms</strong></p>",
+      "<p><strong>SAFE terms</strong></p>",
       "<ul>",
       `<li>Investor: ${name}</li>`,
       `<li>Company: ${COMPANY_NAME}</li>`,
