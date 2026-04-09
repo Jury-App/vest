@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
-import { createInvestment, upsertDonor } from "@/lib/investor-ops";
+import {
+  createInvestment,
+  sendDraftSafeForInvestment,
+  upsertDonor,
+} from "@/lib/investor-ops";
 import { findOrCreateCustomer, stripe } from "@/lib/stripe";
 
 export async function POST(req: Request) {
@@ -63,6 +67,14 @@ export async function POST(req: Request) {
       stripePaymentIntentId: paymentIntent.id,
       investorReference,
       amount,
+    });
+
+    await sendDraftSafeForInvestment({
+      investmentId: investment.id,
+      email: normalizedEmail,
+      name: normalizedName,
+      amountCents: amount,
+      investorReference,
     });
 
     return NextResponse.json({

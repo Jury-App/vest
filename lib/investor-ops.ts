@@ -11,6 +11,7 @@ import {
   sendNewMagicLinkEmail,
   sendPaymentFailedEmail,
   sendPaymentReceivedEmail,
+  sendSafeDraftEmail,
 } from "@/lib/email";
 import { absoluteUrl } from "@/lib/site";
 
@@ -126,6 +127,50 @@ export async function createInvestment({
 
   if (error) throw new Error(error.message);
   return data;
+}
+
+export async function sendDraftSafeForInvestment({
+  investmentId,
+  email,
+  name,
+  amountCents,
+  investorReference,
+}: {
+  investmentId: string;
+  email: string;
+  name: string;
+  amountCents: number;
+  investorReference?: string;
+}) {
+  const admin = createSupabaseAdminClient();
+  const { data: investment, error } = await admin
+    .from("investments")
+    .select("*")
+    .eq("id", investmentId)
+    .single<InvestmentRow>();
+
+  if (error) throw new Error(error.message);
+  if (investment.pending_email_sent_at) return investment;
+
+  await sendSafeDraftEmail({
+    email,
+    name,
+    amountCents,
+    investorReference,
+  });
+
+  const { data: updatedInvestment, error: updateError } = await admin
+    .from("investments")
+    .update({
+      pending_email_sent_at: new Date().toISOString(),
+      paperwork_status: "sent",
+    })
+    .eq("id", investmentId)
+    .select("*")
+    .single<InvestmentRow>();
+
+  if (updateError) throw new Error(updateError.message);
+  return updatedInvestment;
 }
 
 function toInternalPaymentStatus(status: Stripe.PaymentIntent.Status): PaymentStatus {

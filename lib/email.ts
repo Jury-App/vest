@@ -27,7 +27,13 @@ interface EmailParams {
   name: string;
   amountCents?: number;
   magicLink?: string;
+  investorReference?: string;
 }
+
+const SAFE_GUIDE_URL =
+  "https://bookface-static.ycombinator.com/assets/ycdc/Website%20User%20Guide%20Feb%202023%20-%20final-28acf9a3b938e643cc270b7da514194d5c271359be25b631b025605673fa9f95.pdf";
+const COMPANY_NAME = "Jury App Inc.";
+const SAFE_VALUATION_CAP = "$12,000,000";
 
 function formatAmount(amountCents?: number) {
   if (typeof amountCents !== "number") return null;
@@ -76,6 +82,59 @@ export async function sendPaymentReceivedEmail({ email, name, amountCents }: Ema
     subject: "Your Jury investment deposit is in!",
     text: `Hi ${name}, we received your ${amount ?? "investment"} deposit. Thank you for your support! The early buy-in means a lot. So this is how things are gonna go; Let's start with a quick hello and go over any fine details. I'll send you more info once that's booked, and then follow up with SAFE agreements once mutually confirmed! If not, your money is refunded. Schedule 15m here: ${schedulingUrl}`,
     html: `<p>Hi ${name}, we received your ${amount ?? "investment"} deposit. Thank you for your support! The early buy-in means a lot. So this is how things are gonna go; Let's start with a quick hello and go over any fine details. I'll send you more info once that's booked, and then follow up with SAFE agreements once mutually confirmed! If not, your money is refunded. <a href="${schedulingUrl}">Schedule 15m here.</a></p>`,
+  });
+}
+
+export async function sendSafeDraftEmail({
+  email,
+  name,
+  amountCents,
+  investorReference,
+}: EmailParams) {
+  const amount = formatAmount(amountCents) ?? "your indicated investment amount";
+  const referenceLine = investorReference ? `Investor reference: ${investorReference}` : null;
+
+  await sendEmail({
+    to: email,
+    subject: `Draft Jury SAFE for ${amount}`,
+    text: [
+      `Hi ${name},`,
+      "",
+      `Attached below is your draft SAFE summary for a proposed ${amount} investment in ${COMPANY_NAME}.`,
+      "",
+      "Draft SAFE terms:",
+      `- Investor: ${name}`,
+      `- Company: ${COMPANY_NAME}`,
+      `- Instrument: Post-Money SAFE`,
+      `- Purchase amount: ${amount}`,
+      `- Valuation cap: ${SAFE_VALUATION_CAP}`,
+      "- Discount: None",
+      "",
+      "This draft is for review and discussion only and is not countersigned or finalized yet.",
+      referenceLine ?? "",
+      "",
+      `SAFE guide: ${SAFE_GUIDE_URL}`,
+    ]
+      .filter(Boolean)
+      .join("\n"),
+    html: [
+      `<p>Hi ${name},</p>`,
+      `<p>Attached below is your draft SAFE summary for a proposed <strong>${amount}</strong> investment in <strong>${COMPANY_NAME}</strong>.</p>`,
+      "<p><strong>Draft SAFE terms</strong></p>",
+      "<ul>",
+      `<li>Investor: ${name}</li>`,
+      `<li>Company: ${COMPANY_NAME}</li>`,
+      "<li>Instrument: Post-Money SAFE</li>",
+      `<li>Purchase amount: ${amount}</li>`,
+      `<li>Valuation cap: ${SAFE_VALUATION_CAP}</li>`,
+      "<li>Discount: None</li>",
+      "</ul>",
+      "<p>This draft is for review and discussion only and is not countersigned or finalized yet.</p>",
+      referenceLine ? `<p>${referenceLine}</p>` : "",
+      `<p><a href="${SAFE_GUIDE_URL}">Read the SAFE guide</a></p>`,
+    ]
+      .filter(Boolean)
+      .join(""),
   });
 }
 
