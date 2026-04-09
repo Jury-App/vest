@@ -11,7 +11,6 @@ import {
   sendNewMagicLinkEmail,
   sendPaymentFailedEmail,
   sendPaymentReceivedEmail,
-  sendSafeDraftEmail,
 } from "@/lib/email";
 import { absoluteUrl } from "@/lib/site";
 
@@ -129,50 +128,6 @@ export async function createInvestment({
   return data;
 }
 
-export async function sendDraftSafeForInvestment({
-  investmentId,
-  email,
-  name,
-  amountCents,
-  investorReference,
-}: {
-  investmentId: string;
-  email: string;
-  name: string;
-  amountCents: number;
-  investorReference?: string;
-}) {
-  const admin = createSupabaseAdminClient();
-  const { data: investment, error } = await admin
-    .from("investments")
-    .select("*")
-    .eq("id", investmentId)
-    .single<InvestmentRow>();
-
-  if (error) throw new Error(error.message);
-  if (investment.pending_email_sent_at) return investment;
-
-  await sendSafeDraftEmail({
-    email,
-    name,
-    amountCents,
-    investorReference,
-  });
-
-  const { data: updatedInvestment, error: updateError } = await admin
-    .from("investments")
-    .update({
-      pending_email_sent_at: new Date().toISOString(),
-      paperwork_status: "sent",
-    })
-    .eq("id", investmentId)
-    .select("*")
-    .single<InvestmentRow>();
-
-  if (updateError) throw new Error(updateError.message);
-  return updatedInvestment;
-}
-
 function toInternalPaymentStatus(status: Stripe.PaymentIntent.Status): PaymentStatus {
   if (status === "succeeded") return "succeeded";
   if (status === "processing") return "processing";
@@ -238,15 +193,21 @@ export async function syncPaymentIntent(paymentIntent: Stripe.PaymentIntent) {
   }
 
   if (paymentStatus === "succeeded" && !investment.received_email_sent_at) {
+    const timestamp = new Date().toISOString();
     await sendPaymentReceivedEmail({
       email: donor.email,
       name: donor.full_legal_name,
       amountCents: investment.amount,
+      investorReference: investment.investor_reference ?? undefined,
     });
 
     await admin
       .from("investments")
-      .update({ received_email_sent_at: new Date().toISOString() })
+      .update({
+        received_email_sent_at: timestamp,
+        pending_email_sent_at: investment.pending_email_sent_at ?? timestamp,
+        paperwork_status: "sent",
+      })
       .eq("id", investment.id);
   }
 

@@ -81,24 +81,15 @@ export async function sendPaymentFailedEmail({ email, name, amountCents }: Email
   });
 }
 
-export async function sendPaymentReceivedEmail({ email, name, amountCents }: EmailParams) {
-  const amount = formatAmount(amountCents);
-  const schedulingUrl = "https://calendly.com/nicole-meetjury/jury-seed";
-  await sendEmail({
-    to: email,
-    subject: "Your Jury investment deposit is in!",
-    text: `Hi ${name}, we received your ${amount ?? "investment"} deposit. Thank you for your support! The early buy-in means a lot. So this is how things are gonna go; Let's start with a quick hello and go over any fine details. I'll send you more info once that's booked, and then follow up with SAFE agreements once mutually confirmed! If not, your money is refunded. Schedule 15m here: ${schedulingUrl}`,
-    html: `<p>Hi ${name}, we received your ${amount ?? "investment"} deposit. Thank you for your support! The early buy-in means a lot. So this is how things are gonna go; Let's start with a quick hello and go over any fine details. I'll send you more info once that's booked, and then follow up with SAFE agreements once mutually confirmed! If not, your money is refunded. <a href="${schedulingUrl}">Schedule 15m here.</a></p>`,
-  });
-}
-
-export async function sendSafeDraftEmail({
+export async function sendPaymentReceivedEmail({
   email,
   name,
   amountCents,
   investorReference,
 }: EmailParams) {
-  const amount = formatAmount(amountCents) ?? "your indicated investment amount";
+  const amount = formatAmount(amountCents);
+  const schedulingUrl = "https://calendly.com/nicole-meetjury/jury-seed";
+  const resolvedAmount = amount ?? "your indicated investment amount";
   const referenceLine = investorReference ? `Investor reference: ${investorReference}` : null;
   const safeDraftPdf = await generateSafeDraftPdf({
     investorName: name,
@@ -114,22 +105,27 @@ export async function sendSafeDraftEmail({
 
   await sendEmail({
     to: email,
-    subject: `Draft Jury SAFE for ${amount}`,
+    subject: "Let's get started!",
     text: [
       `Hi ${name},`,
       "",
-      `Attached is your draft SAFE agreement PDF for a proposed ${amount} investment in ${COMPANY_NAME}.`,
+      `We received your ${resolvedAmount} investment reservation. Thank you!`,
+      "",
+      `Attached is your draft SAFE agreement PDF for a proposed ${resolvedAmount} investment in ${COMPANY_NAME}.`,
       "",
       "Draft SAFE terms:",
       `- Investor: ${name}`,
       `- Company: ${COMPANY_NAME}`,
       `- Instrument: Post-Money SAFE`,
-      `- Purchase amount: ${amount}`,
+      `- Purchase amount: ${resolvedAmount}`,
       `- Valuation cap: ${SAFE_VALUATION_CAP}`,
       "- Discount: None",
       "",
       "This draft is for review and discussion only and is not countersigned or finalized yet.",
+      "Next step: Schedule 15 min to say hey and go over any fine details!",
       referenceLine ?? "",
+      "",
+      `Schedule 15m here: ${schedulingUrl}`,
       "",
       `SAFE guide: ${SAFE_GUIDE_URL}`,
     ]
@@ -137,17 +133,19 @@ export async function sendSafeDraftEmail({
       .join("\n"),
     html: [
       `<p>Hi ${name},</p>`,
-      `<p>Attached is your draft SAFE agreement PDF for a proposed <strong>${amount}</strong> investment in <strong>${COMPANY_NAME}</strong>.</p>`,
+      `<p>We received your <strong>${resolvedAmount}</strong> deposit. Thank you for your support!</p>`,
+      `<p>Attached is your draft SAFE agreement PDF for a proposed <strong>${resolvedAmount}</strong> investment in <strong>${COMPANY_NAME}</strong>.</p>`,
       "<p><strong>Draft SAFE terms</strong></p>",
       "<ul>",
       `<li>Investor: ${name}</li>`,
       `<li>Company: ${COMPANY_NAME}</li>`,
       "<li>Instrument: Post-Money SAFE</li>",
-      `<li>Purchase amount: ${amount}</li>`,
+      `<li>Purchase amount: ${resolvedAmount}</li>`,
       `<li>Valuation cap: ${SAFE_VALUATION_CAP}</li>`,
       "<li>Discount: None</li>",
       "</ul>",
       "<p>This draft is for review and discussion only and is not countersigned or finalized yet.</p>",
+      `<p>Next step: <a href="${schedulingUrl}">Schedule 15 min to say hey</a> and go over any fine details!</p>`,
       referenceLine ? `<p>${referenceLine}</p>` : "",
       `<p><a href="${SAFE_GUIDE_URL}">Read the SAFE guide</a></p>`,
     ]
