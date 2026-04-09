@@ -76,10 +76,12 @@ export async function generateSafeDraftPdf({
   investorName,
   amountCents,
   investorEmail,
+  investorReference,
 }: {
   investorName: string;
   amountCents: number;
   investorEmail: string;
+  investorReference?: string;
 }) {
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage([612, 792]);
@@ -140,6 +142,7 @@ export async function generateSafeDraftPdf({
     ["Company", `${COMPANY_NAME} (${COMPANY_STATE} C Corp)`],
     ["Investor", investorName],
     ["Investor email", investorEmail],
+    ...(investorReference ? ([["Investor reference", investorReference]] as const) : []),
     ["Purchase amount", formatCurrency(amountCents)],
     ["Instrument", SAFE_INSTRUMENT],
     ["Valuation cap", VALUATION_CAP],
