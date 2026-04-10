@@ -217,11 +217,7 @@ export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
           >
             Jury
           </a>{" "}
-          as we hard-launch, keep building and grow. We are opening a single
-          cap table line item via Reg D 506(b) which allows up to 35
-          non-accredited sophisticated investors (financially literate,
-          risk-aware, and below $250,000 annual income) and unlimited checks
-          from accredited investors.
+          as we hard-launch, keep building and grow. 
         </p>
       ),
     },
@@ -229,7 +225,14 @@ export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
       question: "What are the terms?",
       answer: (
         <div className="space-y-4">
-          <p>You're investing in Jury App Inc., a Delaware C Corp. Your investment will consolidate into one SPV managed by a singular lead and structured as a <a className="underline underline-offset-2" href={SAFE_GUIDE_URL} rel="noreferrer" target="_blank">SAFE</a>. The minimum investment is $2,500 and the maximum individual investment is $999,999. Currently, we are offering a $12M valuation cap post-money. Future fundraising may dilute your ownership. Expect a fraction of a percentage, which is standard. You will have no voting rights or control over company decisions.</p>
+          <p>You're investing in Jury App Inc., a Delaware C Corp. The plan is to open a single
+          cap table line item via Reg D 506(b) which allows up to 35
+          non-accredited sophisticated investors (financially literate,
+          risk-aware, and below $250,000 annual income) and unlimited checks
+          from accredited investors. Your investment will be structured as a <a className="underline underline-offset-2" href={SAFE_GUIDE_URL} rel="noreferrer" target="_blank">SAFE</a>. The minimum investment is $2,500 and the maximum individual (non-institutional) investment is $999,999. Currently, we are offering a $12M valuation cap post-money. Future fundraising may dilute your ownership. Expect a fraction of a percentage, which is standard. You will have no voting rights or control over company decisions.
+          </p>
+          <p style={{ paddingTop: 24 }}>
+          Non-accredited investors are first-come, first-serve; total round determined at close on basis of demand if over-subscribed. </p>
         </div>
       ),
     },
@@ -237,7 +240,7 @@ export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
       question: "What are the risks?",
       answer: (
         <div className="space-y-4">
-          <p>Only invest money you can afford to lose entirely. We are an early-stage company with limited operating history and no meaningful revenue. There is no guaranteed return, no liquidity timeline, and no promise that Jury will succeed. The company is dependent on a single person: Founder and CEO. Returns from startup investments typically come from an acquisition, IPO, or secondary sale.</p>
+          <p>Only invest money you can afford to lose entirely. We are an early-stage company with limited operating history and no meaningful revenue. There is no guaranteed return, no liquidity timeline, and no promise that Jury will succeed. The company is dependent on a single person: Founder and CEO. Returns from startup investments typically come from an acquisition, IPO, or secondary sale - which are not guaranteed.  </p>
         </div>
       ),
     },
