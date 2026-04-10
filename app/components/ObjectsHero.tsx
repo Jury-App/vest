@@ -1222,7 +1222,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
           
               <p style={{ marginTop: 24 }}>
-               I&apos;m a 🇰🇷 country girl with the privilege of growing up in cities around the {GLOBE_EMOJIS[globeEmojiIndex]} because my 🇨🇭 dad was a chef at fancy hotels. I became the first in my fam to graduate high school, move to 🇺🇸, get a degree, and work my way into Silicon Valley through a series of mistakes and happy accidents. Long story short, I make and design software products for a range of people. Previously at Credit Karma, Genies, Code & Theory, and Mayvenn Hair. Now, by the grace of God, luck, and capitalism - for myself 🙏
+               I&apos;m a 🇰🇷 country girl with the privilege of growing up in cities around the {GLOBE_EMOJIS[globeEmojiIndex]} because my 🇨🇭 dad was a chef at fancy hotels. 12 years ago, I became the first in my fam to graduate high school, move to 🇺🇸, get a degree, and work my way into Silicon Valley through a series of mistakes and happy accidents. Long story short, I make and design software products for a range of people. Previously at Credit Karma, Genies, Code & Theory, and Mayvenn Hair. Now, by the grace of God, luck, and capitalism - for myself 🙏
               </p>
               <br />
               <p style={{ marginTop: 0 }}>
@@ -1350,7 +1350,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
 
               <p style={{ marginTop: 24 }}>
-                So began the quest to redesign Social (v chill, sorry ik). After failing in 2021 to
+                So began the quest to redesign Social (v chill, ik). After failing in 2021 to
                 build the Social x Finance app I called "Karmic
                 Vision", I left the fintech world in SF and launched an app at a
                 hot social startup in LA in 2023. That didn&apos;t work out either! But the scales
