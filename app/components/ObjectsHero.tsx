@@ -1365,7 +1365,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 React/Firebase prototype, iterating with women in LA and Pasadena. By
                 the end of the year, I sunsetted the app to redesign it from the
                 ground up with every learned insight, rebrand and reposition, while
-                learning how to vibe code Swift poorly with nascent AI
+                learning how to code Swift poorly with nascent AI
                 tools until I hit a wall and got professional + specialized help
                 to launch our not-so-basic MVP on the App Store in 2025. Post-launch
                 was a flurry of "oh shit, gotta fix this" while getting folks to try
