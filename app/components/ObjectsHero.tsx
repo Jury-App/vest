@@ -1222,7 +1222,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
           
               <p style={{ marginTop: 24 }}>
-               I&apos;m a 🇰🇷 country girl with the privilege of growing up in cities around the {GLOBE_EMOJIS[globeEmojiIndex]} because my 🇨🇭 dad was a chef at fancy hotels. 12 years ago, I became the first in my fam to graduate high school, move to 🇺🇸, get a degree, and work my way into Silicon Valley through a series of mistakes and happy accidents. Long story short, I make and design software products for a range of people. Previously at Credit Karma, Genies, Code & Theory, and Mayvenn Hair. Now, by the grace of God, luck, and capitalism - for myself 🙏
+               I&apos;m a 🇰🇷 country girl with the privilege of growing up in cities around the {GLOBE_EMOJIS[globeEmojiIndex]} because my 🇨🇭 dad was a chef at fancy hotels. I became the first in my family to graduate high school, move to 🇺🇸, get a degree, and work my way into Silicon Valley through a series of mistakes and happy accidents. For 10+ years I made and designed software products for a range of people. Previously at Mayvenn Hair, Credit Karma, and Genies. Now, by the grace of God, luck, and grit - for myself.
               </p>
               <br />
               <p style={{ marginTop: 0 }}>
@@ -1260,7 +1260,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
 
               <p style={{ marginTop: 24 }}>
-                I also began hosting some epic trips and parties but this would come into play later 👼 
+                I also began hosting some epic trips and parties but that comes into play later. 
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1277,8 +1277,8 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
 
               <p style={{ marginTop: 24 }}>
                 Despite our best efforts to
-                extend financial progress to many, many people, the
-                American Dream is still not within reach for most and no "app" can fix that.
+                extend financial progress to many, many people,{" "}
+                <s>the American Dream</s> {" "}dignity is still not within reach and no "app" can fix that.
                It&apos;s a
                 systemic problem with many tendrils but ultimately housed under one roof if we follow the money.</p>
               
@@ -1298,10 +1298,10 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
 
               <p style={{ marginTop: 24 }}>
-                Don't these priorities feel backwards? America is about <strong>freedom</strong>{" "} and <em>personal liberty;</em>{" "} yet we have prioritized business health at the sacrifice of everyday people's cortisol. Insult to injury, we shame and punish people simply asking for less violence. </p>
+                Don't these priorities feel backwards? America is about <strong>freedom</strong>{" "} and <em>personal liberty;</em>{" "} yet we have prioritized business health at the sacrifice of everyday people's cortisol. Insult to injury, we reactively shame and proactively punish those seeking better. </p>
                   
               <p style={{ marginTop: 24 }}>
-                With all the privileges afforded by tech, I've tried to be conscious of where energy goes. Easier said than done, FR FR. So I've hit a ceiling with financial empowerment software; how else might I be useful? <strong>How are people otherwise empowered today to feel good, strong, loving, lovable, and generous? </strong> 
+                With all the privileges afforded by tech, I've tried to be conscious of where energy goes. My career is a body of work of service to others, and I'm committed to continue building better digital systems for people. Easier said than done - I'm not always right. But the Big Picture question persists: How else might I be useful? <strong>How are people otherwise empowered today to feel good, strong, loving, lovable, and generous? </strong> 
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1341,7 +1341,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
 
               <p style={{ marginTop: 24 }}>
                 It&apos;s not healthy to be exposed to everything, everyone, all at
-                once, all the time. Especially when more of us are living on spiritual islands, burned out, creating false attachments for cope, and consuming community more than we contribute. It's not sustainable. Plus - with most of the world's software not yet built, why must we harvest revenue from selling people's data? I'm still bullish on a paid version of IG with no ads. Take my money.
+                once, all the time. Especially when more of us are living on spiritual islands, burned out, creating false attachments for cope, judging others in binary codes, and consuming community more than we contribute. It's not sustainable. Plus - with most of the world's software not yet built, why must we harvest revenue from selling people's data? I'm still bullish on a paid version of IG with no ads. Take my money.
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1350,22 +1350,25 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
 
               <p style={{ marginTop: 24 }}>
-                So began the quest to redesign Social (v chill, ik). After failing in 2021 to
-                build the Social x Finance app I called "Karmic
-                Vision", I left the fintech world in SF and launched an app at a
-                hot social startup in LA in 2023. That didn&apos;t work out either! But the scales
+                So began the quest to redesign Social. We have content-focused Social Media, connection-based Social Networks, Social Betting apps, and peer-to-peer payments. My thesis orients on Social Utility; social apps that systemize workflows around being helpful to each other in meaningfully useful ways - while being swaggy, fun & sexy 💁🏻‍♀️✨ 
+                
+              </p>
+              <p style={{ marginTop: 24 }}> After failing in 2021 to
+                build the Social x Finance app we called "Karmic
+                Vision", I left the fintech world and launched an app at a
+                social startup in 2023. That didn&apos;t work out either! But the scales
                 tipped and I focused next on Online x Offline prototypes, then on
                 Social x Dating. What if your friends were involved in your dating
                 app? We already give each other our phones at
-                brunch or send screenshots in the group chat and tell stories at dinner.
+                brunch, send screenshots in the group chat, and tell stories at dinner.
               </p>
 
               <p style={{ marginTop: 24 }}>
-                I spent most of 2024 alchemizing the first round of design feedback into a
+                I spent most of 2024 alchemizing the first round of design R&D feedback into our
                 React/Firebase prototype, iterating with women in LA and Pasadena. By
                 the end of the year, I sunsetted the app to redesign it from the
                 ground up with every learned insight, rebrand and reposition, while
-                learning how to code Swift poorly with nascent AI
+                learning how to code Swift with nascent AI
                 tools until I hit a wall and got professional + specialized help
                 to launch our not-so-basic MVP on the App Store in 2025. Post-launch
                 was a flurry of "oh shit, gotta fix this" while getting folks to try
@@ -1419,7 +1422,9 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
 
               <p style={{ marginTop: 24 }}>
-                But now? There is so much to do. <strong>Jury needs your help.</strong>
+                But now? There is so much to do. <strong>Jury needs your help.</strong> {" "} </p>
+                
+              <p style={{ marginTop: 24 }}>Strike the match; light the fire - let it burn.
               </p>
 
               <p style={{ marginTop: 24 }}>
@@ -1427,7 +1432,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 </p>
                 
                 <p style={{ marginTop: 24 }}>
-                Imagine creating a profile and using that to go out one weekend, then create a new profile with a different crew another weekend. And all the while, we'll keep learning what makes you <em>you</em> - through <em>them</em> 🪞
+                Imagine creating a profile and using that to go out one weekend, then a new profile with a different crew next weekend. All the while, we'll keep learning what makes you <em>you</em> - through <em>them</em> 🪞
               </p>
 
               <p style={{ marginTop: 24 }}>
