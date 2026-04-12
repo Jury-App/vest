@@ -1216,13 +1216,9 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
           >
             <div ref={firstBodyCopyRef}>
             <p style={{ marginTop: 48 }}>Hi,</p>
-              <br />
-              <p>
-                Forgive the recap, but you all are a very mixed group.
-              </p>
           
               <p style={{ marginTop: 24 }}>
-               I&apos;m a 🇰🇷 country girl with the privilege of growing up in cities around the {GLOBE_EMOJIS[globeEmojiIndex]} because my 🇨🇭 dad was a chef at fancy hotels. I became the first in my family to graduate high school, move to 🇺🇸, get a degree, and work my way into Silicon Valley through a series of mistakes and happy accidents. For 10+ years I made and designed software products for a range of people. Previously at Mayvenn Hair, Credit Karma, and Genies. Now, by the grace of God, luck, and grit - for myself.
+               I&apos;m Nicole - a 🇰🇷 country girl with the privilege of growing up in cities around the {GLOBE_EMOJIS[globeEmojiIndex]} because my 🇨🇭 dad was a chef at fancy hotels. I became the first in my family to graduate high school, move to 🇺🇸, get a degree, and work my way into Silicon Valley through a series of mistakes and happy accidents. For 10+ years I made and designed software products for a range of people at Mayvenn Hair, Credit Karma, and Genies. Now, by the grace of God, luck, and grit - for myself.
               </p>
               <br />
               <p style={{ marginTop: 0 }}>
@@ -1346,11 +1342,11 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
 
               <p style={{ marginTop: 24 }}>
                 Our other connection tool is dating and, idk. I just think we
-                 outgrew the dating apps but don&apos;t really have better alternatives, especially now.
+                 outgrew the dating apps but don&apos;t really have differentiated alternatives.
               </p>
 
               <p style={{ marginTop: 24 }}>
-                So began the quest to redesign Social. We have content-focused Social Media, connection-based Social Networks, Social Betting apps, and peer-to-peer payments. My thesis orients on Social Utility; social apps that systemize workflows around being helpful to each other in meaningfully useful ways - while being swaggy, fun & sexy 💁🏻‍♀️✨ 
+                I began the quest to redefine Social. We have content-focused Social Media, connection-based Social Networks, Social Betting apps, and peer-to-peer payments. My thesis orients on Social Utility; social apps that systemize workflows around being helpful to each other in meaningfully useful ways - and are swaggy, sexy & fun 💁🏻‍♀️✨ 
                 
               </p>
               <p style={{ marginTop: 24 }}> After failing in 2021 to
@@ -1369,10 +1365,13 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
                 the end of the year, I sunsetted the app to redesign it from the
                 ground up with every learned insight, rebrand and reposition, while
                 learning how to code Swift with nascent AI
-                tools until I hit a wall and got professional + specialized help
+                tools alongside specialized help
                 to launch our not-so-basic MVP on the App Store in 2025. Post-launch
                 was a flurry of "oh shit, gotta fix this" while getting folks to try
-                the app. Chaos, but hey, live!
+                the app. </p>
+                
+              <p style={{ marginTop: 24 }}>
+                Chaos, but hey, live!
               </p>
 
               <div
@@ -1428,7 +1427,7 @@ export default function ObjectsHero({ onInvest }: { onInvest: () => void }) {
               </p>
 
               <p style={{ marginTop: 24 }}>
-                We built a new Social app that creates group Intelligence from invited friends to make your profile and match you with events and others. If you're dating, meet your Jury-suggested match IRL. If it's not a vibe, that's fine! You're still outside with friends 🥂
+                We built a new Social app that creates group Intelligence from invited friends to make your profile and go outside together. If you're dating, meet your Jury-suggested person IRL. If it's not a vibe, that's fine! You're still outside with friends 🥂
                 </p>
                 
                 <p style={{ marginTop: 24 }}>
