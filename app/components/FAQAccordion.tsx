@@ -251,9 +251,6 @@ export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
           <p>
             Hold that thought.
           </p>
-          <p style={{ paddingTop: 24 }}>
-            Thank you for the early support!!!
-          </p>
         </div>
       ),
     },
