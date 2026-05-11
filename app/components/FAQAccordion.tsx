@@ -225,7 +225,7 @@ export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
       question: "What are the terms?",
       answer: (
         <div className="space-y-4">
-          <p>You're investing in Jury App Inc., a Delaware C Corp. The plan is to open a single
+          <p>You're investing in Jury Inc., a Delaware C Corp & Public Benefit Corporation. The plan is to open a single
           cap table line item via Reg D 506(b) which allows up to 35
           non-accredited sophisticated investors (financially literate,
           risk-aware, and below $250,000 annual income) and unlimited checks
@@ -249,15 +249,7 @@ export default function FAQAccordion({ onInvest }: FAQAccordionProps) {
       answer: (
         <div className="space-y-4">
           <p>
-            Click{" "}
-            <button
-              className="cursor-pointer underline"
-              onClick={onInvest}
-              type="button"
-            >
-              here
-            </button>{" "}
-            to submit your refundable investment reservation through Stripe and receive SAFE drafts. We'll follow up with a 15 minute call and if mutually greenlit, finalize paperwork then you're in!
+            Hold that thought.
           </p>
           <p style={{ paddingTop: 24 }}>
             Thank you for the early support!!!
