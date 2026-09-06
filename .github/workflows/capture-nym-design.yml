@@ -1,0 +1,108 @@
+name: Temporary capture nym.design
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Capture exact published files and rendered references
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p capture/raw capture/mirror capture/rendered
+
+          curl --fail --silent --show-error --location --compressed \
+            --dump-header capture/raw/response-headers.txt \
+            https://www.nym.design/ \
+            --output capture/raw/index.html
+
+          wget \
+            --page-requisites \
+            --convert-links \
+            --adjust-extension \
+            --span-hosts \
+            --domains=www.nym.design,nym.design,cdn.prod.website-files.com,assets.website-files.com,uploads-ssl.webflow.com,d3e54v103j8qbb.cloudfront.net,fonts.googleapis.com,fonts.gstatic.com,ajax.googleapis.com \
+            --directory-prefix=capture/mirror \
+            --restrict-file-names=unix \
+            --execute robots=off \
+            https://www.nym.design/
+
+          npm init -y >/dev/null 2>&1
+          npm install --no-save playwright-core@1.55.0 >/dev/null 2>&1
+
+          cat > capture.cjs <<'NODE'
+          const fs = require('fs');
+          const { chromium } = require('playwright-core');
+          const executablePath = ['/usr/bin/google-chrome','/usr/bin/google-chrome-stable','/usr/bin/chromium','/usr/bin/chromium-browser'].find(fs.existsSync);
+          if (!executablePath) throw new Error('Chrome not found');
+
+          async function capture(width, height, label) {
+            const browser = await chromium.launch({ executablePath, headless: true, args: ['--no-sandbox','--disable-dev-shm-usage'] });
+            const context = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: 1, colorScheme: 'light' });
+            const page = await context.newPage();
+            const responses = [];
+            page.on('response', r => responses.push({ url: r.url(), status: r.status(), type: r.request().resourceType(), contentType: r.headers()['content-type'] || '' }));
+            await page.goto('https://www.nym.design/', { waitUntil: 'networkidle', timeout: 120000 });
+            await page.waitForTimeout(2500);
+            await page.screenshot({ path: `capture/rendered/${label}.png`, fullPage: true, animations: 'disabled' });
+            fs.writeFileSync(`capture/rendered/${label}.html`, await page.content());
+            const cdp = await context.newCDPSession(page);
+            const snap = await cdp.send('Page.captureSnapshot', { format: 'mhtml' });
+            fs.writeFileSync(`capture/rendered/${label}.mhtml`, snap.data);
+            const audit = await page.evaluate(() => ({
+              title: document.title,
+              url: location.href,
+              viewport: { width: innerWidth, height: innerHeight },
+              page: { width: document.documentElement.scrollWidth, height: document.documentElement.scrollHeight },
+              htmlAttrs: Object.fromEntries([...document.documentElement.attributes].map(a => [a.name,a.value])),
+              bodyAttrs: Object.fromEntries([...document.body.attributes].map(a => [a.name,a.value])),
+              stylesheets: [...document.styleSheets].map(s => s.href || 'inline'),
+              scripts: [...document.scripts].map(s => s.src || 'inline'),
+              links: [...document.querySelectorAll('a')].map(a => ({ text: (a.innerText || '').trim(), href: a.href, target: a.target, rel: a.rel })),
+              images: [...document.images].map(img => ({ src: img.currentSrc || img.src, srcset: img.srcset, sizes: img.sizes, alt: img.alt, width: img.naturalWidth, height: img.naturalHeight })),
+              elements: [...document.querySelectorAll('body *')].map((el, i) => {
+                const r = el.getBoundingClientRect();
+                const s = getComputedStyle(el);
+                return {
+                  i,
+                  tag: el.tagName.toLowerCase(),
+                  id: el.id,
+                  classes: [...el.classList],
+                  text: (el.innerText || '').replace(/\s+/g,' ').trim().slice(0,160),
+                  rect: { x:r.x, y:r.y+scrollY, width:r.width, height:r.height },
+                  style: { display:s.display, position:s.position, color:s.color, backgroundColor:s.backgroundColor, fontFamily:s.fontFamily, fontSize:s.fontSize, fontWeight:s.fontWeight, lineHeight:s.lineHeight, letterSpacing:s.letterSpacing, margin:s.margin, padding:s.padding, gap:s.gap, borderRadius:s.borderRadius, maxWidth:s.maxWidth, opacity:s.opacity, transform:s.transform }
+                };
+              })
+            }));
+            fs.writeFileSync(`capture/rendered/${label}.json`, JSON.stringify(audit, null, 2));
+            fs.writeFileSync(`capture/rendered/${label}-responses.json`, JSON.stringify(responses, null, 2));
+            await browser.close();
+          }
+
+          (async () => {
+            await capture(1440, 900, 'desktop-1440');
+            await capture(1024, 768, 'tablet-1024');
+            await capture(390, 844, 'mobile-390');
+          })().catch(err => { console.error(err); process.exit(1); });
+          NODE
+
+          node capture.cjs
+          find capture -type f -printf '%P\t%s bytes\n' | sort > capture/raw/manifest.txt
+          find capture -type f -print0 | sort -z | xargs -0 sha256sum > capture/raw/sha256.txt
+          tar -czf nym-design-live-capture.tar.gz capture
+
+      - name: Upload temporary capture
+        uses: actions/upload-artifact@v4
+        with:
+          name: nym-design-live-capture
+          path: nym-design-live-capture.tar.gz
+          retention-days: 1
+          if-no-files-found: error
