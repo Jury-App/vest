@@ -139,7 +139,7 @@ export default function GoodQuestions({
       </span>
 
       {/* Narrower screens: post-it sits beneath the line. */}
-      <span className="post-it-slot block xl:hidden" style={{ padding: "14px 12px 30px" }}>
+      <span className="post-it-slot block xl:hidden" style={{ padding: "28px 12px 4px" }}>
         {postIt(-1.5)}
       </span>
     </>
