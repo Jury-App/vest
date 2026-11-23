@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Surrender",
@@ -14,7 +13,7 @@ const OPENING = [
 const OPENING_LAST = "Surrender.";
 
 const FAVORITES_LEAD = "My favorite parts were.";
-const FAVORITES = ["Early Caleb, Amy", "Nicole & Grace"];
+const FAVORITES = ["Early Caleb & Amy", "Nicole & Grace"];
 
 const BODY = [
   [
@@ -76,30 +75,25 @@ export default function SurrenderPage() {
           ))}
         </div>
 
-        <div className="mt-10 flex flex-col items-end">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/assets/signature-exact.png"
-            alt="Nicole's signature"
-            className="h-auto w-[84px]"
-            style={{ filter: "brightness(0) invert(1)" }}
-          />
-          <time
-            dateTime={DATE_ISO}
-            className="mt-1 text-[11px] tracking-[0.08em] text-white/40"
-          >
-            {DATE_LABEL}
-          </time>
+        <div className="mt-10 flex justify-end">
+          <div className="flex flex-col items-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/assets/nym-sig.png"
+              alt="NYM signature"
+              width={420}
+              height={271}
+              className="h-auto w-[46px]"
+            />
+            <time
+              dateTime={DATE_ISO}
+              className="mt-2 text-[11px] tracking-[0.08em] text-white/40"
+            >
+              {DATE_LABEL}
+            </time>
+          </div>
         </div>
 
-        <div className="mt-12">
-          <Link
-            href="/"
-            className="text-sm text-white/50 underline underline-offset-4"
-          >
-            Return to Jury
-          </Link>
-        </div>
       </div>
     </main>
   );
