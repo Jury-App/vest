@@ -81,7 +81,7 @@ export default function SurrenderPage() {
             <img
               src="/assets/nym-sig.png"
               alt="NYM signature"
-              width={420}
+              width={409}
               height={271}
               className="h-auto w-[46px]"
             />
