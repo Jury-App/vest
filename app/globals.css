@@ -185,12 +185,12 @@ html, body {
 
 .squiggle-phrase:hover .squiggle-wave,
 .squiggle-phrase:active .squiggle-wave {
-  animation: squiggle-travel 620ms linear 2;
+  animation: squiggle-travel 1500ms linear 2;
 }
 
 .squiggle-phrase:hover ~ .post-it-slot .post-it,
 .squiggle-phrase:active ~ .post-it-slot .post-it {
-  animation: post-it-flutter 900ms ease-in-out 1;
+  animation: post-it-flutter 2200ms ease-in-out 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
