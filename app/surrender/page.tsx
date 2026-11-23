@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import GoodQuestions from "../components/GoodQuestions";
 
 export const metadata: Metadata = {
   title: "Surrender",
@@ -26,6 +27,25 @@ const BODY = [
   ["I know what this was."],
   ["Value."],
 ];
+
+const QUESTIONS_LABEL = "good questions";
+const QUESTIONS = [
+  "Does this help people?",
+  "How are people empowered to feel good, strong, loving, lovable, and generous?",
+];
+
+function renderLine(line: string) {
+  const index = line.indexOf(QUESTIONS_LABEL);
+  if (index === -1) return line;
+  return (
+    <GoodQuestions
+      before={line.slice(0, index)}
+      label={QUESTIONS_LABEL}
+      after={line.slice(index + QUESTIONS_LABEL.length)}
+      questions={QUESTIONS}
+    />
+  );
+}
 
 const DATE_ISO = "2026-11-23";
 const DATE_LABEL = "November 23, 2026";
@@ -67,8 +87,8 @@ export default function SurrenderPage() {
           {BODY.map((lines) => (
             <p key={lines[0]} style={{ marginTop: 24 }}>
               {lines.map((line) => (
-                <span key={line} className="block">
-                  {line}
+                <span key={line} className="relative block">
+                  {renderLine(line)}
                 </span>
               ))}
             </p>
