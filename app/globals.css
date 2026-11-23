@@ -163,3 +163,39 @@ html, body {
   border-color: rgba(255, 0, 0, 0.72);
   background: rgba(38, 38, 38, 0.95);
 }
+
+/* "good questions": the squiggle ripples and the post-it flutters on hover/tap */
+@keyframes squiggle-travel {
+  to {
+    transform: translateX(-54px);
+  }
+}
+
+@keyframes post-it-flutter {
+  0%, 100% { rotate: 0deg; }
+  22% { rotate: 1.8deg; }
+  48% { rotate: -1.3deg; }
+  74% { rotate: 0.6deg; }
+}
+
+.squiggle-phrase {
+  cursor: default;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.squiggle-phrase:hover .squiggle-wave,
+.squiggle-phrase:active .squiggle-wave {
+  animation: squiggle-travel 620ms linear 2;
+}
+
+.squiggle-phrase:hover ~ .post-it-slot .post-it,
+.squiggle-phrase:active ~ .post-it-slot .post-it {
+  animation: post-it-flutter 900ms ease-in-out 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .squiggle-phrase .squiggle-wave,
+  .squiggle-phrase ~ .post-it-slot .post-it {
+    animation: none !important;
+  }
+}

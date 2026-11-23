@@ -1,7 +1,4 @@
-"use client";
-
 import localFont from "next/font/local";
-import { useEffect, useRef, useState } from "react";
 
 const handwriting = localFont({
   src: "../fonts/classic-fairy.otf",
@@ -24,13 +21,12 @@ type GoodQuestionsProps = {
 };
 
 /**
- * A line of text containing a phrase that reveals a note of questions on hover (mouse), tap
- * (touch) or focus (keyboard).
+ * A line of text with a post-it note of questions attached to it.
  *
- * - Wide screens (xl and up): the note appears as a post-it beside the
- *   line, in the right margin. It is positioned against the nearest `relative` ancestor,
- *   which should be the full-width line the phrase sits in.
- * - Narrower screens have no margin, so the post-it unfolds beneath the line.
+ * - Wide screens (xl and up): the post-it sits beside the line, in the
+ *   right margin. It is positioned against the nearest `relative` ancestor,
+ *   which should be the full-width line itself.
+ * - Narrower screens have no margin, so the post-it sits beneath the line.
  */
 export default function GoodQuestions({
   before,
@@ -38,18 +34,6 @@ export default function GoodQuestions({
   after,
   questions,
 }: GoodQuestionsProps) {
-  const [open, setOpen] = useState(false);
-  const lastPointerType = useRef<string>("mouse");
-
-  useEffect(() => {
-    if (!open) return;
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
-    };
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [open]);
-
   const note = questions.map((question, index) => (
     <span
       key={question}
@@ -63,14 +47,11 @@ export default function GoodQuestions({
   // The post-it itself. `tilt` is its resting angle in degrees.
   const postIt = (tilt: number) => (
     <span
-      className="relative block w-[214px]"
+      className="post-it relative block w-[214px]"
       style={{
         isolation: "isolate",
         transformOrigin: "50% 0%",
-        transform: open
-          ? `rotate(${tilt}deg) scale(1)`
-          : `rotate(${tilt - 4}deg) scale(0.96)`,
-        transition: "transform 360ms cubic-bezier(0.2, 0.8, 0.3, 1)",
+        transform: `rotate(${tilt}deg)`,
       }}
     >
       {/* Shadow: tight under the stuck top edge, loose where the paper lifts. */}
@@ -125,73 +106,41 @@ export default function GoodQuestions({
   return (
     <>
       {before}
-      <button
-        type="button"
-        aria-expanded={open}
-        onPointerDown={(event) => {
-          lastPointerType.current = event.pointerType;
-        }}
-        onPointerEnter={(event) => {
-          if (event.pointerType === "mouse") setOpen(true);
-        }}
-        onPointerLeave={(event) => {
-          if (event.pointerType === "mouse") setOpen(false);
-        }}
-        onFocus={() => {
-          // Touch focus is followed by a click, which does the toggling.
-          if (lastPointerType.current === "mouse") setOpen(true);
-        }}
-        onBlur={() => {
-          if (lastPointerType.current === "mouse") setOpen(false);
-        }}
-        onClick={() =>
-          setOpen((current) =>
-            lastPointerType.current === "mouse" ? true : !current
-          )
-        }
-        className="cursor-help underline decoration-dotted underline-offset-4 outline-none transition-colors duration-200 focus-visible:decoration-solid"
-        style={{
-          font: "inherit",
-          letterSpacing: "inherit",
-          background: "none",
-          border: 0,
-          color: open ? "#fff" : "inherit",
-          textDecorationColor: open
-            ? "rgba(255, 255, 255, 0.9)"
-            : "rgba(255, 255, 255, 0.45)",
-        }}
-      >
+      <span className="squiggle-phrase relative inline-block whitespace-nowrap text-white">
         {label}
-      </button>
+        {/* Hand-drawn squiggle under the phrase; it ripples on hover or tap. */}
+        <svg
+          aria-hidden="true"
+          className="pointer-events-none absolute left-0 w-full"
+          style={{ bottom: "-0.02em", height: "0.42em", overflow: "hidden" }}
+          viewBox="0 -1 108 10"
+          preserveAspectRatio="none"
+          fill="none"
+        >
+          <path
+            className="squiggle-wave"
+            d="M-54 1.7 C-47.5 1.7 -47.5 7 -41 7 C-33.75 7 -33.75 1.2 -26.5 1.2 C-20.25 1.2 -20.25 7.4 -14 7.4 C-7 7.4 -7 1.7 0 1.7 C6.5 1.7 6.5 7 13 7 C20.25 7 20.25 1.2 27.5 1.2 C33.75 1.2 33.75 7.4 40 7.4 C47 7.4 47 1.7 54 1.7 C60.5 1.7 60.5 7 67 7 C74.25 7 74.25 1.2 81.5 1.2 C87.75 1.2 87.75 7.4 94 7.4 C101 7.4 101 1.7 108 1.7 C114.5 1.7 114.5 7 121 7 C128.25 7 128.25 1.2 135.5 1.2 C141.75 1.2 141.75 7.4 148 7.4 C155 7.4 155 1.7 162 1.7"
+            stroke="rgba(255, 255, 255, 0.8)"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+          />
+        </svg>
+      </span>
       {after}
 
       {/* Wide screens: post-it stuck in the right margin, beside the line. */}
       <span
-        className="pointer-events-none absolute left-full top-1/2 hidden xl:block"
-        style={{
-          marginLeft: 44,
-          translate: "0 -42%",
-          opacity: open ? 1 : 0,
-          transition: "opacity 220ms ease",
-        }}
+        className="post-it-slot pointer-events-none absolute left-full top-1/2 hidden xl:block"
+        style={{ marginLeft: 44, translate: "0 -42%" }}
       >
         {postIt(2.5)}
       </span>
 
-      {/* Narrower screens: post-it unfolds beneath the line. */}
-      <span
-        className="grid xl:hidden"
-        style={{
-          gridTemplateRows: open ? "1fr" : "0fr",
-          opacity: open ? 1 : 0,
-          transition: "grid-template-rows 280ms ease, opacity 220ms ease",
-        }}
-      >
-        <span className="block overflow-hidden">
-          <span className="block" style={{ padding: "14px 12px 34px" }}>
-            {postIt(-1.5)}
-          </span>
-        </span>
+      {/* Narrower screens: post-it sits beneath the line. */}
+      <span className="post-it-slot block xl:hidden" style={{ padding: "14px 12px 30px" }}>
+        {postIt(-1.5)}
       </span>
     </>
   );
